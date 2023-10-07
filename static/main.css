@@ -325,17 +325,19 @@
         background-image: url("farm-home.jpg");
         background-repeat: no-repeat;
         background-size: cover;
-        background-size: 150% 100%;
+        background-size: 100% 100%;
         background-position: center;
         margin: 0;
         top: 0;
     }
 
     #toolbar-page {
-        border: solid 4px black;
+        /* border: solid 4px black;
         background-image: url("landscape.jpg");
         background-repeat: no-repeat;
-        background-size: cover;
+        background-size: cover; */
+        background-color: transparent;
+        top: 0;
     }
 
 }
