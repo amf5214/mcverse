@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block head%}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'aboutus.css') }}"/>
+{% endblock %}
+
+{% block body %} 
+    <div class="page-contact">
+        <div class="intro-block">
+            <div class="title-block">
+                <h1 id="title">About us at MC Verse<span class="material-symbols-outlined">rocket_launch</span>
+                </h1>
+                <p id="site-purpose">
+                    MC Verse is a community maintained project that focuses on providing a safe and fun place that Minecraft players of all skill levels and ages can come to learn about Minecraft. Our goal is to have something for every Minecraft player.
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

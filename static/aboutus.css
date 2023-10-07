@@ -1,0 +1,60 @@
+body {
+    margin: 0;
+    font-family: grandstander;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    background-image: url("homepage3.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 125% 100%;
+}
+
+.page-content {
+    margin-left: 2vw;
+    margin-right: 2vw;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    min-height: 5vh;
+    min-width: 1vw;
+    color: #383838;
+    font-weight: normal;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.intro-block {
+    background-color: #21232A;
+    color: white;
+    font-weight: normal;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 1em;
+    margin-top: 25px;
+    margin-bottom: 65vh;
+    margin-left: 15vw;
+    margin-right: 15vw;
+}
+
+.title-block h1 {
+    font-family: grandstander;
+    font-weight: normal;
+    font-size: 16pt;
+    align-items: center;
+    
+}
+
+.title-block h1 span {
+    color: green;
+}
+
+.title-block p {
+   font-family: grandstander;
+    font-weight: normal;
+    font-size: 12pt;
+    line-height: 1.5em
+}
