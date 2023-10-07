@@ -138,12 +138,44 @@
                 <p id="site-purpose">This is a place to find answers to common questions and to ask for help.
                 </p>
             </div>
-            <table class="faq-section">
-                <th>Question ID</th>
-                <th>Question</th>
-                <th>Author</th>
-                
-            </table>
+            <div class="table-wrapper">
+                <table class="faq-section">
+                    {% if admin==True %}
+                        <th>Question ID</th>
+                    {% endif %}
+                    <th>Question</th>
+                    {% if admin==True %}
+                        <th>Author</th>
+                    {% endif %}
+                    <th>Answer</th>
+                    <th>Answerer</th>
+                    {% for question in questions %}
+                        <tr>
+                            {% if admin==True %}
+                                <td>{{question.id}}</td>
+                            {% endif %}
+                            <td>{{question.question}}</td>
+                            {% if admin==True %}
+                                <td>{{question.author_user}}</td>
+                            {% endif %}
+                            <td>{{question.answer}}</td>
+                            <td>{{question.answer_author}}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <input type="button" onclick="location.href='#new-question'" value="New Question" id="new-question-button">
+                <div id="new-question">
+                    <h1>Ask a question</h1>
+                    <form action="/newquestion" method="POST">
+                        <label class="label-element">Username</label>
+                        <input class="form-element" type="text" name="username" id="username">
+                        <label class="label-element">Question</label>
+                        <input class="form-element" type="text" name="question" id="question">
+                        <input type="submit" id="submit-button-faq" value="Submit">
+                    </form>
+                </div>
+            </div>
+            
         </div>
     </div>
 {% endblock %}
