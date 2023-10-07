@@ -322,11 +322,13 @@
 @media (min-width: 1100px) {
 
     body {
-        background-image: url("homepage67.jpg");
+        background-image: url("farm-home.jpg");
         background-repeat: no-repeat;
         background-size: cover;
         background-size: 150% 100%;
+        background-position: center;
         margin: 0;
+        top: 0;
     }
 
     #toolbar-page {
