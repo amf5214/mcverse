@@ -242,6 +242,26 @@
     font-family: grandstander; 
     text-decoration: none;
 }
+
+@media (max-height: 500px) {
+    .leftmenu {
+       
+    }
+
+    #hidden-menu:target {
+        display: flex;
+        flex-direction: column;
+        width: 55%;
+    }
+
+    .hidden-menu-items {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); 
+        justify-content: start;
+        align-content: start;
+    }
+}
+
 @media (max-width: 499px)  {
     body {
         background-image: url("lighthouse.png");
