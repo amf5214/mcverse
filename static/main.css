@@ -186,7 +186,6 @@
     text-decoration: none;
     text-align: left;
     font-size: 15px;
-    padding: 0px;
     cursor: pointer;
     padding: 10px 150px;
     margin-right: 0px;
@@ -286,6 +285,18 @@
 
     .search {
         display: none;
+    }
+
+    .searcharea {
+       width: 60%;
+    }
+
+    .result-box {
+        width: 100%;
+    }
+
+    .result-box ul li {
+        padding: 10px 50px;
     }
 }
 
