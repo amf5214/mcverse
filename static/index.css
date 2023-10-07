@@ -18,7 +18,7 @@
     .homepage > * {
         flex-basis: 40%;
         align-self: top center;
-        flex-grow: 1;
+        flex-grow: .75;
     }
 }
 
@@ -105,7 +105,12 @@
     .quick-links {
         flex-direction: row;
         flex-wrap: wrap;
+        justify-content: space-evenly;
         column-gap: 2em;
+    }
+
+    .quick-links > * {
+        flex-grow: 1;
     }
 }
 
