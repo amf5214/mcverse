@@ -239,6 +239,7 @@
     background-color: #14181b;
     color: white;
     font-family: grandstander; 
+    font-size: clamp(.25rem, .25rem + 2vw, 1rem);
     text-decoration: none;
 }
 

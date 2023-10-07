@@ -1,11 +1,25 @@
 .homepage {
     display: flex;
     flex-direction: column;
-    margin: clamp(.5rem, .5rem + 3vh, 3rem) clamp(.5rem, .5rem + 5vw, 3rem);
+    margin: auto clamp(.25rem, .25rem + 2vw, 3rem);
 }
 
 .homepage > * {
     margin: 1rem auto;
+}
+
+@media(min-width: 1000px) {
+    .homepage {
+        flex-direction: row;
+        flex-wrap: wrap;
+        column-gap: 2em;
+    }
+
+    .homepage > * {
+        flex-basis: 40%;
+        align-self: top center;
+        flex-grow: 1;
+    }
 }
 
 .intro-block {
@@ -20,7 +34,7 @@
 
 .title-block h1 {
     font-family: grandstander;
-    font-size: clamp(1rem, 1rem + 2vw, 2rem);
+    font-size: clamp(.75rem, .75rem + 2vw, 2rem);
     align-items: center;
 }
 
@@ -30,13 +44,11 @@
 
 .title-block p {
    font-family: grandstander;
-   font-size: clamp(.5rem, .5rem + 2vw, 1rem);
+   font-size: clamp(.3rem, .3rem + 2vw, 1rem);
     line-height: 1.5em;
 }
 
-.container {
-    padding: 2rem;
-}
+
 
 .slider {
     display: flex;
@@ -50,17 +62,17 @@
 
 .slider img {
     flex: 1 0 100%;
-    scroll-snap-align: start;    
+    scroll-snap-align: start;  
+    max-width: 100%;  
 }
 
 .slider-nav {
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: center;
-    column-gap: 1rem;
+    column-gap: .5rem;
     position: relative;
-    bottom: 1.25rem;
+    bottom: .75rem;
     transition: translateX(-50%);
     z-index: 1;
 }
@@ -76,4 +88,57 @@
 
 .slider-nav a:hover {
     opacity: 1;
+}
+
+.quick-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.quick-links > * {
+    align-self: center;
+    flex-basis: 40%;
+}
+
+@media (min-width: 400px) {
+    .quick-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        column-gap: 2em;
+    }
+}
+
+.link {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #1373c0;
+    border-radius: 1em;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    padding: .5em;
+    width: 60%
+}
+
+.link > * {
+    margin: 0 auto;
+}
+
+.linklabel {
+    font-family: grandstander;
+    font-size: clamp(.75rem, .75rem + 2vw, 2rem);
+    color: white;
+    text-decoration: none;
+}
+
+.linkimage {
+    width: 12vh;
+    height: 12vh;
+}
+
+.linklabel:hover {
+    text-decoration: underline;
+    color: black
 }
