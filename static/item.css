@@ -80,7 +80,7 @@
     text-align: center;
 }
 
-.item-info h1 span {
+.item-info h1 span, .title span {
     color: green;
 }
 
