@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'profile.css') }}" /> 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=VT323">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Grandstander">
+        <title>Austin Fraley</title>
+    </head>
+    <body>
+        <div class="profile">
+            <nav class="vertical-nav-bar">
+                <img src="{{ url_for('static', filename = 'me.PNG') }}" alt="Me">
+                <label>Austin Fraley</label>
+                <ul class="navbuttons">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/profile">profile</a></li>
+                    <li><a href="/profile/introduction">Bio</a></li>
+                    <li></li>
+                </ul>
+            </nav>
+            <div class="page-content">
+                <div class="intro-block">
+                    <div class="title-block">
+                        <h1 id="title">
+                            My Projects<span class="material-symbols-outlined">rocket_launch</span>
+                        </h1>
+                        <p id="site-purpose">Throughout my time working at Amazon.com, the Financial Independence Group, and my education I have many projects both public and 
+                            confidential dealing with large scale customer facing products. My publicly available projects can be found on my <a href="https://github.com/amf5214">github page</a>.
+                        </p>
+                        <p style="font-size: small">
+                            <ul>
+                                <li>
+                                    <p>Station Assignment Tool: The station assignment tool is a fully built out java application running spring boot as the backend webinterface that worked
+                                    to staff over 8,000 associates across 14 shifts and 3 departments that intelligently predicted where associates needed to be placed based off of 12 
+                                    differnt internal KPIs.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        ARC: Large scale customer facing tool used to create and manage customer contracts for over 2 million customer transactions focusing in annuities and 
+                                        insurance built primarily in the .NET framework and managed by a team of 14 software developers.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        TyeDyeInk.com: Customer facing web application currently in development to service a new and growing business, TyeDyeInk, allowing customers to buy 
+                                        custom products and interact with the designer of the clothing.
+                                    </p>
+                                </li>
+                            </ul>
+                            
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </body>
+</html>

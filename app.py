@@ -82,12 +82,19 @@ def new_question():
 def item_report(itemid, editable):
     page_object = PageObject.query.get_or_404(itemid)
     image_url = f"/static/{page_object.image_link}" 
-    crafting_links = page_object.crafting_image_links.split(" ")
-    for i, link in enumerate(crafting_links):
-        crafting_links[i] = f"/static/{link}"
-    smelting_links = page_object.smelting_image_links.split(" ")
-    for i, link in enumerate(smelting_links):
-        smelting_links[i] = f"/static/{link}"
+    if page_object.crafting_image_links != "":
+        crafting_links = page_object.crafting_image_links.split(" ")
+        for i, link in enumerate(crafting_links):
+            crafting_links[i] = f"/static/{link}"
+    else:
+        crafting_links = ""
+
+    if page_object.smelting_image_links != "":
+        smelting_links = page_object.smelting_image_links.split(" ")
+        for i, link in enumerate(smelting_links):
+            smelting_links[i] = f"/static/{link}"
+    else:
+        smelting_links = ""
 
     return render_template('item.html', page_object=page_object, image_url=image_url, crafting_links=crafting_links, smelting_links=smelting_links, editable=editable)
 
@@ -187,6 +194,14 @@ def update_item(itemid):
 @app.route('/admin/items')
 def all_items():
     return jsonify(get_item_json())
+
+@app.route('/profile')
+def profile():
+    return render_template("profile.html")
+
+@app.route('/profile/introduction')
+def introduction():
+    return render_template("introduction.html")
 
 if __name__ == '__main__':
     app.run(debug=True, port=54913)

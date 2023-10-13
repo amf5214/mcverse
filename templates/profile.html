@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'profile.css') }}" /> 
+    <title>Austin Fraley</title>
+{% endblock%}
+
+{% block body%}
+    <div class="page-content-profile">
+        <div class="intro-block">
+            <div class="title-block" id="profile-item">
+                <h1 id="title">
+                    Profile<span class="material-symbols-outlined">rocket_launch</span>
+                </h1>
+                <div class="image-wrapper">
+                    <img src="{{ url_for('static', filename = 'me.PNG') }}" class="topimage">
+                </div>
+                <p id="site-purpose">Name: Austin Fraley</p>
+                <p id="site-purpose">Username: amf5214</p>
+                <p id="site-purpose">Email: austinfraley.lee@gmail.com</p>
+                <p id="site-purpose">Birthdate: 09/04/2000</p>
+            </div>
+        </div>
+        <div class="user-details">
+            <div class="intro-block">
+                <div class="title-block">
+                    <h1 id="title">
+                        Bio<span class="material-symbols-outlined">rocket_launch</span>
+                    </h1>
+                    <p id="site-purpose">My name is Austin Fraley and I am a current undergraduate student at the University of North Carolina at Charlotte
+                        majoring in computer science and business analytics. I am also an operations area manager at Amazon.com specializing in inbound logistics 
+                        and inventory control. 
+                    </p>
+                </div>
+            </div>
+
+            <div class="intro-block">
+                <div class="title-block">
+                    <h1 id="title">
+                        My Experience<span class="material-symbols-outlined">rocket_launch</span>
+                    </h1>
+                    <p id="site-purpose">I have experience in opearations leadership as well as computer science. I have operations leadership experience at Amazon.com
+                        where I have been working for three years as of october 3, 2023. I currently supervize over 131 inbound associates working in inbound stow and 
+                        inbound logistical support as well as inventory control. I also have experience in software engineering at the Financial Independence Group working 
+                        as a support software developer specializing in Microsoft SQL servers and .NET framework languages. Also, I am the senior tech advisor for TyeDyeInk 
+                        a new custom clothing line started earlier this year.
+                    </p>
+                </div>
+            </div>
+        
+    </div>
+{% endblock %}
