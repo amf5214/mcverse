@@ -77,8 +77,9 @@ def new_question():
     db.session.commit()
     return redirect('/')
 
-@app.route('/item/<itemid>')
-def item_report(itemid):
+@app.route('/item/<itemid>', defaults={"editable":"false"})
+@app.route('/item/<itemid>/<editable>')
+def item_report(itemid, editable):
     page_object = PageObject.query.get_or_404(itemid)
     image_url = f"/static/{page_object.image_link}" 
     crafting_links = page_object.crafting_image_links.split(" ")
@@ -88,7 +89,7 @@ def item_report(itemid):
     for i, link in enumerate(smelting_links):
         smelting_links[i] = f"/static/{link}"
 
-    return render_template('item.html', page_object=page_object, image_url=image_url, crafting_links=crafting_links, smelting_links=smelting_links)
+    return render_template('item.html', page_object=page_object, image_url=image_url, crafting_links=crafting_links, smelting_links=smelting_links, editable=editable)
 
 @app.route('/item/admin')
 def item_admin():
@@ -143,6 +144,41 @@ def get_item_json():
     for x in objects:
         json_data.append([x.item_title, x.id])
     return {"jdata": json_data}
+
+@app.route('/updateitem/<itemid>', methods=["POST"])
+def update_item(itemid):
+    if request.method == "POST":
+        item = PageObject.query.get_or_404(itemid)
+        if request.form["attribute"] == "item_title":
+            item.item_title = request.form["newValue"]
+        elif request.form["attribute"] == "item_description":
+            item.item_description = request.form["newValue"]
+        elif request.form["attribute"] == "source_mod":
+            item.source_mod = request.form["newValue"]
+        elif request.form["attribute"] == "stack_size":
+            item.stack_size = int(request.form["newValue"])
+        elif request.form["attribute"] == "item_rarity":
+            item.item_rarity = request.form["newValue"]
+        elif request.form["attribute"] == "dimension":
+            item.dimension = request.form["newValue"]
+        elif request.form["attribute"] == "item_type":
+            item.item_type = request.form["newValue"]
+        elif request.form["attribute"] == "smelting_image_links":
+            item.smelting_image_links = request.form["newValue"]
+        elif request.form["attribute"] == "crafting_image_links":
+            item.crafting_image_links = request.form["newValue"]
+        elif request.form["attribute"] == "iframe_video_link":
+            item.iframe_video_link = request.form["newValue"]
+        elif request.form["attribute"] == "image_link":
+            item.image_link = request.form["newValue"]
+        
+        try:
+            db.session.commit()
+            print(f"{item.id} updated")
+            return redirect(f"/item/{itemid}")
+        
+        except:
+            print(f"There was an error when updating the chosen item {itemid}")
 
 @app.route('/admin/items')
 def all_items():

@@ -19,29 +19,17 @@
                     <th>Item ID</th>
                     <th>Title</th>
                     <th>Image Link</th>
-                    <th>Description</th>
                     <th>Crafting Image Links</th>
                     <th>Smelting Image Links</th>
-                    <th>Source Mod</th>
-                    <th>Stack Size</th>
-                    <th>Rarity</th>
-                    <th>Dimension</th>
-                    <th>Type</th>
-                    <th>Minecraft ID</th>
+                    <th>IFrame Link</th>
                     {% for item in items %}
                         <tr>
                             <td><h3>{{item.id}}</h3></td>
                             <td><h3>{{item.item_title}}</h3></td>
                             <td><h3>{{item.image_link}}</h3></td>
-                            <td><h3>{{item.item_description}}</h3></td>
                             <td><h3>{{item.crafting_image_links}}</h3></td>
                             <td><h3>{{item.smelting_image_links}}</h3></td>
-                            <td><h3>{{item.source_mod}}</h3></td>
-                            <td><h3>{{item.stack_size}}</h3></td>
-                            <td><h3>{{item.item_rarity}}</h3></td>
-                            <td><h3>{{item.dimension}}</h3></td>
-                            <td><h3>{{item.item_type}}</h3></td>
-                            <td><h3>{{item.minecraft_item_id}}</h3></td>
+                            <td><h3>{{item.iframe_video_link}}</h3></td>
                             <td><a href="/deleteitem/{{item.id}}">Delete</a></td>
                         </tr>
                     {% endfor %}
