@@ -1,4 +1,4 @@
-const itemlist = [
+let itemlist = [
     'Dirt',
     'Grass',
     'Podzol',
@@ -437,45 +437,57 @@ const itemlist = [
     'Gold Horse Armor',
     'Diamond Horse Armor'
     ];
-    
-    var availableKeywords = itemlist;
-    
-    var resultsBox = document.querySelector(".result-box");
-    var inputBox = document.getElementById("search-box-input");
-    
-    inputBox.onkeyup = function() {
-        console.log("search bar function running");
-        var result = [];
-        var input = inputBox.value;
-        if(input.length) {
-            result = availableKeywords.filter((keyword) => {
-                return keyword.toLowerCase().includes(input.toLowerCase());
-            });
-            console.log(result);
-        }
-        display(result);
-        
-        if(!input.length) {
-            resultsBox.innerHTML = "";
-        }
-    }
-    
-    function display(result) {
-        const content = result.map((list) => {
-            console.log("V1: " + list);
-            let data = list.toLowerCase().replace(" ", "-");
-            console.log("V2: " + list);
-            console.log("V3: " + "<li><a href=\"" + data + "-page.html\">" + list + "</a></li>");
-            return "<li><a href=\"" + data + "-page.html\">" + list + "</a></li>";
+
+const item_list= new Map();
+
+async function get_items() {
+    let response_data = await fetch("/admin/items");
+    let data_json = await response_data.json();
+    data_json.jdata.forEach((item)=>{
+        item_list.set(item[0], item[1]);
+    });
+}
+
+get_items();
+console.log(item_list);
+console.log(item_list.get("Iron Ingot"));
+
+var availableKeywords = itemlist;
+
+var resultsBox = document.querySelector(".result-box");
+var inputBox = document.getElementById("search-box-input");
+
+inputBox.onkeyup = function() {
+    console.log("search bar function running");
+    var result = [];
+    var input = inputBox.value;
+    if(input.length) {
+        result = availableKeywords.filter((keyword) => {
+            return keyword.toLowerCase().includes(input.toLowerCase());
         });
-        
-        resultsBox.innerHTML = "<ul>" + content.join('') + "</ul>";
-        
+        console.log(result);
     }
+    display(result);
     
-    function load_list(path) {
-        
-        
+    if(!input.length) {
+        resultsBox.innerHTML = "";
     }
+}
+
+function display(result) {
+    const content = result.map((list) => {
+        console.log("V1: " + list);
+        console.log("V2: " + item_list.get(list));
+        console.log("<li><a href=\"/item/\"" + item_list.get(list) + ">" + list + "</a></li>");
+        return "<li><a href=\"/item/" + item_list.get(list) + "\">" + list + "</a></li>";
+    });
+    
+    resultsBox.innerHTML = "<ul>" + content.join('') + "</ul>";
+    
+}
+
+function load_list(path) {
     
     
+}
+

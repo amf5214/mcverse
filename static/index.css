@@ -16,9 +16,14 @@
     }
 
     .homepage > * {
-        flex-basis: 40%;
+        flex: 0 1 40%;
         align-self: top center;
-        flex-grow: .75;
+    }
+
+    #item-3 {
+        flex: 0 1 50%;
+        align-self: flex-start;
+        align-self: flex-end;
     }
 }
 
@@ -259,4 +264,8 @@ table th {
     font-size: small;
     border-radius: 1em;
     align-self: center;
+}
+
+#item-4 {
+    display: none;
 }

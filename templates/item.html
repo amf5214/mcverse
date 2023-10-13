@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block head%}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'item.css') }}"/>
+{% endblock %}
+
+{% block body %} 
+    <div class="homepage">
+        <div class="intro-block" id="item-1">
+            <div class="title-block">
+                <h1 id="title">
+                    {{page_object.item_title }}
+                    <span class="material-symbols-outlined">rocket_launch</span>
+                </h1>
+                <img id="item-image" src="{{image_url}}">
+            </div>
+        </div>
+        <div class="intro-block" id="item-2">
+            <div class="item-info">
+                <h1 id="title">Item Info<span class="material-symbols-outlined">rocket_launch</span></h1>
+                <p id="site-purpose"> {{page_object.item_description}}
+                </p>
+                <div class="item-attributes">
+                    <h3 id="source-mod-factor">Source mod: {{page_object.source_mod}}</h3>
+                    <h3 id="stack-size-factor">Stack size: {{page_object.stack_size}}</h3>
+                    <h3 id="rarity-factor">Rarity: {{page_object.item_rarity}}</h3>
+                    <h3 id="aquisition-method">Dimension to get: {{page_object.dimension}}</h3>
+                    <h3 id="minecraft_item_id">Minecraft ID: {{page_object.minecraft_item_id}}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="intro-block" id="item-3">
+            <h1 class="title">Crafting<span class="material-symbols-outlined">rocket_launch</span></h1>
+                {% for image in crafting_links %}
+                    <img class="crafting-recipe" src="{{image}}">
+                {% endfor %}
+        </div>
+        <div class="intro-block" id="item-4">
+            <h1 class="title">Smelting<span class="material-symbols-outlined">rocket_launch</span></h1>
+                {% for image in smelting_links %}
+                    <img class="crafting-recipe" src="{{image}}">
+                {% endfor %}
+        </div>
+        <div class="video">
+            <iframe width="560" height="315" src="{{page_object.iframe_video_link}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+    </div>
+{% endblock %}
+
