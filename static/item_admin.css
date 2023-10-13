@@ -208,3 +208,29 @@ table tr:hover {background-color: #ddd;}
     }
 
 }
+
+#modifiers {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#modifiers > * {
+    flex: 0 1 100%;
+    text-align: center;
+    margin: .5rem;
+    padding: 1rem;
+}
+
+#modifiers a {
+    color: white;
+    background-color: black;
+    text-decoration: none;
+
+}
+
+#modifiers a:hover {
+    color: black;
+    background-color: white;
+    text-decoration: none;
+}

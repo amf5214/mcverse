@@ -24,13 +24,14 @@
                     <th>IFrame Link</th>
                     {% for item in items %}
                         <tr>
-                            <td><h3>{{item.id}}</h3></td>
+                            <td><h3 id="itemid">{{item.id}}</h3></td>
                             <td><h3>{{item.item_title}}</h3></td>
-                            <td><h3>{{item.image_link}}</h3></td>
-                            <td><h3>{{item.crafting_image_links}}</h3></td>
-                            <td><h3>{{item.smelting_image_links}}</h3></td>
-                            <td><h3>{{item.iframe_video_link}}</h3></td>
-                            <td><a href="/deleteitem/{{item.id}}">Delete</a></td>
+                            <td><h3 class="editable-item" id="image_link" contenteditable="true">{{item.image_link}}</h3></td>
+                            <td><h3 class="editable-item" id="crafting_image_links" contenteditable="true">{{item.crafting_image_links}}</h3></td>
+                            <td><h3 class="editable-item" id="smelting_image_links" contenteditable="true">{{item.smelting_image_links}}</h3></td>
+                            <td><h3 class="editable-item" id="iframe_video_link" contenteditable="true">{{item.iframe_video_link}}</h3></td>
+                            <td><div id="modifiers"><a href="/deleteitem/{{item.id}}">Delete</a><a href="/item/{{item.id}}/true">Update</a></div></td>
+                            
                         </tr>
                     {% endfor %}
                 </table>
@@ -68,5 +69,6 @@
             </div>
         </div>
     </div>
+    <script src="{{ url_for('static', filename = 'item_admin.js') }}"></script>
 {% endif %}
 {% endblock %}
