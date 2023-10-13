@@ -9,7 +9,7 @@
         <div class="intro-block" id="item-1">
             <div class="title-block">
                 <h1 id="item_title" class="editable-item" contenteditable="{{editable}}">
-                    {{page_object.item_title }}
+                    {{ page_object.item_title }}
                     <span class="material-symbols-outlined">rocket_launch</span>
                 </h1>
                 <img id="item-image" src="{{image_url}}" contenteditable="{{editable}}">
@@ -36,13 +36,15 @@
             </div>
         </div>
         <div class="intro-block" id="item-3">
-            <h1 class="title">Crafting<span class="material-symbols-outlined">rocket_launch</span></h1>
+            <h1 class="title">
+                Crafting<span class="material-symbols-outlined">rocket_launch</span></h1>
                 {% for image in crafting_links %}
                     <img class="crafting-recipe" src="{{image}}" contenteditable="{{editable}}">
                 {% endfor %}
         </div>
         <div class="intro-block" id="item-4">
-            <h1 class="title">Smelting<span class="material-symbols-outlined">rocket_launch</span></h1>
+            <h1 class="title">
+                Smelting<span class="material-symbols-outlined">rocket_launch</span></h1>
                 {% for image in smelting_links %}
                     <img class="crafting-recipe" src="{{image}}" contenteditable="{{editable}}">
                 {% endfor %}

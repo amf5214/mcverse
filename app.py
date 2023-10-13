@@ -150,7 +150,7 @@ def get_item_json():
 def update_item(itemid):
     if request.method == "POST":
         item = PageObject.query.get_or_404(itemid)
-        
+
         if request.form["attribute"] == "item_title":
             item.item_title = request.form["newValue"]
         elif request.form["attribute"] == "item_description":
@@ -173,6 +173,8 @@ def update_item(itemid):
             item.iframe_video_link = request.form["newValue"]
         elif request.form["attribute"] == "image_link":
             item.image_link = request.form["newValue"]
+        elif request.form["attribute"] == "minecraft_item_id":
+            item.minecraft_item_id = request.form["newValue"]
         
         try:
             db.session.commit()
