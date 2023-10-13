@@ -53,9 +53,11 @@
                 {% endfor %}
         </div>
         {% endif %}
+        {% if page_object.iframe_video_link != "" %}
         <div class="video">
             <iframe width="560" height="315" src="{{page_object.iframe_video_link}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen contenteditable="{{editable}}"></iframe>
         </div>
+        {% endif %}
     </div>
     <script src="{{ url_for('static', filename = 'item_modification.js') }}"></script>
 {% endblock %}
