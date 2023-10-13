@@ -131,3 +131,8 @@
 #item-num-db {
     display: none;
 }
+
+#item-image {
+    max-width: 80%;
+    max-height: 80%;
+}

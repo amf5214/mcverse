@@ -31,7 +31,7 @@ with app.app_context():
         smelting_image_links = db.Column(db.String(200))
         source_mod = db.Column(db.String(50))
         stack_size = db.Column(db.Integer)
-        item_rarity = db.Column(db.Enum("Common", "Uncommon", "Rare", "Impossible", "Creative Only"))
+        item_rarity = db.Column(db.Enum("Common", "Uncommon", "Rare", "Impossible", "Creative Only", ""))
         dimension = db.Column(db.String(30))
         item_type = db.Column(db.String(20))
         minecraft_item_id = db.Column(db.String(1000))
@@ -113,16 +113,17 @@ def item_admin():
 
 @app.route('/newitem', methods=['POST'])
 def new_item():
+    rarity = request.form["item_rarity"] if request.form["item_rarity"] != "" else "Common"
     new_item = PageObject(
         item_title = request.form["item_title"],
-        image_link = request.form["image"],
+        image_link = request.form["image_link"],
         item_description = request.form["description"],
         iframe_video_link = request.form["iframe_video_link"],
         crafting_image_links = request.form["crafting_image_links"],
         smelting_image_links = request.form["smelting_image_links"],
         source_mod = request.form["source_mod"],
         stack_size = request.form["stack_size"],
-        item_rarity = request.form["item_rarity"],
+        item_rarity = rarity,
         dimension = request.form["dimension"],
         item_type = request.form["item_type"],
         minecraft_item_id = request.form["minecraft_item_id"]
@@ -149,6 +150,7 @@ def get_item_json():
 def update_item(itemid):
     if request.method == "POST":
         item = PageObject.query.get_or_404(itemid)
+        
         if request.form["attribute"] == "item_title":
             item.item_title = request.form["newValue"]
         elif request.form["attribute"] == "item_description":

@@ -1,13 +1,13 @@
 const editable_boxes = document.getElementsByClassName("editable-item");
-let id = document.getElementById("itemid");
-
-console.log("Item id: " + id.innerText);
 
 function addListener(element) {
     element.addEventListener("focusout", function() {
-        let attribute = element.id;
+        let attributeData = element.id.split("-");
+        let attribute = attributeData[0];
+        let id = attributeData[1];
         let newValue = element.innerText;
-        sendData("/updateitem/" + id.innerText, {"item":id.innerText, "attribute": attribute, "newValue": newValue});
+        console.log("<"+ id + ", " + attribute + ">");
+        sendData("/updateitem/" + id, {"item":id.innerText, "attribute": attribute, "newValue": newValue});
     })
 };
 

@@ -18,7 +18,12 @@
         <div class="intro-block" id="item-2">
             <div class="item-info">
                 <h1 id="title">Item Info<span class="material-symbols-outlined">rocket_launch</span></h1>
-                <p id="item_description" class="editable-item" contenteditable="{{editable}}"> {{page_object.item_description}}
+                {% if page_object.item_description!="" %}
+                <p id="item_description" class="editable-item" contenteditable="{{editable}}">{{page_object.item_description}}
+                {% else %}
+                <p id="item_description" class="editable-item" contenteditable="{{editable}}">Empty Description
+
+                {% endif %}
                 </p>
                 <div class="item-attributes">
                     <h3 id="item-num-db" >{{page_object.id}}</h3>
