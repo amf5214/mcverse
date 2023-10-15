@@ -160,3 +160,17 @@ p a:hover {
     align-items: center;
     flex-shrink: 2;
 }
+
+.permissions {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: x-small;
+}
+
+.hasit {
+    color: green;
+}
+
+.doesnthaveit {
+    color: red;
+}

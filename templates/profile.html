@@ -17,6 +17,15 @@
                 <p id="site-purpose">Username: {{ useraccount.username }}</p>
                 <p id="site-purpose">Email: {{ useraccount.auth.email_account }}</p>
                 <p id="site-purpose">Birthdate: {{ useraccount.birthdate.month }}/{{ useraccount.birthdate.day }}/{{ useraccount.birthdate.year }}</p>
+                <div class="permissions">
+                    {% for permission in permissions %}
+                        {% if permission.has == True %}
+                            <p class="hasit">{{ permission.name }}<span class="material-symbols-outlined">check</span></p>
+                        {% else %}
+                            <p class="doesnthaveit"><a href="/requestpermission/{{permission.name}}/{{useraccount.id}}">{{ permission.name }}<span class="material-symbols-outlined">close</span></a></p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
         <div class="user-details">

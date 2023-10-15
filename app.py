@@ -75,7 +75,7 @@ with app.app_context():
         username = db.Column(db.String(50))
         permission_type = db.Column(db.String(50))
         account_id = db.Column(db.Integer)
-        request_date = db.Column(db.Date)
+        grant_date = db.Column(db.Date)
         is_visible = db.Column(db.Integer, default=1)
 
         def __repr__(self):
@@ -90,6 +90,11 @@ with app.app_context():
         def __repr__(self):
             return f"<AuthAccount {self.id}>"
         
+    class Permission():
+        def __init__(self, has, name):
+            self.has=has
+            self.name=name
+        
     def get_account(request):
         token = request.cookies.get("token")
         try:
@@ -102,8 +107,9 @@ with app.app_context():
         except NoResultFound:
             return UserAccount(full_name="No Account")
 
-
     db.create_all()
+
+    Permission_values = ["Admin", "Edit_Pages", "Add_Pages"]
 
 
 @app.route('/')
@@ -270,7 +276,16 @@ def failed_signin():
 def profile():
     account = get_account(request)
     if account.full_name != "No Account":
-        return render_template("profile.html", useraccount=account)
+        permissions = db.session.execute(db.select(AccountPermission).filter_by(account_id=account.id)).all()
+        permissions_gen = []
+        remaining_permissions = Permission_values
+        for x in permissions:
+            permissions_gen.append(Permission(has=True, name=x.permission_type))
+            remaining_permissions.remove(x.permission_type)
+        for y in remaining_permissions:
+            permissions_gen.append(Permission(has=False, name=y))
+
+        return render_template("profile.html", useraccount=account, permissions=permissions_gen)
     else:
         return redirect('/signin')
 
@@ -322,11 +337,35 @@ def create_new_account():
     account = UserAccount(username=request.form["logusername"],full_name=request.form["logname"],birthdate=birthdate,auth_account_id=authaccountrec.id)
     db.session.add(account)
     db.session.commit()
-    return redirect('signin')
+    return redirect('/signin/home')
 
 @app.route('/permissions/requests/admin')
 def permissions_requests_admin():
-    return render_template("permissions_request_admin.html", admin_token=True)
+    requests = PermissionsRequest.query.filter_by(is_visible=True).order_by(PermissionsRequest.id).all()
+    return render_template("permissions_request_admin.html", admin_token=True, prequests=requests, useraccount=get_account(request))
+
+@app.route('/requestpermission/<permission>/<accountid>')
+def create_permission_request(permission, accountid):
+    account = UserAccount.query.get_or_404(accountid)
+    request = PermissionsRequest(account_id=accountid, permission_type=permission, username=account.username, grant_date=date.today())
+    db.session.add(request)
+    db.session.commit()
+    return redirect('/profile')
+
+@app.route('/prequestdeny/<requestid>')
+def deny_request(requestid):
+    permission_request = PermissionsRequest.query.get_or_404(requestid)
+    permission_request.is_visible = False
+    db.session.commit()
+    return redirect('/permissions/requests/admin')
+
+@app.route('/prequestapprove/<requestid>')
+def approve_request(requestid):
+    permission_request = PermissionsRequest.query.get_or_404(requestid)
+    permission_request.is_visible = False
+    db.session.add(AccountPermission(permission_type=permission_request.permission_type, account_id=permission_request.id))
+    db.session.commit()
+    return redirect('/permissions/requests/admin')
 
 if __name__ == '__main__':
     app.run(debug=True, port=54913)
