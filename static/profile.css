@@ -171,6 +171,7 @@ p a:hover {
     color: green;
 }
 
-.doesnthaveit {
+.doesnthaveit a{
     color: red;
+    text-decoration: none;
 }
