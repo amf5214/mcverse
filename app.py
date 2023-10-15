@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, json, Response, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm.exc import NoResultFound
-from authentication import create_password, validate_password, encode_auth_token 
+from authentication import create_password, validate_password
 from datetime import date
 import sys
 import jwt
@@ -106,6 +106,26 @@ with app.app_context():
         
         except NoResultFound:
             return UserAccount(full_name="No Account")
+        
+        
+    def encode_auth_token(email_account):
+            """
+            Generates the Auth Token
+            :return: string
+            """
+            try:
+                payload = {
+                    'exp': datetime.utcnow() + timedelta(days=1, seconds=0),
+                    'iat': datetime.utcnow(),
+                    'sub': email_account
+                }
+                return jwt.encode(
+                    payload,
+                    app.config.get('SECRET_KEY'),
+                    algorithm='HS256'
+                )
+            except Exception as e:
+                return e
 
     db.create_all()
 
