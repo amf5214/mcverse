@@ -4,6 +4,7 @@ body {
     background-image: url("../static/background2.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    line-height: normal;
  }
 
 
@@ -11,7 +12,6 @@ body {
   font-family: "Poppins", sans-serif;
   font-weight: 300;
   font-size: 15px;
-  line-height: 1.7;
   color: #c4c3ca;
   overflow-x: hidden;
 }
@@ -277,3 +277,4 @@ body {
   color: #ffeba7;
   box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
 }
+

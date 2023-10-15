@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'signinup.css') }}" /> 
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
     <link rel='stylesheet' href='https://unicons.iconscout.com/release/v2.1.9/css/unicons.css'>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'signinup.css') }}" /> 
 {% endblock%}
 
 {% block body%}
@@ -20,7 +20,7 @@
               <div class="card-3d-wrapper">
                 <div class="card-front">
                   <div class="center-wrap">
-                    <div class="section text-center">
+                    <form class="section text-center" method="POST" action="/signin/attempt">
                       <h4 class="mb-4 pb-3">Log In</h4>
                       <div class="form-group">
                         <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
@@ -37,11 +37,15 @@
                 </div>
                 <div class="card-back">
                   <div class="center-wrap">
-                    <div class="section text-center">
+                    <form class="section text-center" method="POST" action="/newaccount">
                       <h4 class="mb-4 pb-3">Sign Up</h4>
                       <div class="form-group">
                         <input type="text" name="logname" class="form-style" placeholder="Your Full Name" id="logname" autocomplete="off">
                         <i class="input-icon uil uil-user"></i>
+                      </div>
+                      <div class="form-group mt-2">
+                        <input type="email" name="logusername" class="form-style" placeholder="Your Username" id="logusername" autocomplete="off">
+                        <i class="input-icon uil uil-at"></i>
                       </div>
                       <div class="form-group mt-2">
                         <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
