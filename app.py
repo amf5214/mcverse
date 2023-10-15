@@ -276,15 +276,18 @@ def failed_signin():
 def profile():
     account = get_account(request)
     if account.full_name != "No Account":
-        permissions = db.session.execute(db.select(AccountPermission).filter_by(account_id=account.id)).all()
+        permissions = db.session.execute(db.select(AccountPermission).filter_by(account_id=account.id)).scalars()
         permissions_gen = []
-        remaining_permissions = Permission_values
+        remaining_permissions = [z for z in Permission_values]
         for x in permissions:
-            permissions_gen.append(Permission(has=True, name=x.permission_type))
-            remaining_permissions.remove(x.permission_type)
+            perm_type = x.permission_type
+            print(perm_type)
+            permissions_gen.append(Permission(has=True, name=perm_type))
+            remaining_permissions.remove(perm_type)
         for y in remaining_permissions:
             permissions_gen.append(Permission(has=False, name=y))
-
+        print(remaining_permissions)
+        print(permissions_gen)
         return render_template("profile.html", useraccount=account, permissions=permissions_gen)
     else:
         return redirect('/signin')
@@ -363,7 +366,7 @@ def deny_request(requestid):
 def approve_request(requestid):
     permission_request = PermissionsRequest.query.get_or_404(requestid)
     permission_request.is_visible = False
-    db.session.add(AccountPermission(permission_type=permission_request.permission_type, account_id=permission_request.id))
+    db.session.add(AccountPermission(permission_type=permission_request.permission_type, account_id=permission_request.account_id))
     db.session.commit()
     return redirect('/permissions/requests/admin')
 
