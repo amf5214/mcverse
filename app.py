@@ -295,6 +295,8 @@ def signinattempt():
         auth_account = db.session.execute(db.select(AuthAccount).filter_by(email_account=request.form["logemail"])).scalar_one()
 
         if(validate_password(given_pass, auth_account.hash_password)):
+            auth_account.auth_token = encode_auth_token(request.form["logemail"])
+            db.session.commit()
             response = make_response(redirect("/"))
             response.set_cookie("token", auth_account.auth_token)
             return response
@@ -327,10 +329,11 @@ def create_new_account():
 
 @app.route('/deleteaccount/<accountid>')
 def delete_account(accountid):
-    db.session.delete(AuthAccount.query.get_or_404(accountid))
-    db.session.delete(UserAccount.query.get_or_404(accountid))
-    db.session.commit()
-    return redirect('/')
+    # db.session.delete(AuthAccount.query.get_or_404(accountid))
+    # db.session.delete(UserAccount.query.get_or_404(accountid))
+    # db.session.commit()
+    # return redirect('/')
+    pass
 
 if __name__ == '__main__':
     app.run(debug=True, port=54913)

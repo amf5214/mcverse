@@ -1,0 +1,4 @@
+configure edit permissions
+configure profile page to allow you to edit your account page
+configure forgot password tool
+configure image upload
