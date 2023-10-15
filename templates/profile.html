@@ -12,7 +12,7 @@
                 <h1 id="site-purpose">
                     Profile<span class="material-symbols-outlined">rocket_launch</span>
                 </h1>
-                <img src="{{ url_for('static', filename = 'me.PNG') }}" class="topimage">
+                <img src="../static/{{ useraccount.account_image_link }}" class="topimage">
                 <p id="site-purpose">Name: {{ useraccount.full_name }}</p>
                 <p id="site-purpose">Username: {{ useraccount.username }}</p>
                 <p id="site-purpose">Email: {{ useraccount.auth.email_account }}</p>

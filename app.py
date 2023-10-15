@@ -302,7 +302,12 @@ def signinattempt():
             return response
     except NoResultFound: 
         return redirect("/signin/failed")
-        
+    
+@app.route('/signout')
+def sign_out():
+    response = make_response(redirect("/"))
+    response.set_cookie("token", "None")
+    return response
 
 @app.route('/newaccount', methods=["POST"])
 def create_new_account():

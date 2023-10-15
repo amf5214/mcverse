@@ -24,7 +24,7 @@
                                 <button class="menubutton" onClick="location.href='#body'"><span class="material-symbols-outlined">Menu</span></button>
                             </div>
                             {% if useraccount.full_name!="No Account"%}
-                                <img id="image-of-me" src="" alt="Me">
+                                <img id="image-of-me" src="../static/{{ useraccount.account_image_link }}" alt="Me">
                                 <label id="image-of-me-label"><a href="/profile">{{ useraccount.full_name }}</a></label>
                             {% endif %}
                             <a class="menu-items" href="/">Home</a>
@@ -39,7 +39,7 @@
                             <a class="menu-items" href="#">NPC</a>
                             <a class="menu-items" href="https://github.com/amf5214/MC-Verse">Code</a>
                             {% if useraccount.full_name!="No Account"%}
-                            <a class="menu-items" href="#">Sign Out</a>
+                            <a class="menu-items" href="/signout">Sign Out</a>
                             {% else %}
                             <a class="menu-items" href="/signin/home">Sign In</a>
                             {% endif %}
