@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, json, Response, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm.exc import NoResultFound
-from authentication import create_password, validate_password
+from authentication import create_password, validate_password, encode_auth_token 
 from datetime import date
 import sys
 import jwt
@@ -70,6 +70,17 @@ with app.app_context():
         def __repr__(self):
             return f"<AccountPermission {self.id}>"
         
+    class PermissionsRequest(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        username = db.Column(db.String(50))
+        permission_type = db.Column(db.String(50))
+        account_id = db.Column(db.Integer)
+        request_date = db.Column(db.Date)
+        is_visible = db.Column(db.Integer, default=1)
+
+        def __repr__(self):
+            return f"<AccountPermission Request {self.id}>"
+        
     class AuthAccount(db.Model):
         id = db.Column(db.Integer, primary_key=True)
         email_account = db.Column(db.String(100), unique=True)
@@ -78,25 +89,6 @@ with app.app_context():
 
         def __repr__(self):
             return f"<AuthAccount {self.id}>"
-        
-    def encode_auth_token(email_account):
-        """
-        Generates the Auth Token
-        :return: string
-        """
-        try:
-            payload = {
-                'exp': datetime.utcnow() + timedelta(days=1, seconds=0),
-                'iat': datetime.utcnow(),
-                'sub': email_account
-            }
-            return jwt.encode(
-                payload,
-                app.config.get('SECRET_KEY'),
-                algorithm='HS256'
-            )
-        except Exception as e:
-            return e
         
     def get_account(request):
         token = request.cookies.get("token")
@@ -332,13 +324,9 @@ def create_new_account():
     db.session.commit()
     return redirect('signin')
 
-@app.route('/deleteaccount/<accountid>')
-def delete_account(accountid):
-    # db.session.delete(AuthAccount.query.get_or_404(accountid))
-    # db.session.delete(UserAccount.query.get_or_404(accountid))
-    # db.session.commit()
-    # return redirect('/')
-    pass
+@app.route('/permissions/requests/admin')
+def permissions_requests_admin():
+    return render_template("permissions_request_admin.html", admin_token=True)
 
 if __name__ == '__main__':
     app.run(debug=True, port=54913)

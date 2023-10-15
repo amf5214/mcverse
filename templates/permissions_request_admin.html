@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'permissions_admin.css') }}"/>
+{% endblock %}
+
+{% block body %}
+{% if admin_token==True %}
+    <div class="homepage">
+        <div class="intro-block">
+            <div class="title-block">
+                <h1 id="title">Permissions Requests<span class="material-symbols-outlined">rocket_launch</span>
+                </h1>
+                <p id="site-purpose">This is a place to manage all requested permissions
+                </p>
+            </div>
+            <div class="table-wrapper">
+                <table class="item-section">   
+                    <th>User ID</th>
+                    <th>Username</th>
+                    <th>Requested Permission</th>
+                    <th>Request Date</th>
+                    {% for prequest in prequests %}
+                        <tr>
+                            <td><h3 id="object_exis_id">{{prequest.account_id}}</h3></td>
+                            <td><h3>{{prequest.username}}</h3></td>
+                            <td><h3>{{prequest.permission_type}}</h3></td>
+                            <td><h3>{{prequest.request_date}}</h3></td>
+                            <td><div id="modifiers"><a href="/prequestdeny/{{prequest.id}}">Deny</a><a href="/prequestapprove/{{prequest.id}}">Approve</a></div></td>
+                            
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
