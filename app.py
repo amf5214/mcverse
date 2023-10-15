@@ -37,8 +37,37 @@ with app.app_context():
         minecraft_item_id = db.Column(db.String(1000))
 
         def __repr__(self):
-            return f"<Page Obj {self.id}>"
+            return f"<PageObj {self.id}>"
 
+    class UserAccount(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        username = db.Column(db.String(50))
+        first_name = db.Column(db.String(50))
+        last_name = db.Column(db.String(50))
+        auth_account_id = db.Column(db.Integer)
+        birthdate = db.Column(db.Date)
+        account_image_link = db.Column(db.String(100))
+
+        def __repr__(self):
+            return f"<UserAccount {self.id}>"
+        
+    class AccountPermission(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        permission_type = db.Column(db.String(50))
+        account_id = db.Column(db.Integer)
+        grant_date = db.Column(db.Date)
+
+        def __repr__(self):
+            return f"<AccountPermission {self.id}>"
+        
+    class AuthAccount(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        email_account = db.Column(db.String(100), unique=True)
+        hash_password = db.Column(db.String(1000))
+        auth_token = db.Column(db.String(1000))
+
+        def __repr__(self):
+            return f"<AuthAccount {self.id}>"
 
     db.create_all()
 
@@ -202,6 +231,14 @@ def profile():
 @app.route('/profile/introduction')
 def introduction():
     return render_template("introduction.html")
+
+@app.route('/signin')
+def signin():
+    return render_template('signinup.html')
+
+@app.route('/toolbar')
+def toolbar():
+    return render_template('toolbar.html')
 
 if __name__ == '__main__':
     app.run(debug=True, port=54913)

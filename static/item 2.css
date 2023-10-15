@@ -1,0 +1,50 @@
+.homepage {
+    display: flex;
+    flex-direction: column;
+    margin: auto clamp(.25rem, .25rem + 2vw, 3rem);
+    margin-bottom: 20rem;
+}
+
+.homepage > * {
+    margin: 1rem auto;
+}
+
+@media(min-width: 1000px) {
+    .homepage {
+        flex-direction: row;
+        flex-wrap: wrap;
+        column-gap: 2em;
+    }
+
+    .homepage > * {
+        flex-basis: 40%;
+        align-self: top center;
+        flex-grow: .75;
+    }
+}
+
+.intro-block {
+    background-color: #21232A;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 1em;
+}
+
+.title-block h1 {
+    font-family: grandstander;
+    font-size: clamp(.75rem, .75rem + 2vw, 2rem);
+    align-items: center;
+}
+
+.title-block h1 span {
+    color: green;
+}
+
+.title-block p {
+   font-family: grandstander;
+   font-size: clamp(.3rem, .3rem + 2vw, 1rem);
+    line-height: 1.5em;
+}

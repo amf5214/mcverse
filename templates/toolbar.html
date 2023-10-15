@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'toolbar.css') }}"/> 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=VT323">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Grandstander">
+        <title>MC Verse</title>
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename = 'icon.ico') }}">
+    </head>
+    <body>
+        <div id="toolbar-page">
+            <div class="topbanner">
+                <div class="leftmenu">
+                    <button class="menubutton" onClick="location.href='#hidden-menu'"><span class="material-symbols-outlined">Menu</span></button>
+                    <div id="hidden-menu">
+                        <div class="hidden-menu-items">
+                            <div class="menu-items">
+                                <button class="menubutton" onClick="location.href='#body'"><span class="material-symbols-outlined">Menu</span></button>
+                            </div>
+                            <img id="image-of-me" src="{{ url_for('static', filename = 'me.PNG') }}" alt="Me">
+                            <label id="image-of-me-label"><a href="/profile">Austin Fraley</a></label>
+                            <a class="menu-items" href="/">Home</a>
+                            <a class="menu-items" href="/aboutus">About Us</a>
+                            <a class="menu-items" href="/contactus">Contact Us</a>
+                            <a class="menu-items" href="#">Learn</a>
+                            <a class="menu-items" href="#">Items</a>
+                            <a class="menu-items" href="#">Bosses</a>
+                            <a class="menu-items" href="#">Tools</a>
+                            <a class="menu-items" href="#">Weapons</a>
+                            <a class="menu-items" href="#">Buildings</a>
+                            <a class="menu-items" href="#">NPC</a>
+                            <a class="menu-items" href="https://github.com/amf5214/MC-Verse">Code</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="toplogobox">
+                <button onClick="location.href='/'" id="homebutton" class="logobutton" >
+                    <img id="logo" src="{{ url_for('static', filename = 'minecraftlogo.png') }}"/>
+                </button>
+                <h1 id="tagname">MC Verse</h1>
+            </div>
+            <div class="topbanner">
+                <nav class="nav__link">
+                    <div class="searchbox">
+                        <button id="chat-button"><span class="material-symbols-outlined">search</span>
+                            </button>
+                        <div class="searcharea">
+                            <div class="searchbar">
+                                <input id="search-box-input" type="search" placeholder="Search anything", autocomplete="off">
+                                
+                            </div>
+                            <div class="result-box">
+                                <ul>
+                                    <li><a href="/item/2">Iron Ingot</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search">
+                        <button id="chat-button"><span class="material-symbols-outlined">chat</span></button>
+                         <iframe id="discord" src="https://discord.com/widget?id=1154982800320110666&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <script src="{{ url_for('static', filename = 'autocomplete.js') }}"></script>
+    </body>
+</html>
