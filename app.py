@@ -1,11 +1,17 @@
-from flask import Flask, render_template, request, redirect, url_for, json, Response, jsonify
+from flask import Flask, render_template, request, redirect, url_for, json, Response, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm.exc import NoResultFound
+from authentication import create_password, validate_password
+from datetime import date
 import sys
+import jwt
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
 with app.app_context():
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mcverse.sqlite"
+    app.config["SECRET_KEY"] = "jgjdfk34benrgtgjfhbdnjmkf5784iejkdshjssefwr"
     db = SQLAlchemy(app)
 
     class FrequentlyAskedQuestion(db.Model):
@@ -42,14 +48,18 @@ with app.app_context():
     class UserAccount(db.Model):
         id = db.Column(db.Integer, primary_key=True)
         username = db.Column(db.String(50))
-        first_name = db.Column(db.String(50))
-        last_name = db.Column(db.String(50))
+        full_name = db.Column(db.String(100))
         auth_account_id = db.Column(db.Integer)
         birthdate = db.Column(db.Date)
         account_image_link = db.Column(db.String(100))
+        bio = db.Column(db.Text)
+        experience = db.Column(db.Text)
 
         def __repr__(self):
             return f"<UserAccount {self.id}>"
+        
+        def set_auth(self, auth_account):
+            self.auth = auth_account
         
     class AccountPermission(db.Model):
         id = db.Column(db.Integer, primary_key=True)
@@ -68,6 +78,38 @@ with app.app_context():
 
         def __repr__(self):
             return f"<AuthAccount {self.id}>"
+        
+    def encode_auth_token(email_account):
+        """
+        Generates the Auth Token
+        :return: string
+        """
+        try:
+            payload = {
+                'exp': datetime.utcnow() + timedelta(days=1, seconds=0),
+                'iat': datetime.utcnow(),
+                'sub': email_account
+            }
+            return jwt.encode(
+                payload,
+                app.config.get('SECRET_KEY'),
+                algorithm='HS256'
+            )
+        except Exception as e:
+            return e
+        
+    def get_account(request):
+        token = request.cookies.get("token")
+        try:
+            auth_account = db.session.execute(db.select(AuthAccount).filter_by(auth_token=token)).scalar_one()
+            account = db.session.execute(db.select(UserAccount).filter_by(auth_account_id=auth_account.id)).scalar_one()
+            account.set_auth(auth_account)
+
+            return account
+        
+        except NoResultFound:
+            return UserAccount(full_name="No Account")
+
 
     db.create_all()
 
@@ -85,17 +127,17 @@ def go_home():
         for x in page_objects:
             print(x)
         sys.stdout = original_stdout
-
-    return render_template('index.html', questions=frequently_asked_questions)
+    
+    return render_template('index.html', questions=frequently_asked_questions, useraccount=get_account(request))
 
 
 @app.route('/aboutus')
 def aboutus():
-    return render_template('aboutus.html')
+    return render_template('aboutus.html', useraccount=get_account(request))
 
 @app.route('/contactus')
 def contactus():
-    return render_template('contactus.html')
+    return render_template('contactus.html', useraccount=get_account(request))
 
 @app.route('/newquestion', methods=['POST'])
 def new_question():
@@ -125,7 +167,7 @@ def item_report(itemid, editable):
     else:
         smelting_links = ""
 
-    return render_template('item.html', page_object=page_object, image_url=image_url, crafting_links=crafting_links, smelting_links=smelting_links, editable=editable)
+    return render_template('item.html', page_object=page_object, image_url=image_url, crafting_links=crafting_links, smelting_links=smelting_links, editable=editable, useraccount=get_account(request))
 
 @app.route('/item/admin')
 def item_admin():
@@ -145,7 +187,7 @@ def item_admin():
         "minecraft_item_id": "Minecraft Item ID",
         "item_type": "Item Type"
         }
-    return render_template('item_admin.html', admin_token=True, items=items, template=template)
+    return render_template('item_admin.html', admin_token=True, items=items, template=template, useraccount=get_account(request))
 
 @app.route('/newitem', methods=['POST'])
 def new_item():
@@ -167,13 +209,13 @@ def new_item():
 
     db.session.add(new_item)
     db.session.commit()
-    return redirect('/item/admin')
+    return redirect('/item/admin', useraccount=get_account(request))
 
 @app.route('/deleteitem/<itemid>')
 def delete_item(itemid):
     db.session.delete(PageObject.query.get_or_404(itemid))
     db.session.commit()
-    return redirect('/item/admin')
+    return redirect('/item/admin', useraccount=get_account(request))
 
 def get_item_json():
     objects = PageObject.query.order_by(PageObject.id).all()
@@ -224,21 +266,71 @@ def update_item(itemid):
 def all_items():
     return jsonify(get_item_json())
 
+@app.route('/signin/home')
+def signin():
+    return render_template('signinup.html', useraccount=get_account(request))
+
+@app.route('/signin/failed')
+def failed_signin():
+    return render_template('signinup.html', message="Username/Password Invalid. Please try again.", useraccount=get_account(request))
+
 @app.route('/profile')
 def profile():
-    return render_template("profile.html")
+    account = get_account(request)
+    if account.full_name != "No Account":
+        return render_template("profile.html", useraccount=account)
+    else:
+        return redirect('/signin')
 
-@app.route('/profile/introduction')
-def introduction():
-    return render_template("introduction.html")
+# @app.route('/profile/introduction')
+# def introduction():
+#     return render_template("introduction.html", useraccount=get_account(request))
 
-@app.route('/signin')
-def signin():
-    return render_template('signinup.html')
 
-@app.route('/toolbar')
-def toolbar():
-    return render_template('toolbar.html')
+@app.route('/attemptedsignin', methods=["POST"])
+def signinattempt():
+    try:
+        given_pass = request.form["logpass"]
+
+        auth_account = db.session.execute(db.select(AuthAccount).filter_by(email_account=request.form["logemail"])).scalar_one()
+
+        if(validate_password(given_pass, auth_account.hash_password)):
+            response = make_response(redirect("/"))
+            response.set_cookie("token", auth_account.auth_token)
+            return response
+    except NoResultFound: 
+        return redirect("/signin/failed")
+        
+
+@app.route('/newaccount', methods=["POST"])
+def create_new_account():
+
+    password = create_password(request.form["logpass"])
+    print(request.form["logusername"])
+    token = encode_auth_token(str(request.form["logusername"]))
+    print(token)
+    auth_account = AuthAccount(email_account=request.form["logemail"],hash_password=password, auth_token=token)
+
+    db.session.add(auth_account)
+
+    db.session.commit()
+
+    authaccountrec = db.session.execute(db.select(AuthAccount).filter_by(email_account=request.form["logemail"])).scalar_one()
+    birthdatedata=birthdate=request.form["logbirthdate"].split("-")
+    print(birthdatedata)
+    birthdate = date(int(birthdatedata[0]), int(birthdatedata[1]), int(birthdatedata[2]))
+
+    account = UserAccount(username=request.form["logusername"],full_name=request.form["logname"],birthdate=birthdate,auth_account_id=authaccountrec.id)
+    db.session.add(account)
+    db.session.commit()
+    return redirect('signin')
+
+@app.route('/deleteaccount/<accountid>')
+def delete_account(accountid):
+    db.session.delete(AuthAccount.query.get_or_404(accountid))
+    db.session.delete(UserAccount.query.get_or_404(accountid))
+    db.session.commit()
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug=True, port=54913)

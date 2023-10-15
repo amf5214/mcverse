@@ -6,3 +6,4 @@ def create_password(password_string):
 
 def validate_password(given_pass, real_pass):
     return sha256_crypt.verify(given_pass, real_pass)
+

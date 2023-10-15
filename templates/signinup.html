@@ -20,7 +20,7 @@
               <div class="card-3d-wrapper">
                 <div class="card-front">
                   <div class="center-wrap">
-                    <form class="section text-center" method="POST" action="/signin/attempt">
+                    <form class="section text-center" method="POST" action="/attemptedsignin">
                       <h4 class="mb-4 pb-3">Log In</h4>
                       <div class="form-group">
                         <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
@@ -30,9 +30,10 @@
                         <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
                         <i class="input-icon uil uil-lock-alt"></i>
                       </div>
-                      <a href="#" class="submit-btn">submit</a>
+                      <input type="submit" class="submit-btn" value="submit">
                       <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></p>
-                    </div>
+                      <p class="statusbar" style='color: red'>{{ message }}</p>
+                    </form>
                   </div>
                 </div>
                 <div class="card-back">
@@ -44,19 +45,24 @@
                         <i class="input-icon uil uil-user"></i>
                       </div>
                       <div class="form-group mt-2">
-                        <input type="email" name="logusername" class="form-style" placeholder="Your Username" id="logusername" autocomplete="off">
-                        <i class="input-icon uil uil-at"></i>
+                        <input type="text" name="logusername" class="form-style" placeholder="Your Username" id="logusername" autocomplete="off">
+                        <i class="input-icon uil uil-user"></i>
                       </div>
                       <div class="form-group mt-2">
                         <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
                         <i class="input-icon uil uil-at"></i>
                       </div>
                       <div class="form-group mt-2">
+                        <input type="date" name="logbirthdate" class="form-style" placeholder="Your Birthdate" id="logbirthdate" autocomplete="off">
+                        <i class="input-icon uil uil-calendar-alt"></i>
+                      </div>
+                      <div class="form-group mt-2">
                         <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
                         <i class="input-icon uil uil-lock-alt"></i>
                       </div>
-                      <a href="#" class="submit-btn">submit</a>
-                    </div>
+                      
+                      <input type="submit" class="submit-btn" value="submit">
+                    </form>
                   </div>
                 </div>
               </div>
