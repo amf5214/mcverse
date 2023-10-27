@@ -7,12 +7,15 @@ import sys
 import jwt
 import os
 from datetime import datetime, timedelta
+from werkzeug.utils import secure_filename
+import uuid
 
 app = Flask(__name__)
 
 with app.app_context():
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mcverse.sqlite"
     app.config["SECRET_KEY"] = "jgjdfk34benrgtgjfhbdnjmkf5784iejkdshjssefwr"
+    app.config["UPLOAD_FOLDER"] = "static/uploads/"
     db = SQLAlchemy(app)
 
     class FrequentlyAskedQuestion(db.Model):
@@ -102,7 +105,12 @@ with app.app_context():
             auth_account = db.session.execute(db.select(AuthAccount).filter_by(auth_token=token)).scalar_one()
             account = db.session.execute(db.select(UserAccount).filter_by(auth_account_id=auth_account.id)).scalar_one()
             account.set_auth(auth_account)
-            account.image_resource_link = os.path.join(os.curdir, "/static/uploads", account.account_image_link)
+            if account.account_image_link != None:
+                account.image_resource_link = os.path.join(os.curdir, "/static/uploads", account.account_image_link)
+                account.image_flag = True
+            else:
+                account.image_resource_link = os.path.join(os.curdir, "/static/uploads", "no_image.jpg")
+                account.image_flag = False
 
             return account
         
@@ -391,6 +399,21 @@ def approve_request(requestid):
     db.session.add(AccountPermission(permission_type=permission_request.permission_type, account_id=permission_request.account_id))
     db.session.commit()
     return redirect('/permissions/requests/admin')
+
+@app.route('/profileimageupdate', methods=['POST'])
+def updateprofileimage():
+    picture_account = UserAccount.query.get_or_404(request.form["user_id"])
+    print(picture_account)
+    user_file = request.files["imageupload"]
+    if user_file.filename == '':
+        return redirect("/profile")
+    if user_file:
+        filename = secure_filename(user_file.filename)
+        pic_name = str(uuid.uuid1()) + "_" + filename
+        print(pic_name)
+        print(os.path.join(app.config["UPLOAD_FOLDER"], pic_name))
+        user_file.save(os.path.join(app.config["UPLOAD_FOLDER"], pic_name))
+        return redirect("/profile")
 
 if __name__ == '__main__':
     app.run(debug=True, port=54913)

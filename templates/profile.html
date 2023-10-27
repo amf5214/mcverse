@@ -12,7 +12,20 @@
                 <h1 id="site-purpose">
                     Profile<span class="material-symbols-outlined">rocket_launch</span>
                 </h1>
-                <img src="../static/{{ useraccount.account_image_link }}" class="topimage">
+                <form method="post" action="/profileimageupdate" id="profileimageform" enctype="multipart/form-data">
+                    <input type="text" hidden name="user_id" value="{{ useraccount.id }}" text="{{ useraccount.id }}">
+                    <div class="intro-block">
+                        <label id="drop-area">
+                            <input type="file" value="" text="" name="imageupload" accept="image/png, image/jpeg" hidden id="input-file">
+                            <div id="img-view">
+                                <img src="{{ useraccount.image_resource_link }}" class="topimage">
+                            </div>
+                        </label>
+                    </div>
+
+                </form>
+                <!-- <img src="{{ useraccount.image_resource_link }}" class="topimage"></img> -->
+
                 <p id="site-purpose">Name: {{ useraccount.full_name }}</p>
                 <p id="site-purpose">Username: {{ useraccount.username }}</p>
                 <p id="site-purpose">Email: {{ useraccount.auth.email_account }}</p>
@@ -50,4 +63,5 @@
             </div>
         
     </div>
+    <script src="static/profile.js"></script>
 {% endblock %}
