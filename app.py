@@ -5,6 +5,7 @@ from authentication import create_password, validate_password
 from datetime import date
 import sys
 import jwt
+import os
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
@@ -101,6 +102,7 @@ with app.app_context():
             auth_account = db.session.execute(db.select(AuthAccount).filter_by(auth_token=token)).scalar_one()
             account = db.session.execute(db.select(UserAccount).filter_by(auth_account_id=auth_account.id)).scalar_one()
             account.set_auth(auth_account)
+            account.image_resource_link = os.path.join(os.curdir, "/static/uploads", account.account_image_link)
 
             return account
         
