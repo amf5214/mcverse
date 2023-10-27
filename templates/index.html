@@ -176,5 +176,18 @@
                 </div>
             </div>
         </div>
+        {% if useraccount.admin_flag == False %}
+        {% else %}
+        <div class="intro-block" id="item-5">
+            <div class="title-block">
+                <h1 id="title">Admin Tools<span class="material-symbols-outlined">rocket_launch</span>
+                </h1>
+            </div>
+            <div class="perm-request-block">
+                <a href="/item/admin">Manage Items</a>
+                <a href="/permissions/requests/admin">Manage Permissions Requests</a>
+            </div>
+        </div>
+        {% endif %}
     </div>
 {% endblock %}

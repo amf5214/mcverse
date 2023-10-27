@@ -21,7 +21,7 @@
     }
 
     #item-3 {
-        flex: 0 1 50%;
+        flex: 0 1 40%;
         align-self: flex-start;
         align-self: flex-end;
     }
@@ -268,4 +268,32 @@ table th {
 
 #item-4 {
     display: none;
+}
+
+#item-5 {
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+}
+
+.perm-request-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.perm-request-block > * {
+    margin: 1rem;
+    text-decoration: none;
+    font-family: grandstander;
+    font-size: 1.5rem;
+}
+
+.perm-request-block a {
+    color: blue;
+}
+
+.perm-request-block a:hover {
+    color: white;
 }

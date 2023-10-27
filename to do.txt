@@ -1,4 +1,6 @@
 configure edit permissions
 configure profile page to allow you to edit your account page
 configure forgot password tool
-configure image upload
+configure signin to handle incorrect password
+add admin drop down to access admin pages
+configure image upload <>

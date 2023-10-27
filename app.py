@@ -105,6 +105,11 @@ with app.app_context():
             auth_account = db.session.execute(db.select(AuthAccount).filter_by(auth_token=token)).scalar_one()
             account = db.session.execute(db.select(UserAccount).filter_by(auth_account_id=auth_account.id)).scalar_one()
             account.set_auth(auth_account)
+            permissions = db.session.execute(db.select(AccountPermission).filter_by(account_id=account.id)).scalars()
+            account.admin_flag = False
+            for x in permissions:
+                if x.permission_type == "Admin":
+                    account.admin_flag = True
             if account.account_image_link != None:
                 account.image_resource_link = os.path.join(os.curdir, "/static/uploads", account.account_image_link)
                 account.image_flag = True
@@ -180,18 +185,18 @@ def new_question():
 @app.route('/item/<itemid>/<editable>')
 def item_report(itemid, editable):
     page_object = PageObject.query.get_or_404(itemid)
-    image_url = f"/static/{page_object.image_link}" 
+    image_url = f"/static/items/{page_object.image_link}" 
     if page_object.crafting_image_links != "":
         crafting_links = page_object.crafting_image_links.split(" ")
         for i, link in enumerate(crafting_links):
-            crafting_links[i] = f"/static/{link}"
+            crafting_links[i] = f"/static/items/{link}"
     else:
         crafting_links = ""
 
     if page_object.smelting_image_links != "":
         smelting_links = page_object.smelting_image_links.split(" ")
         for i, link in enumerate(smelting_links):
-            smelting_links[i] = f"/static/{link}"
+            smelting_links[i] = f"/static/items/{link}"
     else:
         smelting_links = ""
 
@@ -413,6 +418,8 @@ def updateprofileimage():
         print(pic_name)
         print(os.path.join(app.config["UPLOAD_FOLDER"], pic_name))
         user_file.save(os.path.join(app.config["UPLOAD_FOLDER"], pic_name))
+        picture_account.account_image_link = pic_name
+        db.session.commit()
         return redirect("/profile")
 
 if __name__ == '__main__':
