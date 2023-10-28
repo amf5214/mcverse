@@ -33,6 +33,18 @@
                     <h3 id="item_rarity" class="editable-item" contenteditable="{{editable}}">Rarity: {{page_object.item_rarity}}</h3>
                     <h3 id="dimension" class="editable-item" contenteditable="{{editable}}">Dimension to get: {{page_object.dimension}}</h3>
                     <h3 id="minecraft_item_id" class="editable-item" contenteditable="{{editable}}">Minecraft ID: {{page_object.minecraft_item_id}}</h3>
+                    <h3>Item Type:
+                        {% if editable == True %}
+                            <select enabled id="item_type" class="editable-item" value="{{ page_object.item_type }}">
+                                <option>Item</option>
+                                <option>Weapon</option>
+                                <option>Tool</option>
+                            </select>
+                        {% else %}
+                        {{ page_object.item_type }}
+                        {% endif %}
+                </h3>
+                    
                 </div>
             </div>
         </div>

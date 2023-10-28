@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'itemhome.css') }}" /> 
+    <title>MC Verse</title>
+{% endblock %}
+
+{% block body %}
+    <div class="homepage">
+        <div class="intro-block">
+            <div class="title-block">
+                <h1 id="title">All Items<span class="material-symbols-outlined">rocket_launch</span>
+                </h1>
+                <p id="site-purpose">This is a place to view all current item pages
+                </p>
+            </div>
+            <div class="table-wrapper">
+                <table class="item-section">   
+                    <th>Title</th>
+                    <th>Image</th>
+                    <th>Description</th>
+                    {% for item in items %}
+                        <tr>
+                            <td><a href="/item/{{item.id}}">{{item.item_title}}</h3></td>
+                            <td class="image-wrapper"><img class="item-image" src="{{item.image_link}}"></td>
+                            <td><h3>{{item.item_description}}</h3></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <input type="button" onclick="location.href='#new-item'" value="New Item" id="new-item-button">
+                <div id="new-item">
+                    <button id="close" onclick="location.href='#body'">
+                        <span class="material-symbols-outlined" id="background-circle">cancel</span>
+                        <span class="material-symbols-outlined" id="xcircle">close</span>
+                    </button>
+                    <h1></h1>
+                    <form action="/newitem" method="POST">
+                        {% for element in template.keys() %}
+                            {% if element not in ["dimension","id", "item_type"] %}
+                                <label class="label-element">{{ template[element] }}</label>
+                                <input class="form-element" type="text" name="{{element}}" id="{{element}}">
+                            {% endif %}
+                        {% endfor %}
+                        <label class="label-element">Dimension</label>
+                        <select class="form-element" name="dimension" id="dimension">
+                            <option>Overworld</option>
+                            <option>Nether</option>
+                            <option>End</option>
+                            <option>Galacticraft-Moon</option>
+                            <option>Galacticraft-Mars</option>
+                        </select>
+                        <label class="label-element">Type</label>
+                        <select class="form-element" name="item_type" id="item_type">
+                            <option>Item</option>
+                            <option>Weapon</option>
+                            <option>Tool</option>
+                        </select>
+                        <input type="submit" id="submit-button-item" value="Submit" class="btn">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

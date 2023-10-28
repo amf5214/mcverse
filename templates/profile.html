@@ -2,7 +2,7 @@
 
 {% block head %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'profile.css') }}" /> 
-    <title>Austin Fraley</title>
+    <title>{{ useraccount.full_name }}</title>
 {% endblock%}
 
 {% block body%}

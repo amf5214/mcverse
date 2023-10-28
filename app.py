@@ -105,11 +105,8 @@ with app.app_context():
             auth_account = db.session.execute(db.select(AuthAccount).filter_by(auth_token=token)).scalar_one()
             account = db.session.execute(db.select(UserAccount).filter_by(auth_account_id=auth_account.id)).scalar_one()
             account.set_auth(auth_account)
-            permissions = db.session.execute(db.select(AccountPermission).filter_by(account_id=account.id)).scalars()
-            account.admin_flag = False
-            for x in permissions:
-                if x.permission_type == "Admin":
-                    account.admin_flag = True
+            account.admin_flag = permission_validation("Admin", account.id)
+            print(account.admin_flag)
             if account.account_image_link != None:
                 account.image_resource_link = os.path.join(os.curdir, "/static/uploads", account.account_image_link)
                 account.image_flag = True
@@ -259,7 +256,6 @@ def new_item():
         item_type = request.form["item_type"],
         minecraft_item_id = request.form["minecraft_item_id"]
     )
-
     db.session.add(new_item)
     db.session.commit()
     return redirect('/item/admin', useraccount=get_account(request))
@@ -441,6 +437,31 @@ def updateprofileimage():
         picture_account.account_image_link = pic_name
         db.session.commit()
         return redirect("/profile")
+    
+@app.route('/item/home')
+def item_home():
+    items = db.session.execute(db.select(PageObject).filter_by(item_type="Item")).scalars()
+    item_list = []
+    for x in items:
+        x.image_link = "/static/items/" + x.image_link
+        item_list.append(x)
+    
+    template = {
+        "id": "ID", 
+        "item_title": "Title", 
+        "image_link": "Image Link",
+        "description": "Description",
+        "iframe_video_link": "Youtube video", 
+        "crafting_image_links": "Crafting Image Links", 
+        "smelting_image_links": "Smelting Image Links", 
+        "source_mod": "Source Mod", 
+        "stack_size": "Stack Size", 
+        "item_rarity": "Rarity", 
+        "dimension": "Dimension",
+        "minecraft_item_id": "Minecraft Item ID",
+        "item_type": "Item Type"
+        }
+    return render_template('itemhome.html', items=item_list, template=template, useraccount=get_account(request))
 
 if __name__ == '__main__':
     app.run(debug=True, port=54913)

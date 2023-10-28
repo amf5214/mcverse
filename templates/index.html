@@ -176,25 +176,24 @@
                 </div>
             </div>
         </div>
-        {% if useraccount.admin_flag == False %}
-        {% else %}
-        <div class="intro-block" id="item-5">
-            <div class="title-block">
-                <h1 id="title">Admin Tools<span class="material-symbols-outlined">rocket_launch</span>
-                </h1>
+        {% if useraccount.admin_flag == True %}
+            <div class="intro-block" id="item-5">
+                <div class="title-block">
+                    <h1 id="title">Admin Tools<span class="material-symbols-outlined">rocket_launch</span>
+                    </h1>
+                </div>
+                <div class="admin-tool-block">
+                    <table>
+                        <th>Tools</th>
+                        <tr>
+                            <td><a href="/item/admin">Manage Items</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/permissions/requests/admin">Manage Permissions Requests</a></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-            <div class="admin-tool-block">
-                <table>
-                    <th>Tools</th>
-                    <tr>
-                        <td><a href="/item/admin">Manage Items</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="/permissions/requests/admin">Manage Permissions Requests</a></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
         {% endif %}
     </div>
 {% endblock %}

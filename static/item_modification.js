@@ -17,6 +17,10 @@ function addListener(element) {
         if(attribute == "item_title") {
             newValue = newValue.split(" rocket_launch")[0]
         }
+
+        if(attribute == "item_type") {
+            newValue = element.value;
+        }
         sendData("/updateitem/" + id.innerText, {"item":id.innerText, "attribute": attribute, "newValue": newValue});
     })
 };
