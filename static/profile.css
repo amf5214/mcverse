@@ -150,7 +150,7 @@ p a:hover {
 }
 
 .footer {
-    grid-column-start: span 4;
+    grid-column-start: span 6;
 }
 
 .user-details {

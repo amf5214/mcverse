@@ -18,16 +18,16 @@
             <section class="container">
                 <div class="slider-wrapper">
                     <div class="slider">
-                        <img id="slide-1" src="{{ url_for('static', filename = 'homepage.jpg') }}"/>
-                        <img id="slide-2" src="{{ url_for('static', filename = 'homepage2.png') }}"/>
-                        <img id="slide-3" src="{{ url_for('static', filename = 'homepage3.png') }}"/>
-                        <img id="slide-4" src="{{ url_for('static', filename = 'homepage4.jpg') }}"/>
-                        <img id="slide-5" src="{{ url_for('static', filename = 'homepage5.jpg') }}"/>
-                        <img id="slide-6" src="{{ url_for('static', filename = 'homepage6.jpg') }}"/>
-                        <img id="slide-7" src="{{ url_for('static', filename = 'homepage67.jpg') }}"/>
-                        <img id="slide-8" src="{{ url_for('static', filename = 'homepage8.jpg') }}"/>
-                        <img id="slide-9" src="{{ url_for('static', filename = 'homepage9.jpg') }}"/>
-                        <img id="slide-10" src="{{ url_for('static', filename = 'homepage10.png') }}"/>
+                        <img id="slide-1" src="{{ url_for('static', filename = 'homepage.jpg') }}" alt="Image"/>
+                        <img id="slide-2" src="{{ url_for('static', filename = 'homepage2.png') }}" alt="Image"/>
+                        <img id="slide-3" src="{{ url_for('static', filename = 'homepage3.png') }}" alt="Image"/>
+                        <img id="slide-4" src="{{ url_for('static', filename = 'homepage4.jpg') }}" alt="Image"/>
+                        <img id="slide-5" src="{{ url_for('static', filename = 'homepage5.jpg') }}" alt="Image"/>
+                        <img id="slide-6" src="{{ url_for('static', filename = 'homepage6.jpg') }}" alt="Image"/>
+                        <img id="slide-7" src="{{ url_for('static', filename = 'homepage67.jpg') }}" alt="Image"/>
+                        <img id="slide-8" src="{{ url_for('static', filename = 'homepage8.jpg') }}" alt="Image"/>
+                        <img id="slide-9" src="{{ url_for('static', filename = 'homepage9.jpg') }}" alt="Image"/>
+                        <img id="slide-10" src="{{ url_for('static', filename = 'homepage10.png') }}" alt="Image"/>
                     </div>
                     <div class="slider-nav">
                         <a href="#slide-1"></a>
@@ -56,11 +56,11 @@
             <section class="container">
                 <div class="slider-wrapper">
                     <div class="slider">
-                        <img id="slide-21" src="{{ url_for('static', filename = 'mcgame_vanilla2.avif') }}"/>
-                        <img id="slide-22" src="{{ url_for('static', filename = 'mcgame_dungeons2.avif') }}"/>
-                        <img id="slide-23" src="{{ url_for('static', filename = 'mcgame_legends2.avif') }}"/>
-                        <img id="slide-24" src="{{ url_for('static', filename = 'mcgame_realms2.jpeg') }}"/>
-                        <img id="slide-25" src="{{ url_for('static', filename = 'mcgame_edu2.webp') }}"/>
+                        <img id="slide-21" src="{{ url_for('static', filename = 'mcgame_vanilla2.avif') }}" alt="Vanill Minecraft"/>
+                        <img id="slide-22" src="{{ url_for('static', filename = 'mcgame_dungeons2.avif') }}" alt="Minecraft Dungeons"/>
+                        <img id="slide-23" src="{{ url_for('static', filename = 'mcgame_legends2.avif') }}" alt="Minecraft Legends"/>
+                        <img id="slide-24" src="{{ url_for('static', filename = 'mcgame_realms2.jpeg') }}" alt="Minecraft Realms"/>
+                        <img id="slide-25" src="{{ url_for('static', filename = 'mcgame_edu2.webp') }}" alt="Minecraft Education"/>
                     </div>
                     <div class="slider-nav">
                         <a href="#slide-21"></a>
@@ -83,31 +83,31 @@
             <div class="quick-links">
                 <div class="link">
                     <img class="linkimage" src="{{url_for('static', filename='apple.webp')}}">
-                    <a class="linklabel" href="#">Food</a>
+                    <a class="linklabel" href="/learn/food">Food</a>
                 </div>
                 <div class="link">
                     <img class="linkimage" src="{{url_for('static', filename='farming.png')}}">
-                    <a  class="linklabel" href="#">Farming</a>
+                    <a  class="linklabel" href="/learn/farming">Farming</a>
                 </div>
                 <div class="link">
                     <img class="linkimage" src="{{url_for('static', filename='mining4.png')}}">
-                    <a  class="linklabel" href="#">Mining</a>
+                    <a  class="linklabel" href="/learn/mining">Mining</a>
                 </div>
                 <div class="link">
                     <img class="linkimage" src="{{url_for('static', filename='building.webp')}}">
-                    <a  class="linklabel" href="#">Building</a>
+                    <a  class="linklabel" href="/learn/building">Building</a>
                 </div>
                 <div class="link">
                     <img class="linkimage" src="{{url_for('static', filename='electricity3.png')}}">
-                    <a  class="linklabel" href="#">Power</a>
+                    <a  class="linklabel" href="/learn/power">Power</a>
                 </div>
                 <div class="link">
                     <img class="linkimage" src="{{url_for('static', filename='storage3.png')}}">
-                    <a  class="linklabel" href="#">Storage</a>
+                    <a  class="linklabel" href="/learn/storage">Storage</a>
                 </div>
                 <div class="link">
                     <img class="linkimage" src="{{url_for('static', filename='backpack3.png')}}">
-                    <a  class="linklabel" href="#">Backpack</a>
+                    <a  class="linklabel" href="/learn/backpacks">Backpack</a>
                 </div>
                 <div class="link">
                     <img class="linkimage" src="{{url_for('static', filename='dungeon.webp')}}">
@@ -115,19 +115,19 @@
                 </div>
                 <div class="link">
                     <img class="linkimage" src="{{url_for('static', filename='weapon3.png')}}">
-                    <a  class="linklabel" href="#">Weapon</a>
+                    <a  class="linklabel" href="/weapon/home">Weapon</a>
                 </div>
                 <div class="link">
                     <img class="linkimage" src="{{url_for('static', filename='Chisels.webp')}}">
-                    <a  class="linklabel" href="#">Chisel 2</a>
+                    <a  class="linklabel" href="/learn/chisel2">Chisel 2</a>
                 </div>
                 <div class="link">
                     <img class="linkimage" src="{{url_for('static', filename='bibliocraft2.png')}}">
-                    <a  class="linklabel" href="#">Biblio</a>
+                    <a  class="linklabel" href="/learn/bibliocraft">Biblio</a>
                 </div>
                 <div class="link">
                     <img class="linkimage" src="{{url_for('static', filename='journeymap4.png')}}">
-                    <a  class="linklabel" href="#">Journey</a>
+                    <a  class="linklabel" href="/learn/journeymap">Journey</a>
                 </div>
             </div>
         </div>
@@ -140,6 +140,7 @@
             </div>
             <div class="table-wrapper">
                 <table class="faq-section">
+                    <caption></caption>
                     {% if admin==True %}
                         <th>Question ID</th>
                     {% endif %}
@@ -184,6 +185,7 @@
                 </div>
                 <div class="admin-tool-block">
                     <table>
+                        <caption></caption>
                         <th>Tools</th>
                         <tr>
                             <td><a href="/item/admin">Manage Items</a></td>

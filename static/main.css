@@ -226,26 +226,7 @@
 .searchbox ul li:hover a {background-color: #21232A; color: white;}
 .searchbox ul li a:hover {background-color: #21232A; color: white;}
 
-
-.footer {
-    min-width: 100%;
-    padding-left: 8vw;
-    padding-right: 8vw;
-    padding-bottom: 2vh;
-    padding-top: 2vh;
-    text-align: center;
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-    align-items: center;
-    background-color: #14181b;
-    color: white;
-    font-family: grandstander; 
-    font-size: clamp(.25rem, .25rem + 2vw, 1rem);
-    text-decoration: none;
-}
 .about {
-    min-width: 100%;
     padding-left: 8vw;
     padding-right: 8vw;
     padding-bottom: 2vh;
