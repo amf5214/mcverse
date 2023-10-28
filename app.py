@@ -9,6 +9,9 @@ import os
 from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename
 import uuid
+import logging
+
+logging.basicConfig(filename='record.log', level=logging.DEBUG)
 
 app = Flask(__name__)
 
