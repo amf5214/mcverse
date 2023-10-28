@@ -42,7 +42,7 @@
                         <span class="material-symbols-outlined" id="xcircle">close</span>
                     </button>
                     <h1></h1>
-                    <form action="/newitem" method="POST">
+                    <form action="/newitem" method="POST" enctype="multipart/form-data">
                         {% for element in template.keys() %}
                             {% if element not in ["dimension","id", "item_type"] %}
                                 <label class="label-element">{{ template[element] }}</label>
@@ -63,6 +63,8 @@
                             <option>Weapon</option>
                             <option>Tool</option>
                         </select>
+                        <label class="label-element">Item Image</label>
+                        <input type="file" accept="image/*" name="file">
                         <input type="submit" id="submit-button-item" value="Submit" class="btn">
                     </form>
                 </div>

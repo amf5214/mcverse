@@ -16,6 +16,7 @@ with app.app_context():
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mcverse.sqlite"
     app.config["SECRET_KEY"] = "jgjdfk34benrgtgjfhbdnjmkf5784iejkdshjssefwr"
     app.config["UPLOAD_FOLDER"] = "static/uploads/"
+    app.config["ITEM_FOLDER"] = "static/items/"
     db = SQLAlchemy(app)
 
     class FrequentlyAskedQuestion(db.Model):
@@ -147,6 +148,18 @@ with app.app_context():
                 )
             except Exception as e:
                 return e
+            
+    def save_item(request):
+        user_file = request.files["file"]
+        if user_file.filename == '':
+            return None
+        if user_file:
+            filename = secure_filename(user_file.filename)
+            pic_name = str(uuid.uuid1()) + "_" + filename
+            print(pic_name)
+            print(os.path.join(app.config["ITEM_FOLDER"], pic_name))
+            user_file.save(os.path.join(app.config["ITEM_FOLDER"], pic_name))
+            return pic_name
 
     db.create_all()
 
@@ -225,7 +238,6 @@ def item_admin():
     template = {
         "id": "ID", 
         "item_title": "Title", 
-        "image_link": "Image Link",
         "description": "Description",
         "iframe_video_link": "Youtube video", 
         "crafting_image_links": "Crafting Image Links", 
@@ -242,9 +254,13 @@ def item_admin():
 @app.route('/newitem', methods=['POST'])
 def new_item():
     rarity = request.form["item_rarity"] if request.form["item_rarity"] != "" else "Common"
+    path = save_item(request)
+    if path == None:
+        path=""
+
     new_item = PageObject(
         item_title = request.form["item_title"],
-        image_link = request.form["image_link"],
+        image_link = path,
         item_description = request.form["description"],
         iframe_video_link = request.form["iframe_video_link"],
         crafting_image_links = request.form["crafting_image_links"],
@@ -258,13 +274,13 @@ def new_item():
     )
     db.session.add(new_item)
     db.session.commit()
-    return redirect('/item/admin', useraccount=get_account(request))
+    return redirect('/item/home')
 
 @app.route('/deleteitem/<itemid>')
 def delete_item(itemid):
     db.session.delete(PageObject.query.get_or_404(itemid))
     db.session.commit()
-    return redirect('/item/admin', useraccount=get_account(request))
+    return redirect('/item/admin')
 
 def get_item_json():
     objects = PageObject.query.order_by(PageObject.id).all()
@@ -461,7 +477,57 @@ def item_home():
         "minecraft_item_id": "Minecraft Item ID",
         "item_type": "Item Type"
         }
-    return render_template('itemhome.html', items=item_list, template=template, useraccount=get_account(request))
+    return render_template('itemhome.html', items=item_list, pagename="Item", template=template, useraccount=get_account(request))
+
+@app.route('/tool/home')
+def tool_home():
+    items = db.session.execute(db.select(PageObject).filter_by(item_type="Tool")).scalars()
+    item_list = []
+    for x in items:
+        x.image_link = "/static/items/" + x.image_link
+        item_list.append(x)
+    
+    template = {
+        "id": "ID", 
+        "item_title": "Title", 
+        "image_link": "Image Link",
+        "description": "Description",
+        "iframe_video_link": "Youtube video", 
+        "crafting_image_links": "Crafting Image Links", 
+        "smelting_image_links": "Smelting Image Links", 
+        "source_mod": "Source Mod", 
+        "stack_size": "Stack Size", 
+        "item_rarity": "Rarity", 
+        "dimension": "Dimension",
+        "minecraft_item_id": "Minecraft Item ID",
+        "item_type": "Item Type"
+        }
+    return render_template('itemhome.html', pagename="Tool", items=item_list, template=template, useraccount=get_account(request))
+
+@app.route('/weapon/home')
+def weapon_home():
+    items = db.session.execute(db.select(PageObject).filter_by(item_type="Weapon")).scalars()
+    item_list = []
+    for x in items:
+        x.image_link = "/static/items/" + x.image_link
+        item_list.append(x)
+    
+    template = {
+        "id": "ID", 
+        "item_title": "Title", 
+        "image_link": "Image Link",
+        "description": "Description",
+        "iframe_video_link": "Youtube video", 
+        "crafting_image_links": "Crafting Image Links", 
+        "smelting_image_links": "Smelting Image Links", 
+        "source_mod": "Source Mod", 
+        "stack_size": "Stack Size", 
+        "item_rarity": "Rarity", 
+        "dimension": "Dimension",
+        "minecraft_item_id": "Minecraft Item ID",
+        "item_type": "Item Type"
+        }
+    return render_template('itemhome.html', pagename="Weapon", items=item_list, template=template, useraccount=get_account(request))
 
 if __name__ == '__main__':
     app.run(debug=True, port=54913)
