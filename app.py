@@ -123,9 +123,11 @@ with app.app_context():
             return UserAccount(full_name="No Account")
         
     def permission_validation(permission, accountid):
-        user_perms = db.session.execute(db.select(AccountPermission).filter_by(accountid=accountid)).scalars()
+        user_perms = db.session.execute(db.select(AccountPermission).filter_by(account_id=accountid)).scalars()
         for permissionx in user_perms:
-            return permissionx == permission
+            print(f"{permissionx.permission_type}={permission}")
+            if permissionx.permission_type == permission:
+                return True
         
         return False
         
@@ -207,7 +209,18 @@ def item_report(itemid, editable):
     else:
         smelting_links = ""
 
-    return render_template('item.html', page_object=page_object, image_url=image_url, crafting_links=crafting_links, smelting_links=smelting_links, editable=editable, useraccount=get_account(request))
+    account = get_account(request)
+
+    print("editable=" + editable)
+    if editable == "true":
+        editable_permisssion = permission_validation("Edit_Pages", account.id)
+        print("editable_permission=" + str(editable_permisssion))
+        if editable_permisssion:
+            return render_template('item.html', page_object=page_object, image_url=image_url, crafting_links=crafting_links, smelting_links=smelting_links, editable=editable_permisssion, useraccount=get_account(request))
+        else:
+            return redirect(f"/item/{itemid}/false")
+    else:
+        return render_template('item.html', page_object=page_object, image_url=image_url, crafting_links=crafting_links, smelting_links=smelting_links, editable=False, useraccount=get_account(request))
 
 @app.route('/item/admin')
 def item_admin():

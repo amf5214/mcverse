@@ -136,3 +136,15 @@
     max-width: 80%;
     max-height: 80%;
 }
+
+.title-block a {
+    font-family: grandstander;
+    font-size: clamp(.75rem, .75rem + 2vw, 2rem);
+    align-items: center;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 0;
+}
+.title-block a:hover {
+    text-decoration: underline;
+}
