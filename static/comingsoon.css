@@ -1,0 +1,26 @@
+body {
+    background-image: url("/static/homepage2.png")
+}
+
+.page-content {
+
+}
+
+.comingsoon-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    margin: 20%;
+    margin-bottom: 70%;
+    margin-top: 20%;
+    background-color: white;
+    border-radius: 20rem;
+    font-size: clamp(1rem, 1.2rem+5vw, 2rem);
+    text-align: center;
+}
+
+#tagname {
+    color: white;
+}

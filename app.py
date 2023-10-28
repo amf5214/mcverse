@@ -165,6 +165,10 @@ with app.app_context():
 
     Permission_values = ["Admin", "Edit_Pages", "Add_Pages"]
 
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('comingsoon.html', useraccount=get_account(request)), 404
 
 @app.route('/')
 def go_home():
