@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, json, Response, jsonify, make_response
+from flask import Flask, render_template, request, redirect, url_for, json, Response, jsonify, make_response, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm.exc import NoResultFound
 from authentication import create_password, validate_password
@@ -10,6 +10,10 @@ from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename
 import uuid
 import logging
+from base64 import b64encode
+import base64
+from io import BytesIO #Converts data from Database into bytes
+
 
 logging.basicConfig(filename='record.log', level=logging.DEBUG)
 
@@ -97,12 +101,40 @@ with app.app_context():
 
         def __repr__(self):
             return f"<AuthAccount {self.id}>"
-        
+
     class Permission():
         def __init__(self, has, name):
             self.has=has
             self.name=name
+
+    class FileContent(db.Model):
+
+      id = db.Column(db.Integer,  primary_key=True)
+      name = db.Column(db.String(128), nullable=False)
+      data = db.Column(db.LargeBinary, nullable=False) #Actual data, needed for Download
+      rendered_data = db.Column(db.Text, nullable=False) #Data to render the pic in browser
+      text = db.Column(db.Text)
+      location = db.Column(db.String(64))
+      pic_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+      def __repr__(self):
+          return f"<FileContent {self.id}>"
+      
+
+    class image_item():
+        def __init__(self, location, rendered_data):
+            self.location = location
+            self.rendered_data = rendered_data
+            self.src = self.create_src()
+
+        def create_src(self):
+            return f"data:image/{self.location};base64,{self.rendered_data}"
         
+    def create_image_item(id):
+        item = PageObject.query.get_or_404(id)
+        image_id = item.image_link
+        image = FileContent.query.get_or_404(image_id)
+        return image_item(image.location, image.rendered_data)
+
     def get_account(request):
         token = request.cookies.get("token")
         try:
@@ -112,11 +144,18 @@ with app.app_context():
             account.admin_flag = permission_validation("Admin", account.id)
             print(account.admin_flag)
             if account.account_image_link != None:
-                account.image_resource_link = os.path.join(os.curdir, "/static/uploads", account.account_image_link)
+                image_id = account.account_image_link
                 account.image_flag = True
+                try:
+                    int(image_id)
+                except:
+                    image_id = 3
             else:
-                account.image_resource_link = os.path.join(os.curdir, "/static/uploads", "no_image.jpg")
+                image_id = 3
                 account.image_flag = False
+            image_obj = FileContent.query.get_or_404(image_id)
+            account.profile_img_loc = image_obj.location
+            account.profile_img_data = image_obj.rendered_data
 
             return account
         
@@ -131,7 +170,6 @@ with app.app_context():
                 return True
         
         return False
-        
         
     def encode_auth_token(email_account):
             """
@@ -163,6 +201,27 @@ with app.app_context():
             print(os.path.join(app.config["ITEM_FOLDER"], pic_name))
             user_file.save(os.path.join(app.config["ITEM_FOLDER"], pic_name))
             return pic_name
+
+    def render_picture(data):
+        render_pic = base64.b64encode(data).decode('ascii') 
+        return render_pic
+
+    def uploadimage(request):
+        file = request.files['file']
+        if file.filename == '':
+            return None
+        if file:
+            data = file.read()
+            render_file = render_picture(data)
+            filename = secure_filename(file.filename)
+            pic_name = str(uuid.uuid1()) + "_" + filename
+            location = file.filename.split(".")[1]
+
+            newFile = FileContent(name=file.filename, data=data, 
+            rendered_data=render_file, text=pic_name, location=location)
+            db.session.add(newFile)
+            db.session.commit() 
+            return newFile.id
 
     db.create_all()
 
@@ -211,7 +270,8 @@ def new_question():
 @app.route('/item/<itemid>/<editable>')
 def item_report(itemid, editable):
     page_object = PageObject.query.get_or_404(itemid)
-    image_url = f"/static/items/{page_object.image_link}" 
+    item_image = create_image_item(itemid) 
+
     if page_object.crafting_image_links != "":
         crafting_links = page_object.crafting_image_links.split(" ")
         for i, link in enumerate(crafting_links):
@@ -233,11 +293,11 @@ def item_report(itemid, editable):
         editable_permisssion = permission_validation("Edit_Pages", account.id)
         print("editable_permission=" + str(editable_permisssion))
         if editable_permisssion:
-            return render_template('item.html', page_object=page_object, image_url=image_url, crafting_links=crafting_links, smelting_links=smelting_links, editable=editable_permisssion, useraccount=get_account(request))
+            return render_template('item.html', page_object=page_object, item_image=item_image, crafting_links=crafting_links, smelting_links=smelting_links, editable=editable_permisssion, useraccount=get_account(request))
         else:
             return redirect(f"/item/{itemid}/false")
     else:
-        return render_template('item.html', page_object=page_object, image_url=image_url, crafting_links=crafting_links, smelting_links=smelting_links, editable=False, useraccount=get_account(request))
+        return render_template('item.html', page_object=page_object, item_image=item_image, crafting_links=crafting_links, smelting_links=smelting_links, editable=False, useraccount=get_account(request))
 
 @app.route('/item/admin')
 def item_admin():
@@ -383,6 +443,7 @@ def signinattempt():
             db.session.commit()
             response = make_response(redirect("/"))
             response.set_cookie("token", auth_account.auth_token)
+            flash("Sign in Successful!", "info")
             return response
     except NoResultFound: 
         return redirect("/signin/failed")
@@ -391,6 +452,7 @@ def signinattempt():
 def sign_out():
     response = make_response(redirect("/"))
     response.set_cookie("token", "None")
+    flash("You've been logged out!", "info")
     return response
 
 @app.route('/newaccount', methods=["POST"])
@@ -445,21 +507,24 @@ def approve_request(requestid):
     return redirect('/permissions/requests/admin')
 
 @app.route('/profileimageupdate', methods=['POST'])
-def updateprofileimage():
+def profileimageupdate():
+    image_id = uploadimage(request)
+    print("Image ID: " + str(image_id))
     picture_account = UserAccount.query.get_or_404(request.form["user_id"])
-    print(picture_account)
-    user_file = request.files["imageupload"]
-    if user_file.filename == '':
-        return redirect("/profile")
-    if user_file:
-        filename = secure_filename(user_file.filename)
-        pic_name = str(uuid.uuid1()) + "_" + filename
-        print(pic_name)
-        print(os.path.join(app.config["UPLOAD_FOLDER"], pic_name))
-        user_file.save(os.path.join(app.config["UPLOAD_FOLDER"], pic_name))
-        picture_account.account_image_link = pic_name
-        db.session.commit()
-        return redirect("/profile")
+
+    picture_account.account_image_link = str(image_id)
+    db.session.commit()
+    return redirect("/profile")
+
+@app.route('/itemimageupdate', methods=['POST'])
+def itemimageupdate():
+    image_id = uploadimage(request)
+    print("Image ID: " + str(image_id))
+    picture_item = PageObject.query.get_or_404(request.form["item_id"])
+
+    picture_item.image_link = str(image_id)
+    db.session.commit()
+    return redirect(f"/item/{request.form['item_id']}/false")
     
 @app.route('/item/home')
 def item_home():
