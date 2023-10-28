@@ -211,3 +211,18 @@ p a:hover {
 .profile-image-area {
     margin: 2rem;
 }
+
+tr td {
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+}
+
+tr td p{
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+}
+

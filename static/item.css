@@ -137,14 +137,16 @@
     max-height: 80%;
 }
 
-.title-block a {
+#edit_item_btn {
     font-family: grandstander;
     font-size: clamp(.75rem, .75rem + 2vw, 2rem);
     align-items: center;
     text-align: center;
     margin-top: 2rem;
     margin-bottom: 0;
+    color: white;
+    text-decoration: none;
 }
-.title-block a:hover {
+#edit_item_btn:hover {
     text-decoration: underline;
 }
