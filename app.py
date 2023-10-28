@@ -122,6 +122,13 @@ with app.app_context():
         except NoResultFound:
             return UserAccount(full_name="No Account")
         
+    def permission_validation(permission, accountid):
+        user_perms = db.session.execute(db.select(AccountPermission).filter_by(accountid=accountid)).scalars()
+        for permissionx in user_perms:
+            return permissionx == permission
+        
+        return False
+        
         
     def encode_auth_token(email_account):
             """
