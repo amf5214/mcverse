@@ -273,16 +273,19 @@ table th {
 }
 
 #item-5 {
-    align-items: center;
+    align-items: flex-start;
     align-content: center;
     justify-content: flex-start;
 }
+
 
 .admin-tool-block {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    align-content: center;
+    align-self: center;
 }
 
 .admin-tool-block > * {
