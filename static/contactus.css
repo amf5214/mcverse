@@ -1,0 +1,122 @@
+body {
+    margin: 0;
+    font-family: grandstander;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    background-image: url("homepage10.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 125% 100%;
+}
+
+.page-content {
+    margin-left: 2vw;
+    margin-right: 2vw;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    min-height: 5vh;
+    min-width: 1vw;
+    color: #383838;
+    font-weight: normal;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.intro-block {
+    background-color: #21232A;
+    color: white;
+    font-weight: normal;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 1em;
+    margin-top: 5vh;
+    margin-bottom: 2vh;
+    margin-left: 15vw;
+    margin-right: 15vw;
+}
+
+.title-block h1 {
+    font-family: grandstander;
+    font-weight: normal;
+    font-size: 16pt;
+    align-items: center;
+    
+}
+
+.title-block h1 span {
+    color: green;
+}
+
+.title-block p {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    font-family: grandstander;
+    font-weight: normal;
+    font-size: 12pt;
+    line-height: 1.5em
+}
+
+.email-block {
+    background-color: #21232A;
+    color: white;
+    font-weight: normal;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 1em;
+    margin-top: 2vh;
+    margin-bottom: 15vh;
+    margin-left: 15vw;
+    margin-right: 15vw;
+}
+
+.message-form {
+
+}
+
+.input-device {
+    font-family: grandstander;
+    font-size: 12pt;
+    padding: 5px;
+    line-height: 20px;
+    margin: 5pt;
+    min-width: 95%;
+}
+
+.input-device:hover {
+  transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.message-box {
+    font-family: grandstander;
+    font-size: 12pt;
+    padding: 5px;
+    margin: 5pt;
+    min-width: 95%;
+    min-height: 30%;   
+}
+
+.message-box:hover {
+  transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.send-button {
+    font-family: grandstander;
+    font-size: 12pt;
+    padding: 8px;
+    line-height: 20px;
+    margin: 5pt;
+    background-color: green;
+    color: white;
+}
+
+#tagname {
+    color: white;
+}

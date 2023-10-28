@@ -4,5 +4,36 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'contactus.css') }}"/>
 {% endblock %}
 
-{% block body %} 
+{% block body %}
+    <div class="page-contact">
+        <div class="intro-block">
+            <div class="title-block">
+                <h1 id="title">Contact us at MC Verse<span class="material-symbols-outlined">rocket_launch</span>
+                </h1>
+                <p id="site-purpose">Check out our code at https://github.com/amf5214</p>
+                <p id="site-purpose">Email us at afraley2@uncc.edu</p>
+                <p id="site-purpose">Call us at (704)712-7551</p>
+            </div>
+        </div>
+    </div>
+    <div class="email-block">
+        <div class="title-block">
+            <h1 id="title">Send us an email<span class="material-symbols-outlined">rocket_launch</span>
+            </h1>
+        </div>
+        <form class="message-form">
+            <div class="input-box">
+                <input class="input-device" type="text" placeholder="Enter your name">
+            </div>
+            <div class="input-box">
+                <input class="input-device" type="text" placeholder="Enter your email">
+            </div>
+            <div class="input-box">
+                <textarea type="text" class="message-box" placeholder="Enter your message here"></textarea>
+            </div>
+            <div class="button">
+                <input class="send-button" type="button" value="send Now">
+            </div>
+        </form>
+    </div>
 {% endblock %}
