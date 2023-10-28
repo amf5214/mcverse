@@ -115,10 +115,11 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-evenly;
-        column-gap: 2em;
+        column-gap: 1em;
     }
 
     .quick-links > * {
+        flex-basis: 40%;
         flex-grow: 1;
     }
 }
@@ -129,11 +130,11 @@
     justify-content: center;
     align-items: center;
     background-color: #1373c0;
-    border-radius: 1em;
+    border-radius: 10em;
     margin-top: 0.25rem;
     margin-bottom: 0.25rem;
     padding: .5em;
-    width: 60%
+    width: 50%
 }
 
 .link > * {
@@ -148,8 +149,9 @@
 }
 
 .linkimage {
-    width: 12vh;
-    height: 12vh;
+    width: 10vh;
+    height: 10vh;
+    border-radius: 50%;
 }
 
 .linklabel:hover {
@@ -276,24 +278,45 @@ table th {
     justify-content: flex-start;
 }
 
-.perm-request-block {
+.admin-tool-block {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.perm-request-block > * {
+.admin-tool-block > * {
     margin: 1rem;
     text-decoration: none;
     font-family: grandstander;
     font-size: 1.5rem;
 }
 
-.perm-request-block a {
-    color: blue;
+table tr:nth-child(odd) {
+    background-color: #f2f2f2;
+    color: #21232A;
 }
 
-.perm-request-block a:hover {
+table tr:nth-child(odd) a{
+    background-color: #f2f2f2;
+    color: #21232A;
+}
+table tr:nth-child(even) {
+    background-color: #ddd;
+    color: #21232A;
+}
+
+table tr:nth-child(even) a{
+    background-color: #ddd;
+    color: #21232A;
+}
+  
+table tr:hover {
+    background-color: #21232A;
+    color: white;
+}
+
+table tr:hover a {
+    background-color: #21232A;
     color: white;
 }

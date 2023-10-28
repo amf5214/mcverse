@@ -123,7 +123,7 @@
                 </div>
                 <div class="link">
                     <img class="linkimage" src="{{url_for('static', filename='bibliocraft2.png')}}">
-                    <a  class="linklabel" href="#">Bibliocraft</a>
+                    <a  class="linklabel" href="#">Biblio</a>
                 </div>
                 <div class="link">
                     <img class="linkimage" src="{{url_for('static', filename='journeymap4.png')}}">
@@ -183,9 +183,16 @@
                 <h1 id="title">Admin Tools<span class="material-symbols-outlined">rocket_launch</span>
                 </h1>
             </div>
-            <div class="perm-request-block">
-                <a href="/item/admin">Manage Items</a>
-                <a href="/permissions/requests/admin">Manage Permissions Requests</a>
+            <div class="admin-tool-block">
+                <table>
+                    <th>Tools</th>
+                    <tr>
+                        <td><a href="/item/admin">Manage Items</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="/permissions/requests/admin">Manage Permissions Requests</a></td>
+                    </tr>
+                </table>
             </div>
         </div>
         {% endif %}
