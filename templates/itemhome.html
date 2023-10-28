@@ -23,7 +23,7 @@
                     {% for item in items %}
                         <tr>
                             <td><a href="/item/{{item.id}}">{{item.item_title}}</h3></td>
-                            <td class="image-wrapper"><img class="item-image" src="{{item.image_link}}"></td>
+                            <td class="image-wrapper"><img class="item-image" src="{{ (image_dict[item.id]).src }}"></td>
                             <td><h3>{{item.item_description}}</h3></td>
                         </tr>
                     {% endfor %}

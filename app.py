@@ -131,7 +131,27 @@ with app.app_context():
         
     def create_image_item(id):
         item = PageObject.query.get_or_404(id)
+        if item.image_link != None:
+            image_id = item.image_link
+            try:
+                int(image_id)
+            except:
+                image_id = 7
+        else:
+            image_id = 7
+        image = FileContent.query.get_or_404(image_id)
+        return image_item(image.location, image.rendered_data)
+    
+    def create_image_item_2(item):
         image_id = item.image_link
+        if item.image_link != None:
+            image_id = item.image_link
+            try:
+                int(image_id)
+            except:
+                image_id = 7
+        else:
+            image_id = 7
         image = FileContent.query.get_or_404(image_id)
         return image_item(image.location, image.rendered_data)
 
@@ -227,10 +247,10 @@ with app.app_context():
 
     Permission_values = ["Admin", "Edit_Pages", "Add_Pages"]
 
-@app.errorhandler(404)
-def page_not_found(e):
-    # note that we set the 404 status explicitly
-    return render_template('comingsoon.html', useraccount=get_account(request)), 404
+# @app.errorhandler(404)
+# def page_not_found(e):
+#     # note that we set the 404 status explicitly
+#     return render_template('comingsoon.html', useraccount=get_account(request)), 404
 
 @app.route('/')
 def go_home():
@@ -530,8 +550,9 @@ def itemimageupdate():
 def item_home():
     items = db.session.execute(db.select(PageObject).filter_by(item_type="Item")).scalars()
     item_list = []
+    image_dict = {}
     for x in items:
-        x.image_link = "/static/items/" + x.image_link
+        image_dict[x.id] = create_image_item_2(x)
         item_list.append(x)
     
     template = {
@@ -549,14 +570,15 @@ def item_home():
         "minecraft_item_id": "Minecraft Item ID",
         "item_type": "Item Type"
         }
-    return render_template('itemhome.html', items=item_list, pagename="Item", template=template, useraccount=get_account(request))
+    return render_template('itemhome.html', items=item_list, image_dict=image_dict, pagename="Item", template=template, useraccount=get_account(request))
 
 @app.route('/tool/home')
 def tool_home():
     items = db.session.execute(db.select(PageObject).filter_by(item_type="Tool")).scalars()
     item_list = []
+    image_dict = {}
     for x in items:
-        x.image_link = "/static/items/" + x.image_link
+        image_dict[x.id] = create_image_item_2(x)
         item_list.append(x)
     
     template = {
@@ -574,14 +596,15 @@ def tool_home():
         "minecraft_item_id": "Minecraft Item ID",
         "item_type": "Item Type"
         }
-    return render_template('itemhome.html', pagename="Tool", items=item_list, template=template, useraccount=get_account(request))
+    return render_template('itemhome.html', pagename="Tool", image_dict=image_dict, items=item_list, template=template, useraccount=get_account(request))
 
 @app.route('/weapon/home')
 def weapon_home():
     items = db.session.execute(db.select(PageObject).filter_by(item_type="Weapon")).scalars()
     item_list = []
+    image_dict = {}
     for x in items:
-        x.image_link = "/static/items/" + x.image_link
+        image_dict[x.id] = create_image_item_2(x)
         item_list.append(x)
     
     template = {
@@ -599,7 +622,7 @@ def weapon_home():
         "minecraft_item_id": "Minecraft Item ID",
         "item_type": "Item Type"
         }
-    return render_template('itemhome.html', pagename="Weapon", items=item_list, template=template, useraccount=get_account(request))
+    return render_template('itemhome.html', pagename="Weapon", image_dict=image_dict, items=item_list, template=template, useraccount=get_account(request))
 
 if __name__ == '__main__':
     app.run(debug=True, port=54913)

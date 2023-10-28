@@ -1486,3 +1486,320 @@ INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:02:29] "[36mGET /static/autocomplet
 INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:02:29] "[36mGET /static/items/iron-ingot-smelting-2.png HTTP/1.1[0m" 304 -
 INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:02:29] "GET /admin/items HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:02:29] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug: * Detected change in '/Users/austinfraley/Desktop/www.mcverse.com/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 138-293-436
+INFO:werkzeug: * Detected change in '/Users/austinfraley/Desktop/www.mcverse.com/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 138-293-436
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/index.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/homepage4.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/homepage.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/homepage2.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/homepage5.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/homepage3.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/mcgame_vanilla2.avif HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/mcgame_dungeons2.avif HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/homepage6.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/homepage67.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/homepage8.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/homepage9.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/homepage10.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/mcgame_legends2.avif HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/mcgame_realms2.jpeg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/mcgame_edu2.webp HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/apple.webp HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/farming.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/mining4.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/building.webp HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/electricity3.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/storage3.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/backpack3.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/dungeon.webp HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/weapon3.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/Chisels.webp HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/bibliocraft2.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:08] "[36mGET /static/journeymap4.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:09] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:10] "GET /item/admin HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:11] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:11] "[36mGET /static/item_admin.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:11] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:11] "[36mGET /static/item_admin.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:11] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:11] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:11] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:14] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:15] "[35m[1mGET /item/home HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:15] "[36mGET /item/home?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:15] "[36mGET /item/home?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:15] "[36mGET /item/home?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:15] "[36mGET /item/home?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:36] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:37] "GET /weapon/home HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:37] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:37] "[36mGET /static/itemhome.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:37] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:37] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:37] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:10:38] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug: * Detected change in '/Users/austinfraley/Desktop/www.mcverse.com/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 138-293-436
+INFO:werkzeug: * Detected change in '/Users/austinfraley/Desktop/www.mcverse.com/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 138-293-436
+INFO:werkzeug: * Detected change in '/Users/austinfraley/Desktop/www.mcverse.com/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 138-293-436
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:15] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:16] "[33mGET /item/home HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:16] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:16] "[36mGET /static/comingsoon.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:16] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:16] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:16] "[36mGET /static/homepage2.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:16] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:17] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:18] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:20] "[33mGET /item/home HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:20] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:20] "[36mGET /static/comingsoon.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:20] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:20] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:20] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:20] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:21] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:23] "[33mGET /tool/home HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:23] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:23] "[36mGET /static/comingsoon.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:23] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:23] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:23] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:23] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug: * Detected change in '/Users/austinfraley/Desktop/www.mcverse.com/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 138-293-436
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:12:58] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:13:00] "[33mGET /item/home HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:13:57] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug: * Detected change in '/Users/austinfraley/Desktop/www.mcverse.com/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:54913
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 138-293-436
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:16:46] "GET /item/home HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:16:46] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:16:46] "[36mGET /static/itemhome.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:16:46] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:16:46] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:16:46] "[36mGET /static/forest.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:16:46] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:16:46] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:16:51] "[33mGET /item/3 HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:16:52] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:16:54] "[33mGET /item/4 HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:16:56] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug: * Detected change in '/Users/austinfraley/Desktop/www.mcverse.com/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 138-293-436
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:19] "GET /item/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:19] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:19] "[36mGET /static/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:19] "[36mGET /static/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:19] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:19] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:19] "[36mGET /static/forest.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:19] "[36mGET /static/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:19] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:20] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:23] "GET /item/3/true HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:23] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:23] "[36mGET /static/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:23] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:23] "[36mGET /static/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:23] "[36mGET /static/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:23] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:23] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:23] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:37] "[32mPOST /itemimageupdate HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:37] "[32mGET /item/3/false HTTP/1.1[0m" 308 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:37] "GET /item/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:37] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:37] "[36mGET /static/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:37] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:37] "[36mGET /static/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:37] "[36mGET /static/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:37] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:37] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:38] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:39] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:40] "GET /item/home HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:40] "[36mGET /static/itemhome.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:40] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:40] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:40] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:40] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:40] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:42] "GET /item/4 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:42] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:42] "[36mGET /static/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:42] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:42] "[36mGET /static/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:42] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:42] "[36mGET /static/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:42] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:42] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:44] "GET /item/4/true HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:44] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:44] "[36mGET /static/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:44] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:44] "[36mGET /static/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:44] "[36mGET /static/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:44] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:44] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:44] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:45] "GET /item/4/true HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:45] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:45] "[36mGET /static/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:45] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:45] "[36mGET /static/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:45] "[36mGET /static/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:45] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:45] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:18:45] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:02] "[32mPOST /itemimageupdate HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:02] "[32mGET /item/4/false HTTP/1.1[0m" 308 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:02] "GET /item/4 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:02] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:02] "[36mGET /static/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:02] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:02] "[36mGET /static/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:02] "[36mGET /static/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:02] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:02] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:03] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:04] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:05] "GET /item/home HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:05] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:05] "[36mGET /static/itemhome.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:05] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:05] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:05] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:05] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:08] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:10] "GET /tool/home HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:10] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:10] "[36mGET /static/itemhome.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:10] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:10] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:10] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:10] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:15] "GET /item/5 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:15] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:15] "[36mGET /static/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:15] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:15] "[36mGET /static/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:15] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:15] "[36mGET /static/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:15] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:15] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:16] "GET /item/5/true HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:16] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:16] "[36mGET /static/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:16] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:16] "[36mGET /static/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:16] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:16] "[36mGET /static/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:16] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:16] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:42] "[32mPOST /itemimageupdate HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:42] "[32mGET /item/5/false HTTP/1.1[0m" 308 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:42] "GET /item/5 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:42] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:42] "[36mGET /static/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:42] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:42] "[36mGET /static/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:42] "[36mGET /static/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:42] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:42] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:42] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:44] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:46] "GET /weapon/home HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:46] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:46] "[36mGET /static/itemhome.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:46] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:46] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:46] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:46] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:47] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/homepage.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/index.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/homepage3.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/homepage2.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/homepage4.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/homepage5.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/mcgame_vanilla2.avif HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/mcgame_dungeons2.avif HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/homepage6.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/homepage67.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/homepage8.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/homepage9.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/homepage10.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/mcgame_legends2.avif HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/mcgame_realms2.jpeg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/mcgame_edu2.webp HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/apple.webp HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/farming.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/mining4.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/electricity3.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/building.webp HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/storage3.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/backpack3.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/dungeon.webp HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/weapon3.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/Chisels.webp HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/bibliocraft2.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/journeymap4.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:19:54] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:00] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:01] "GET /item/home HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:02] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:02] "[36mGET /static/itemhome.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:02] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:02] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:02] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:02] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:02] "GET /item/2 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:03] "[36mGET /static/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:03] "[36mGET /static/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:03] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:03] "[36mGET /static/items/iron-ingot-recipe-2.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:03] "[36mGET /static/items/iron-ingot-recipe-1.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:03] "[36mGET /static/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:03] "[36mGET /static/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:03] "[36mGET /static/items/iron-ingot-smelting-1.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:03] "[36mGET /static/items/iron-ingot-smelting-2.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:03] "[36mGET /static/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:03] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Oct/2023 19:20:03] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
