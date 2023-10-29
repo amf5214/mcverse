@@ -186,7 +186,6 @@ with app.app_context():
                 account.profile_img_loc = image_obj.location
                 logging.info(f"account_image_loc={account.profile_img_loc}")
                 account.profile_img_data = image_obj.rendered_data
-                logging.info(f"account_image_rendered_img={account.profile_img_data}")
 
                 return account
             
@@ -562,6 +561,21 @@ def item_home(type):
         return render_template('itemhome.html', pagename=type.upper(), image_dict=image_dict, items=item_list, template=template, useraccount=get_account(request))
     else:
         return redirect("/")
+    
+@app.route('/admin/uploadimage', methods=["GET"])
+def adminuploadimage():
+    useraccount = get_account(request)
+    test = permission_validation("Admin", useraccount.id)
+    if test:
+        return render_template('uploadimage.html', useraccount=useraccount, baseimage=create_image_item(2))
+    else:
+        return redirect('/')
+
+@app.route('/uploadimagedb', methods=["POST"])
+def uploadnewimage():
+    image_id = uploadimage(request)
+    return redirect('/')
+
 
 # app.run(debug=True, port=54913)
    
