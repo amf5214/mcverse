@@ -641,5 +641,5 @@ def unlinksmeltingimage(page_object, image):
     db.session.commit()   
     return redirect(f'/item/{page_object}/true')
 
-# app.run(debug=True, port=54913)
+app.run(debug=False, port=54913)
    
