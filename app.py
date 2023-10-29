@@ -263,10 +263,10 @@ with app.app_context():
 
     logging.info("Backend functions built")
 
-# @app.errorhandler(404)
-# def page_not_found(e):
-#     # note that we set the 404 status explicitly
-#     return render_template('comingsoon.html', useraccount=get_account(request)), 404
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('comingsoon.html', useraccount=get_account(request)), 404
 
 @app.route('/')
 def go_home():
