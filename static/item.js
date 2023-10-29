@@ -74,3 +74,20 @@ function uploadImage3() {
     submitButtom.style.margin = "1rem";
     imageView3.appendChild(submitButtom);
 }
+
+
+showmenubtn = document.getElementById("openclosebtn")
+editingmenu = document.getElementById("editing-menu")
+editmenutextspan = document.getElementById("editmenutextspan")
+
+function showftn() {
+    if(editmenutextspan.textContent == "right_panel_close") {
+        editmenutextspan.textContent = "right_panel_open";
+        editingmenu.style.visibility = "hidden";
+    }
+
+    else {
+        editmenutextspan.textContent = "right_panel_close";
+        editingmenu.style.visibility = "visible";
+    }
+}

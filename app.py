@@ -300,14 +300,14 @@ def item_report(itemid, editable):
     if page_object.crafting_image_links != "":
         crafting_links = page_object.crafting_image_links.split(" ")
         for i, link in enumerate(crafting_links):
-            crafting_links[i] = f"/static/items/{link}"
+            crafting_links[i] = create_image(link)
     else:
         crafting_links = ""
 
     if page_object.smelting_image_links != "":
         smelting_links = page_object.smelting_image_links.split(" ")
         for i, link in enumerate(smelting_links):
-            smelting_links[i] = f"/static/items/{link}"
+            smelting_links[i] = create_image(int(link))
     else:
         smelting_links = ""
 
@@ -585,17 +585,20 @@ def uploadnewimage():
 @app.route('/createcraftingimage', methods=['POST'])
 def create_crafting_image():
     itemid = request.form["item_id"]
-    object = PageObject.query.get_or_404(itemid)
+    pobject = PageObject.query.get_or_404(itemid)
     image_id = uploadimage(request)
-    image_links = object.crafting_image_links.split(" ")
-    image_links.append(image_id)
+    image_links = pobject.crafting_image_links.split(" ")
+    print(f"image_links_v1{image_links}")
+    image_links.append(str(image_id))
+    print(f"image_links_v2{image_links}")
     new_str = ""
     for i, x in enumerate(image_links):
-        if i == 1:
+        if i == 0:
             new_str = str(x)
         else:
             new_str = new_str + " " + str(x)
-    object.crafting_image_links = new_str
+    print(new_str)
+    pobject.crafting_image_links = new_str
     db.session.commit()    
     return redirect(f'item/{itemid}/true')
 
@@ -603,17 +606,17 @@ def create_crafting_image():
 @app.route('/createsmeltingimage', methods=['POST'])
 def create_smelting_image():
     itemid = request.form["item_id"]
-    object = PageObject.query.get_or_404(itemid)
+    pobject = PageObject.query.get_or_404(itemid)
     image_id = uploadimage(request)
-    image_links = object.smelting_image_links.split(" ")
-    image_links.append(image_id)
+    image_links = pobject.smelting_image_links.split(" ")
+    image_links.append(str(image_id))
     new_str = ""
     for i, x in enumerate(image_links):
-        if i == 1:
+        if i == 0:
             new_str = str(x)
         else:
             new_str = new_str + " " + str(x)
-    object.smelting_image_links = new_str
+    pobject.smelting_image_links = new_str
     db.session.commit()    
     return redirect(f'item/{itemid}/true')
 

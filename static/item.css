@@ -35,6 +35,19 @@
     margin: 1em;
 }
 
+.intro-block-image {
+    background-color: #21232A;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    padding: 2rem;
+    border-radius: 1em;
+    margin: 1em;
+}
+
 #item-1 .title-block{
     justify-content: space-between;
 }
@@ -239,5 +252,13 @@
 }
 
 .addimg {
-    cursor: default;
+    cursor: move;
 }
+
+#openclosemenudiv {
+    top: 50%;
+    right: 0;
+    z-index: 100;
+    position: fixed;
+}
+

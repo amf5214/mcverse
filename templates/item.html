@@ -72,20 +72,20 @@
             </div>
         </div>
         {% if crafting_links!="" %}
-        <div class="intro-block" id="item-3">
+        <div class="intro-block-image" id="item-3">
             <h1 class="title">
                 Crafting<span class="material-symbols-outlined">rocket_launch</span></h1>
                 {% for image in crafting_links %}
-                    <img class="crafting-recipe" src="{{image}}" contenteditable="{{editable}}">
+                    <img class="crafting-recipe" src="{{image.src}}">
                 {% endfor %}
         </div>
         {% endif %}
         {% if smelting_links != "" %}
-        <div class="intro-block" id="item-4">
+        <div class="intro-block-image" id="item-4">
             <h1 class="title">
                 Smelting<span class="material-symbols-outlined">rocket_launch</span></h1>
                 {% for image in smelting_links %}
-                    <img class="crafting-recipe" src="{{image}}" contenteditable="{{editable}}">
+                    <img class="crafting-recipe" src="{{image.src}}">
                 {% endfor %}
         </div>
         {% endif %}
@@ -125,7 +125,11 @@
                     </form>
                 </div>
             </div>
+            <div id="openclosemenudiv">
+                <button id="openclosebtn" onclick="showftn()"><span id="editmenutextspan" class="material-symbols-outlined">right_panel_close</span></button>
+            </div>
         {% endif %}
+        
     </div>
     <script src="{{ url_for('static', filename = 'item_modification.js') }}"></script>
     <script src="{{ url_for('static', filename = 'item.js') }}"></script>
