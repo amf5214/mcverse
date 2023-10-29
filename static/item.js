@@ -10,8 +10,6 @@ const dropArea3 = document.getElementById("drop-area3");
 const inputFile3 = document.getElementById("input-file3");
 const imageView3 = document.getElementById("img-view3");
 
-const profileImageForm = document.getElementById("itemimageform");
-
 inputFile.addEventListener("change", uploadImage);
 
 function uploadImage() {
@@ -25,11 +23,11 @@ function uploadImage() {
     imageView.appendChild(imageObj);
     imageObj.style.maxHeight = "100%";
     imageObj.style.maxWidth = "100%";
-    imageObj.style.borderRadius = "50rem";
-
+    
     let submitButtom = document.createElement("input");
     submitButtom.type = "submit";
     submitButtom.style.margin = "1rem";
+    submitButtom.style.cursor = "pointer"
     imageView.appendChild(submitButtom);
 }
 
@@ -41,12 +39,13 @@ function uploadImage2() {
     // imageView.style.backgroundImage = `url(${imgLink})`;
     imageView2.textContent = "";
     imageView2.style.border = 0;
-    let imageObj = document.createElement('img');
-    imageObj.src = `${imgLink}`;
-    imageView2.appendChild(imageObj);
-    imageObj.style.maxHeight = "100%";
-    imageObj.style.maxWidth = "100%";
-    imageObj.style.borderRadius = "50rem";
+    let imageObj2 = document.createElement('img');
+    imageObj2.src = `${imgLink}`;
+    imageObj2.style.maxHeight = "100%";
+    imageObj2.style.maxWidth = "100%";
+    imageObj2.style.borderRadius = 0;
+    imageObj2.id = "img-view2";
+    imageView2.appendChild(imageObj2);
 
     let submitButtom = document.createElement("input");
     submitButtom.type = "submit";
@@ -62,13 +61,14 @@ function uploadImage3() {
     // imageView.style.backgroundImage = `url(${imgLink})`;
     imageView3.textContent = "";
     imageView3.style.border = 0;
-    let imageObj = document.createElement('img');
-    imageObj.src = `${imgLink}`;
-    imageView3.appendChild(imageObj);
-    imageObj.style.maxHeight = "100%";
-    imageObj.style.maxWidth = "100%";
-    imageObj.style.borderRadius = "50rem";
-
+    let imageObj2 = document.createElement('img');
+    imageObj2.src = `${imgLink}`;
+    imageObj2.style.maxHeight = "100%";
+    imageObj2.style.maxWidth = "100%";
+    imageObj2.style.borderRadius = 0;
+    imageObj2.id = "img-view2";
+    imageView3.appendChild(imageObj2);
+    
     let submitButtom = document.createElement("input");
     submitButtom.type = "submit";
     submitButtom.style.margin = "1rem";

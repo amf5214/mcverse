@@ -126,9 +126,10 @@ with app.app_context():
       logging.info("Table classes configured")
 
     class image_item():
-        def __init__(self, location, rendered_data):
+        def __init__(self, location, rendered_data, id):
             self.location = location
             self.rendered_data = rendered_data
+            self.id = id
             self.src = self.create_src()
 
         def create_src(self):
@@ -136,7 +137,7 @@ with app.app_context():
         
     def create_image(id):
         image = FileContent.query.get_or_404(id)
-        return image_item(image.location, image.rendered_data)
+        return image_item(image.location, image.rendered_data, image.id)
 
     def create_image_item(id):
         item = PageObject.query.get_or_404(id)
@@ -149,7 +150,7 @@ with app.app_context():
         else:
             image_id = 7
         image = FileContent.query.get_or_404(image_id)
-        return image_item(image.location, image.rendered_data)
+        return image_item(image.location, image.rendered_data, image.id)
     
     def create_image_item_2(item):
         image_id = item.image_link
@@ -162,7 +163,7 @@ with app.app_context():
         else:
             image_id = 7
         image = FileContent.query.get_or_404(image_id)
-        return image_item(image.location, image.rendered_data)
+        return image_item(image.location, image.rendered_data, image.id)
 
     def get_account(request):
         token = request.cookies.get("token")
@@ -298,14 +299,14 @@ def item_report(itemid, editable):
     smeltingdefault = create_image(9) 
 
     if page_object.crafting_image_links != "":
-        crafting_links = page_object.crafting_image_links.split(" ")
+        crafting_links = page_object.crafting_image_links.strip().split(" ")
         for i, link in enumerate(crafting_links):
             crafting_links[i] = create_image(link)
     else:
         crafting_links = ""
 
     if page_object.smelting_image_links != "":
-        smelting_links = page_object.smelting_image_links.split(" ")
+        smelting_links = page_object.smelting_image_links.strip().split(" ")
         for i, link in enumerate(smelting_links):
             smelting_links[i] = create_image(int(link))
     else:
@@ -587,7 +588,7 @@ def create_crafting_image():
     itemid = request.form["item_id"]
     pobject = PageObject.query.get_or_404(itemid)
     image_id = uploadimage(request)
-    image_links = pobject.crafting_image_links.split(" ")
+    image_links = pobject.crafting_image_links.strip().split(" ")
     print(f"image_links_v1{image_links}")
     image_links.append(str(image_id))
     print(f"image_links_v2{image_links}")
@@ -608,7 +609,7 @@ def create_smelting_image():
     itemid = request.form["item_id"]
     pobject = PageObject.query.get_or_404(itemid)
     image_id = uploadimage(request)
-    image_links = pobject.smelting_image_links.split(" ")
+    image_links = pobject.smelting_image_links.strip().split(" ")
     image_links.append(str(image_id))
     new_str = ""
     for i, x in enumerate(image_links):
@@ -619,6 +620,38 @@ def create_smelting_image():
     pobject.smelting_image_links = new_str
     db.session.commit()    
     return redirect(f'item/{itemid}/true')
+
+@app.route('/unlinkcraftingimage/<page_object>/<image>')
+def unlinkcraftingimage(page_object, image):
+    image_id = str(image)
+    pobject = PageObject.query.get_or_404(page_object)
+    image_links = pobject.crafting_image_links.strip().split(" ")
+    image_links.remove(image_id)
+    new_str = ""
+    for i, x in enumerate(image_links):
+        if i == 0:
+            new_str = str(x)
+        else:
+            new_str = new_str + " " + str(x)
+    pobject.crafting_image_links = new_str
+    db.session.commit()   
+    return redirect(f'/item/{page_object}/true')
+
+@app.route('/unlinksmeltingimage/<page_object>/<image>')
+def unlinksmeltingimage(page_object, image):
+    image_id = str(image)
+    pobject = PageObject.query.get_or_404(page_object)
+    image_links = pobject.smelting_image_links.strip().split(" ")
+    image_links.remove(image_id)
+    new_str = ""
+    for i, x in enumerate(image_links):
+        if i == 0:
+            new_str = str(x)
+        else:
+            new_str = new_str + " " + str(x)
+    pobject.smelting_image_links = new_str
+    db.session.commit()   
+    return redirect(f'/item/{page_object}/true')
 
 # app.run(debug=True, port=54913)
    

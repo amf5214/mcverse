@@ -126,7 +126,19 @@
 
 #item-3 img, #item-4 img {
     max-width: 100%;
-    max-height: 100%;
+    height: 100%;
+}
+
+.image-container-sub {
+    position: relative;
+    max-width: 100%;
+    margin: 1rem;
+}
+
+.image-container-sub button {
+    position: absolute;
+    top: 50%;
+    left: -5%;
 }
 
 .item_title span {
@@ -143,6 +155,8 @@
     color: white;
     display: flex;
     justify-content: center;
+    align-items: center;
+    align-content: center;
     padding: 3vh;
     border-radius: 1em;
     flex: 0 1 40%;
@@ -251,14 +265,27 @@
     border-radius: 2rem;
 }
 
+.option-block > * {
+    flex: 0 1 100%;
+}
+
 .addimg {
     cursor: move;
 }
 
 #openclosemenudiv {
-    top: 50%;
+    top: 30%;
     right: 0;
     z-index: 100;
     position: fixed;
+    display: flex;
+    flex-direction: column;
 }
 
+#img-view2, #img-view3, #item-image {
+    border-radius: 0;
+}
+
+#img-view3 img, #img-view2 img {
+    border-radius: 0;;
+}

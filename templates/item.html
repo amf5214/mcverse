@@ -36,7 +36,7 @@
                 {% else %}
                     <img id="item-image" src="{{item_image.src}}" contenteditable="{{editable}}">
                 {% endif %}
-                <a href="/item/{{ page_object.id }}/true" id="edit_item_btn">Edit</a>
+
             </div>
         </div>
         <div class="intro-block" id="item-2">
@@ -76,7 +76,12 @@
             <h1 class="title">
                 Crafting<span class="material-symbols-outlined">rocket_launch</span></h1>
                 {% for image in crafting_links %}
-                    <img class="crafting-recipe" src="{{image.src}}">
+                    <div class="image-container-sub">
+                        <img class="crafting-recipe" src="{{image.src}}">
+                        {% if editable == True %}
+                            <button onclick="window.location.href='/unlinkcraftingimage/{{page_object.id}}/{{image.id}}'"><span class="material-symbols-outlined">close</span></button>
+                        {% endif %}
+                        </div>
                 {% endfor %}
         </div>
         {% endif %}
@@ -85,7 +90,12 @@
             <h1 class="title">
                 Smelting<span class="material-symbols-outlined">rocket_launch</span></h1>
                 {% for image in smelting_links %}
-                    <img class="crafting-recipe" src="{{image.src}}">
+                    <div class="image-container-sub">
+                        <img class="crafting-recipe" src="{{image.src}}">
+                        {% if editable == True %}
+                            <button onclick="window.location.href='/unlinksmeltingimage/{{page_object.id}}/{{image.id}}'"><span class="material-symbols-outlined">close</span></button>
+                        {% endif %}
+                    </div>
                 {% endfor %}
         </div>
         {% endif %}
@@ -125,10 +135,16 @@
                     </form>
                 </div>
             </div>
-            <div id="openclosemenudiv">
-                <button id="openclosebtn" onclick="showftn()"><span id="editmenutextspan" class="material-symbols-outlined">right_panel_close</span></button>
-            </div>
         {% endif %}
+        <div id="openclosemenudiv">
+            {% if editable == True %}
+                <button id="openclosebtn" onclick="showftn()"><span id="editmenutextspan" class="material-symbols-outlined">right_panel_close</span></button>
+                <button id="close" onclick="window.location.href='/item/{{page_object.id}}/false'"><span id="editmenutextspan" class="material-symbols-outlined">done_outline</span></button>
+            {% else %}
+                <button id="close" onclick="window.location.href='/item/{{page_object.id}}/true'"><span id="editmenutextspan" class="material-symbols-outlined">edit</span></button>
+            {% endif %}
+        </div>
+        
         
     </div>
     <script src="{{ url_for('static', filename = 'item_modification.js') }}"></script>
