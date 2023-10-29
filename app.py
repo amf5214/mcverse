@@ -9,7 +9,7 @@ import os
 from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename
 import uuid
-import logging
+# import logging
 from base64 import b64encode
 import base64
 from io import BytesIO #Converts data from Database into bytes
@@ -18,7 +18,7 @@ import pymysql
 from sqlalchemy.dialects.mysql import LONGTEXT
 
 
-logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
+# logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
 
 app = Flask(__name__)
 
@@ -29,7 +29,7 @@ with app.app_context():
     app.config["UPLOAD_FOLDER"] = "static/uploads/"
     app.config["ITEM_FOLDER"] = "static/items/"
     db = SQLAlchemy(app)
-    logging.info("Database configured")
+    # logging.info("Database configured")
 
     class FrequentlyAskedQuestion(db.Model):
         id = db.Column(db.Integer, primary_key=True)
@@ -123,7 +123,7 @@ with app.app_context():
       def __repr__(self):
           return f"<FileContent {self.id}>"
       
-      logging.info("Table classes configured")
+    #   logging.info("Table classes configured")
 
     class image_item():
         def __init__(self, location, rendered_data, id):
@@ -167,16 +167,16 @@ with app.app_context():
 
     def get_account(request):
         token = request.cookies.get("token")
-        logging.info(f"auth_token={token}")
+        # logging.info(f"auth_token={token}")
         if token != None:
             try:
                 auth_account = db.session.execute(db.select(AuthAccount).filter_by(auth_token=token)).scalar_one()
-                logging.info(f"auth_account_id={auth_account.id}")
+                # logging.info(f"auth_account_id={auth_account.id}")
                 account = db.session.execute(db.select(UserAccount).filter_by(auth_account_id=auth_account.id)).scalar_one()
-                logging.info(f"account_id={account.id}")
+                # logging.info(f"account_id={account.id}")
                 account.set_auth(auth_account)
                 account.admin_flag = permission_validation("Admin", account.id)
-                logging.info(f"admin_flag={account.admin_flag}")
+                # logging.info(f"admin_flag={account.admin_flag}")
                 if account.account_image_link != None:
                     image_id = account.account_image_link
                     account.image_flag = True
@@ -189,7 +189,7 @@ with app.app_context():
                     account.image_flag = False
                 image_obj = FileContent.query.get_or_404(image_id)
                 account.profile_img_loc = image_obj.location
-                logging.info(f"account_image_loc={account.profile_img_loc}")
+                # logging.info(f"account_image_loc={account.profile_img_loc}")
                 account.profile_img_data = image_obj.rendered_data
 
                 return account
@@ -202,7 +202,6 @@ with app.app_context():
     def permission_validation(permission, accountid):
         user_perms = db.session.execute(db.select(AccountPermission).filter_by(account_id=accountid)).scalars()
         for permissionx in user_perms:
-            print(f"{permissionx.permission_type}={permission}")
             if permissionx.permission_type == permission:
                 return True
         
@@ -261,7 +260,7 @@ with app.app_context():
 
     Permission_values = ["Admin", "Edit_Pages", "Add_Pages"]
 
-    logging.info("Backend functions built")
+    # logging.info("Backend functions built")
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -314,10 +313,8 @@ def item_report(itemid, editable):
 
     account = get_account(request)
 
-    print("editable=" + editable)
     if editable == "true":
         editable_permisssion = permission_validation("Edit_Pages", account.id)
-        print("editable_permission=" + str(editable_permisssion))
         if editable_permisssion:
             return render_template('item.html', page_object=page_object, item_image=item_image, crafting_links=crafting_links, smelting_links=smelting_links, editable=editable_permisssion, useraccount=get_account(request), smeltingdefault=smeltingdefault, craftingdefault=craftingdefault)
         else:
@@ -410,11 +407,10 @@ def update_item(itemid):
         
         try:
             db.session.commit()
-            print(f"{item.id} updated")
             return redirect(f"/item/{itemid}/true")
         
         except:
-            print(f"There was an error when updating the chosen item {itemid}")
+            pass
 
 @app.route('/admin/items')
 def all_items():
@@ -470,16 +466,13 @@ def signinattempt():
 def sign_out():
     response = make_response(redirect("/"))
     response.set_cookie("token", "None")
-    flash("You've been logged out!", "info")
     return response
 
 @app.route('/newaccount', methods=["POST"])
 def create_new_account():
 
     password = create_password(request.form["logpass"])
-    print(f"username={request.form['logusername']}")
     token = encode_auth_token(str(request.form["logusername"]))
-    print(f"auth_token={token}")
     auth_account = AuthAccount(email_account=request.form["logemail"],hash_password=password, auth_token=token)
 
     db.session.add(auth_account)
@@ -526,7 +519,6 @@ def approve_request(requestid):
 @app.route('/profileimageupdate', methods=['POST'])
 def profileimageupdate():
     image_id = uploadimage(request)
-    print("Image ID: " + str(image_id))
     picture_account = UserAccount.query.get_or_404(request.form["user_id"])
 
     picture_account.account_image_link = str(image_id)
@@ -536,7 +528,6 @@ def profileimageupdate():
 @app.route('/itemimageupdate', methods=['POST'])
 def itemimageupdate():
     image_id = uploadimage(request)
-    print("Image ID: " + str(image_id))
     picture_item = PageObject.query.get_or_404(request.form["item_id"])
 
     picture_item.image_link = str(image_id)
@@ -589,16 +580,13 @@ def create_crafting_image():
     pobject = PageObject.query.get_or_404(itemid)
     image_id = uploadimage(request)
     image_links = pobject.crafting_image_links.strip().split(" ")
-    print(f"image_links_v1{image_links}")
     image_links.append(str(image_id))
-    print(f"image_links_v2{image_links}")
     new_str = ""
     for i, x in enumerate(image_links):
         if i == 0:
             new_str = str(x)
         else:
             new_str = new_str + " " + str(x)
-    print(new_str)
     pobject.crafting_image_links = new_str
     db.session.commit()    
     return redirect(f'item/{itemid}/true')
