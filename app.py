@@ -13,22 +13,27 @@ import logging
 from base64 import b64encode
 import base64
 from io import BytesIO #Converts data from Database into bytes
+from sqlalchemy import create_engine
+import pymysql
+from sqlalchemy.dialects.mysql import LONGTEXT
 
 
-logging.basicConfig(filename='record.log', level=logging.DEBUG)
+logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
 
 app = Flask(__name__)
 
 with app.app_context():
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mcverse.sqlite"
+    # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mcverse.sqlite"
+    app.config["SQLALCHEMY_DATABASE_URI"] = "mariadb+pymysql://prod_main:Alhamley3/@mariadb-152364-0.cloudclusters.net:19546/mcverse_prod?charset=utf8mb4"
     app.config["SECRET_KEY"] = "jgjdfk34benrgtgjfhbdnjmkf5784iejkdshjssefwr"
     app.config["UPLOAD_FOLDER"] = "static/uploads/"
     app.config["ITEM_FOLDER"] = "static/items/"
     db = SQLAlchemy(app)
+    logging.info("Database configured")
 
     class FrequentlyAskedQuestion(db.Model):
         id = db.Column(db.Integer, primary_key=True)
-        author_user = db.Column(db.String, nullable=True)
+        author_user = db.Column(db.String(200), nullable=True)
         question = db.Column(db.String(200), nullable=True)
         answer = db.Column(db.String(200), default="")
         answer_author = db.Column(db.String(200), default="")
@@ -43,7 +48,7 @@ with app.app_context():
         id = db.Column(db.Integer, primary_key=True)
         item_title = db.Column(db.String(200), nullable=False)
         image_link = db.Column(db.String(200))
-        item_description = db.Column(db.String(200), nullable=True)
+        item_description = db.Column(db.Text, nullable=True)
         iframe_video_link = db.Column(db.String(500), nullable=True, default="www.google.com")
         crafting_image_links = db.Column(db.String(200))
         smelting_image_links = db.Column(db.String(200))
@@ -111,14 +116,14 @@ with app.app_context():
 
       id = db.Column(db.Integer,  primary_key=True)
       name = db.Column(db.String(128), nullable=False)
-      data = db.Column(db.LargeBinary, nullable=False) #Actual data, needed for Download
-      rendered_data = db.Column(db.Text, nullable=False) #Data to render the pic in browser
+      rendered_data = db.Column(db.Text(max), nullable=False) #Data to render the pic in browser
       text = db.Column(db.Text)
       location = db.Column(db.String(64))
       pic_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
       def __repr__(self):
           return f"<FileContent {self.id}>"
       
+      logging.info("Table classes configured")
 
     class image_item():
         def __init__(self, location, rendered_data):
@@ -157,29 +162,37 @@ with app.app_context():
 
     def get_account(request):
         token = request.cookies.get("token")
-        try:
-            auth_account = db.session.execute(db.select(AuthAccount).filter_by(auth_token=token)).scalar_one()
-            account = db.session.execute(db.select(UserAccount).filter_by(auth_account_id=auth_account.id)).scalar_one()
-            account.set_auth(auth_account)
-            account.admin_flag = permission_validation("Admin", account.id)
-            print(account.admin_flag)
-            if account.account_image_link != None:
-                image_id = account.account_image_link
-                account.image_flag = True
-                try:
-                    int(image_id)
-                except:
+        logging.info(f"auth_token={token}")
+        if token != None:
+            try:
+                auth_account = db.session.execute(db.select(AuthAccount).filter_by(auth_token=token)).scalar_one()
+                logging.info(f"auth_account_id={auth_account.id}")
+                account = db.session.execute(db.select(UserAccount).filter_by(auth_account_id=auth_account.id)).scalar_one()
+                logging.info(f"account_id={account.id}")
+                account.set_auth(auth_account)
+                account.admin_flag = permission_validation("Admin", account.id)
+                logging.info(f"admin_flag={account.admin_flag}")
+                if account.account_image_link != None:
+                    image_id = account.account_image_link
+                    account.image_flag = True
+                    try:
+                        int(image_id)
+                    except:
+                        image_id = 3
+                else:
                     image_id = 3
-            else:
-                image_id = 3
-                account.image_flag = False
-            image_obj = FileContent.query.get_or_404(image_id)
-            account.profile_img_loc = image_obj.location
-            account.profile_img_data = image_obj.rendered_data
+                    account.image_flag = False
+                image_obj = FileContent.query.get_or_404(image_id)
+                account.profile_img_loc = image_obj.location
+                logging.info(f"account_image_loc={account.profile_img_loc}")
+                account.profile_img_data = image_obj.rendered_data
+                logging.info(f"account_image_rendered_img={account.profile_img_data}")
 
-            return account
-        
-        except NoResultFound:
+                return account
+            
+            except NoResultFound:
+                return UserAccount(full_name="No Account")
+        else:
             return UserAccount(full_name="No Account")
         
     def permission_validation(permission, accountid):
@@ -217,8 +230,6 @@ with app.app_context():
         if user_file:
             filename = secure_filename(user_file.filename)
             pic_name = str(uuid.uuid1()) + "_" + filename
-            print(pic_name)
-            print(os.path.join(app.config["ITEM_FOLDER"], pic_name))
             user_file.save(os.path.join(app.config["ITEM_FOLDER"], pic_name))
             return pic_name
 
@@ -237,15 +248,16 @@ with app.app_context():
             pic_name = str(uuid.uuid1()) + "_" + filename
             location = file.filename.split(".")[1]
 
-            newFile = FileContent(name=file.filename, data=data, 
-            rendered_data=render_file, text=pic_name, location=location)
+            newFile = FileContent(name=file.filename, rendered_data=render_file, text=pic_name, location=location)
             db.session.add(newFile)
             db.session.commit() 
             return newFile.id
 
-    db.create_all()
+    # db.create_all()
 
     Permission_values = ["Admin", "Edit_Pages", "Add_Pages"]
+
+    logging.info("Backend functions built")
 
 # @app.errorhandler(404)
 # def page_not_found(e):
@@ -255,17 +267,6 @@ with app.app_context():
 @app.route('/')
 def go_home():
     frequently_asked_questions = FrequentlyAskedQuestion.query.order_by(FrequentlyAskedQuestion.id).all()
-    objects = PageObject.query.order_by(PageObject.id).all()
-    page_objects = map(lambda obj: f"{obj.id}:{obj.item_title},", objects)
-
-    original_stdout = sys.stdout # Save a reference to the original standard output
-
-    with open('static/searchbar.txt', 'w') as f:
-        sys.stdout = f # Change the standard output to the file we created.
-        for x in page_objects:
-            print(x)
-        sys.stdout = original_stdout
-    
     return render_template('index.html', questions=frequently_asked_questions, useraccount=get_account(request))
 
 
@@ -280,7 +281,6 @@ def contactus():
 @app.route('/newquestion', methods=['POST'])
 def new_question():
     new_question = FrequentlyAskedQuestion(author_user=str(request.form["username"]), question=str(request.form["question"]))
-    print(new_question.to_string())
     
     db.session.add(new_question)
     db.session.commit()
@@ -327,8 +327,6 @@ def item_admin():
         "item_title": "Title", 
         "description": "Description",
         "iframe_video_link": "Youtube video", 
-        "crafting_image_links": "Crafting Image Links", 
-        "smelting_image_links": "Smelting Image Links", 
         "source_mod": "Source Mod", 
         "stack_size": "Stack Size", 
         "item_rarity": "Rarity", 
@@ -341,17 +339,15 @@ def item_admin():
 @app.route('/newitem', methods=['POST'])
 def new_item():
     rarity = request.form["item_rarity"] if request.form["item_rarity"] != "" else "Common"
-    path = save_item(request)
+    path = uploadimage(request)
     if path == None:
-        path=""
+        path=1
 
     new_item = PageObject(
         item_title = request.form["item_title"],
         image_link = path,
         item_description = request.form["description"],
         iframe_video_link = request.form["iframe_video_link"],
-        crafting_image_links = request.form["crafting_image_links"],
-        smelting_image_links = request.form["smelting_image_links"],
         source_mod = request.form["source_mod"],
         stack_size = request.form["stack_size"],
         item_rarity = rarity,
@@ -361,7 +357,7 @@ def new_item():
     )
     db.session.add(new_item)
     db.session.commit()
-    return redirect('/item/home')
+    return redirect('/item/home/item')
 
 @app.route('/deleteitem/<itemid>')
 def delete_item(itemid):
@@ -435,13 +431,10 @@ def profile():
         remaining_permissions = [z for z in Permission_values]
         for x in permissions:
             perm_type = x.permission_type
-            print(perm_type)
             permissions_gen.append(Permission(has=True, name=perm_type))
             remaining_permissions.remove(perm_type)
         for y in remaining_permissions:
             permissions_gen.append(Permission(has=False, name=y))
-        print(remaining_permissions)
-        print(permissions_gen)
         return render_template("profile.html", useraccount=account, permissions=permissions_gen)
     else:
         return redirect('/signin')
@@ -463,7 +456,6 @@ def signinattempt():
             db.session.commit()
             response = make_response(redirect("/"))
             response.set_cookie("token", auth_account.auth_token)
-            flash("Sign in Successful!", "info")
             return response
     except NoResultFound: 
         return redirect("/signin/failed")
@@ -479,9 +471,9 @@ def sign_out():
 def create_new_account():
 
     password = create_password(request.form["logpass"])
-    print(request.form["logusername"])
+    print(f"username={request.form['logusername']}")
     token = encode_auth_token(str(request.form["logusername"]))
-    print(token)
+    print(f"auth_token={token}")
     auth_account = AuthAccount(email_account=request.form["logemail"],hash_password=password, auth_token=token)
 
     db.session.add(auth_account)
@@ -490,7 +482,6 @@ def create_new_account():
 
     authaccountrec = db.session.execute(db.select(AuthAccount).filter_by(email_account=request.form["logemail"])).scalar_one()
     birthdatedata=birthdate=request.form["logbirthdate"].split("-")
-    print(birthdatedata)
     birthdate = date(int(birthdatedata[0]), int(birthdatedata[1]), int(birthdatedata[2]))
 
     account = UserAccount(username=request.form["logusername"],full_name=request.form["logname"],birthdate=birthdate,auth_account_id=authaccountrec.id)
@@ -545,85 +536,32 @@ def itemimageupdate():
     picture_item.image_link = str(image_id)
     db.session.commit()
     return redirect(f"/item/{request.form['item_id']}/false")
-    
-@app.route('/item/home')
-def item_home():
-    items = db.session.execute(db.select(PageObject).filter_by(item_type="Item")).scalars()
-    item_list = []
-    image_dict = {}
-    for x in items:
-        image_dict[x.id] = create_image_item_2(x)
-        item_list.append(x)
-    
-    template = {
-        "id": "ID", 
-        "item_title": "Title", 
-        "image_link": "Image Link",
-        "description": "Description",
-        "iframe_video_link": "Youtube video", 
-        "crafting_image_links": "Crafting Image Links", 
-        "smelting_image_links": "Smelting Image Links", 
-        "source_mod": "Source Mod", 
-        "stack_size": "Stack Size", 
-        "item_rarity": "Rarity", 
-        "dimension": "Dimension",
-        "minecraft_item_id": "Minecraft Item ID",
-        "item_type": "Item Type"
-        }
-    return render_template('itemhome.html', items=item_list, image_dict=image_dict, pagename="Item", template=template, useraccount=get_account(request))
+  
+@app.route('/item/home/<type>')
+def item_home(type):
+    if type in ["item", "weapon", "tool"]:
+        items = db.session.execute(db.select(PageObject).filter_by(item_type=type)).scalars()
+        item_list = []
+        image_dict = {}
+        for x in items:
+            image_dict[x.id] = create_image_item_2(x)
+            item_list.append(x)
+        
+        template = {
+            "id": "ID", 
+            "item_title": "Title", 
+            "description": "Description",
+            "iframe_video_link": "Youtube video", 
+            "source_mod": "Source Mod", 
+            "stack_size": "Stack Size", 
+            "item_rarity": "Rarity", 
+            "dimension": "Dimension",
+            "minecraft_item_id": "Minecraft Item ID",
+            "item_type": "Item Type"
+            }
+        return render_template('itemhome.html', pagename=type.upper(), image_dict=image_dict, items=item_list, template=template, useraccount=get_account(request))
+    else:
+        return redirect("/")
 
-@app.route('/tool/home')
-def tool_home():
-    items = db.session.execute(db.select(PageObject).filter_by(item_type="Tool")).scalars()
-    item_list = []
-    image_dict = {}
-    for x in items:
-        image_dict[x.id] = create_image_item_2(x)
-        item_list.append(x)
-    
-    template = {
-        "id": "ID", 
-        "item_title": "Title", 
-        "image_link": "Image Link",
-        "description": "Description",
-        "iframe_video_link": "Youtube video", 
-        "crafting_image_links": "Crafting Image Links", 
-        "smelting_image_links": "Smelting Image Links", 
-        "source_mod": "Source Mod", 
-        "stack_size": "Stack Size", 
-        "item_rarity": "Rarity", 
-        "dimension": "Dimension",
-        "minecraft_item_id": "Minecraft Item ID",
-        "item_type": "Item Type"
-        }
-    return render_template('itemhome.html', pagename="Tool", image_dict=image_dict, items=item_list, template=template, useraccount=get_account(request))
-
-@app.route('/weapon/home')
-def weapon_home():
-    items = db.session.execute(db.select(PageObject).filter_by(item_type="Weapon")).scalars()
-    item_list = []
-    image_dict = {}
-    for x in items:
-        image_dict[x.id] = create_image_item_2(x)
-        item_list.append(x)
-    
-    template = {
-        "id": "ID", 
-        "item_title": "Title", 
-        "image_link": "Image Link",
-        "description": "Description",
-        "iframe_video_link": "Youtube video", 
-        "crafting_image_links": "Crafting Image Links", 
-        "smelting_image_links": "Smelting Image Links", 
-        "source_mod": "Source Mod", 
-        "stack_size": "Stack Size", 
-        "item_rarity": "Rarity", 
-        "dimension": "Dimension",
-        "minecraft_item_id": "Minecraft Item ID",
-        "item_type": "Item Type"
-        }
-    return render_template('itemhome.html', pagename="Weapon", image_dict=image_dict, items=item_list, template=template, useraccount=get_account(request))
-
-if __name__ == '__main__':
-    app.run(debug=True, port=54913)
+# app.run(debug=True, port=54913)
    

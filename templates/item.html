@@ -2,6 +2,15 @@
 
 {% block head%}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'item.css') }}"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+    $( function() {
+        $( "#editing-menu" ).draggable();
+    } );
+    </script>
+
 {% endblock %}
 
 {% block body %} 
@@ -84,6 +93,38 @@
         <div class="video">
             <iframe width="560" height="315" src="{{page_object.iframe_video_link}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen contenteditable="{{editable}}"></iframe>
         </div>
+        {% endif %}
+        {% if editable == True %}
+            <div id="editing-menu">
+                <div class="addimg">
+                    <h1>Add Crafting Image</h1>
+                    <form method="post" action="/createcraftingimage" id="itemcraftingimageform" enctype="multipart/form-data">
+                        <input type="text" hidden name="item_id" value="{{ page_object.id }}" text="{{ page_object.id }}">
+                        <div class="option-block">
+                            <label id="drop-area">
+                                <input type="file" value="" text="" name="file" accept="image/png, image/jpeg, image/jpg" hidden id="input-file2">
+                                <div id="img-view">
+                                    <img id="item-image" src="{{item_image.src}}">
+                                </div>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="addimg">
+                    <h1>Add Smelting Image</h1>
+                    <form method="post" action="/createsmeltingimage" id="itemsmeltingimageform" enctype="multipart/form-data">
+                        <input type="text" hidden name="item_id" value="{{ page_object.id }}" text="{{ page_object.id }}">
+                        <div class="option-block">
+                            <label id="drop-area">
+                                <input type="file" value="" text="" name="file" accept="image/png, image/jpeg, image/jpg" hidden id="input-file3">
+                                <div id="img-view">
+                                    <img id="item-image" src="{{item_image.src}}">
+                                </div>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
         {% endif %}
     </div>
     <script src="{{ url_for('static', filename = 'item_modification.js') }}"></script>
