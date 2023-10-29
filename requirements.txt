@@ -3,7 +3,6 @@ flask_sqlalchemy
 passlib
 datetime
 pyjwt==2.8.0
-sys
 werkzeug
 uuid
 logging
