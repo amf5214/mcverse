@@ -25,9 +25,9 @@
                     <form method="post" action="/itemimageupdate" id="itemimageform" enctype="multipart/form-data">
                         <input type="text" hidden name="item_id" value="{{ page_object.id }}" text="{{ page_object.id }}">
                         <div class="intro-block">
-                            <label id="drop-area">
+                            <label class="drop-area" id="drop-area">
                                 <input type="file" value="" text="" name="file" accept="image/png, image/jpeg, image/jpg" hidden id="input-file">
-                                <div id="img-view">
+                                <div class="img-view" id="img-view">
                                     <img id="item-image" src="{{item_image.src}}">
                                 </div>
                             </label>
@@ -101,10 +101,10 @@
                     <form method="post" action="/createcraftingimage" id="itemcraftingimageform" enctype="multipart/form-data">
                         <input type="text" hidden name="item_id" value="{{ page_object.id }}" text="{{ page_object.id }}">
                         <div class="option-block">
-                            <label id="drop-area">
+                            <label class="drop-area" id="drop-area2">
                                 <input type="file" value="" text="" name="file" accept="image/png, image/jpeg, image/jpg" hidden id="input-file2">
-                                <div id="img-view">
-                                    <img id="item-image" src="{{item_image.src}}">
+                                <div class="img-view" id="img-view2">
+                                    <img id="item-image" src="{{craftingdefault.src}}">
                                 </div>
                             </label>
                         </div>
@@ -115,10 +115,10 @@
                     <form method="post" action="/createsmeltingimage" id="itemsmeltingimageform" enctype="multipart/form-data">
                         <input type="text" hidden name="item_id" value="{{ page_object.id }}" text="{{ page_object.id }}">
                         <div class="option-block">
-                            <label id="drop-area">
+                            <label class="drop-area" id="drop-area3">
                                 <input type="file" value="" text="" name="file" accept="image/png, image/jpeg, image/jpg" hidden id="input-file3">
-                                <div id="img-view">
-                                    <img id="item-image" src="{{item_image.src}}">
+                                <div class="img-view" id="img-view3">
+                                    <img id="item-image" src="{{smeltingdefault.src}}">
                                 </div>
                             </label>
                         </div>

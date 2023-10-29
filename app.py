@@ -134,6 +134,10 @@ with app.app_context():
         def create_src(self):
             return f"data:image/{self.location};base64,{self.rendered_data}"
         
+    def create_image(id):
+        image = FileContent.query.get_or_404(id)
+        return image_item(image.location, image.rendered_data)
+
     def create_image_item(id):
         item = PageObject.query.get_or_404(id)
         if item.image_link != None:
@@ -290,6 +294,8 @@ def new_question():
 def item_report(itemid, editable):
     page_object = PageObject.query.get_or_404(itemid)
     item_image = create_image_item(itemid) 
+    craftingdefault = create_image(10) 
+    smeltingdefault = create_image(9) 
 
     if page_object.crafting_image_links != "":
         crafting_links = page_object.crafting_image_links.split(" ")
@@ -312,7 +318,7 @@ def item_report(itemid, editable):
         editable_permisssion = permission_validation("Edit_Pages", account.id)
         print("editable_permission=" + str(editable_permisssion))
         if editable_permisssion:
-            return render_template('item.html', page_object=page_object, item_image=item_image, crafting_links=crafting_links, smelting_links=smelting_links, editable=editable_permisssion, useraccount=get_account(request))
+            return render_template('item.html', page_object=page_object, item_image=item_image, crafting_links=crafting_links, smelting_links=smelting_links, editable=editable_permisssion, useraccount=get_account(request), smeltingdefault=smeltingdefault, craftingdefault=craftingdefault)
         else:
             return redirect(f"/item/{itemid}/false")
     else:
@@ -404,7 +410,7 @@ def update_item(itemid):
         try:
             db.session.commit()
             print(f"{item.id} updated")
-            return redirect(f"/item/{itemid}")
+            return redirect(f"/item/{itemid}/true")
         
         except:
             print(f"There was an error when updating the chosen item {itemid}")
@@ -576,6 +582,40 @@ def uploadnewimage():
     image_id = uploadimage(request)
     return redirect('/')
 
+@app.route('/createcraftingimage', methods=['POST'])
+def create_crafting_image():
+    itemid = request.form["item_id"]
+    object = PageObject.query.get_or_404(itemid)
+    image_id = uploadimage(request)
+    image_links = object.crafting_image_links.split(" ")
+    image_links.append(image_id)
+    new_str = ""
+    for i, x in enumerate(image_links):
+        if i == 1:
+            new_str = str(x)
+        else:
+            new_str = new_str + " " + str(x)
+    object.crafting_image_links = new_str
+    db.session.commit()    
+    return redirect(f'item/{itemid}/true')
+
+
+@app.route('/createsmeltingimage', methods=['POST'])
+def create_smelting_image():
+    itemid = request.form["item_id"]
+    object = PageObject.query.get_or_404(itemid)
+    image_id = uploadimage(request)
+    image_links = object.smelting_image_links.split(" ")
+    image_links.append(image_id)
+    new_str = ""
+    for i, x in enumerate(image_links):
+        if i == 1:
+            new_str = str(x)
+        else:
+            new_str = new_str + " " + str(x)
+    object.smelting_image_links = new_str
+    db.session.commit()    
+    return redirect(f'item/{itemid}/true')
 
 # app.run(debug=True, port=54913)
    
