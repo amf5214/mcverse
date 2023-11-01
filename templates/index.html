@@ -80,56 +80,74 @@
                 <p id="site-purpose">These are links to helpful information to help you get started on your adventure or to help you get out of tricky situations.
                 </p>
             </div>
-            <div class="quick-links">
-                <div class="link">
-                    <img class="linkimage" src="{{url_for('static', filename='apple.webp')}}">
-                    <a class="linklabel" href="/learn/food">Food</a>
+            <section class="container" id="con-2">
+                <div class="slider-wrapper" id="wrapper-2">
+                    <div id="link-box">
+                        <div class="link" id="link-1">
+                            <img class="linkimage" src="{{url_for('static', filename='apple.webp')}}">
+                            <a class="linklabel" href="/learn/food">Food</a>
+                        </div>
+                        <div class="link" id="link-2">
+                            <img class="linkimage" src="{{url_for('static', filename='farming.png')}}">
+                            <a  class="linklabel" href="/learn/farming">Farming</a>
+                        </div>
+                        <div class="link" id="link-3">
+                            <img class="linkimage" src="{{url_for('static', filename='mining4.png')}}">
+                            <a  class="linklabel" href="/learn/mining">Mining</a>
+                        </div>
+                        <div class="link" id="link-4">
+                            <img class="linkimage" src="{{url_for('static', filename='building.webp')}}">
+                            <a  class="linklabel" href="/learn/building">Building</a>
+                        </div>
+                        <div class="link" id="link-5">
+                            <img class="linkimage" src="{{url_for('static', filename='electricity3.png')}}">
+                            <a  class="linklabel" href="/learn/power">Power</a>
+                        </div>
+                        <div class="link" id="link-6">
+                            <img class="linkimage" src="{{url_for('static', filename='storage3.png')}}">
+                            <a  class="linklabel" href="/learn/storage">Storage</a>
+                        </div>
+                        <div class="link" id="link-7">
+                            <img class="linkimage" src="{{url_for('static', filename='backpack3.png')}}">
+                            <a  class="linklabel" href="/learn/backpacks">Backpack</a>
+                        </div>
+                        <div class="link" id="link-8">
+                            <img class="linkimage" src="{{url_for('static', filename='dungeon.webp')}}">
+                            <a  class="linklabel" href="/learn/dungeons">Dungeon</a>
+                        </div>
+                        <div class="link" id="link-9">
+                            <img class="linkimage" src="{{url_for('static', filename='weapon3.png')}}">
+                            <a  class="linklabel" href="/weapon/home">Weapon</a>
+                        </div>
+                        <div class="link" id="link-10">
+                            <img class="linkimage" src="{{url_for('static', filename='Chisels.webp')}}">
+                            <a  class="linklabel" href="/learn/chisel2">Chisel 2</a>
+                        </div>
+                        <div class="link" id="link-11">
+                            <img class="linkimage" src="{{url_for('static', filename='bibliocraft2.png')}}">
+                            <a  class="linklabel" href="/learn/bibliocraft">Biblio</a>
+                        </div>
+                        <div class="link" id="link-12">
+                            <img class="linkimage" src="{{url_for('static', filename='journeymap4.png')}}">
+                            <a  class="linklabel" href="/learn/journeymap">Journey</a>
+                        </div>
+                    </div>
+                    <div class="slider-nav">
+                        <a href="#link-1"></a>
+                        <a href="#link-2"></a>
+                        <a href="#link-3"></a>
+                        <a href="#link-4"></a>
+                        <a href="#link-5"></a>
+                        <a href="#link-6"></a>
+                        <a href="#link-7"></a>
+                        <a href="#link-8"></a>
+                        <a href="#link-9"></a>
+                        <a href="#link-10"></a>
+                        <a href="#link-11"></a>
+                        <a href="#link-12"></a>
+                    </div>
                 </div>
-                <div class="link">
-                    <img class="linkimage" src="{{url_for('static', filename='farming.png')}}">
-                    <a  class="linklabel" href="/learn/farming">Farming</a>
-                </div>
-                <div class="link">
-                    <img class="linkimage" src="{{url_for('static', filename='mining4.png')}}">
-                    <a  class="linklabel" href="/learn/mining">Mining</a>
-                </div>
-                <div class="link">
-                    <img class="linkimage" src="{{url_for('static', filename='building.webp')}}">
-                    <a  class="linklabel" href="/learn/building">Building</a>
-                </div>
-                <div class="link">
-                    <img class="linkimage" src="{{url_for('static', filename='electricity3.png')}}">
-                    <a  class="linklabel" href="/learn/power">Power</a>
-                </div>
-                <div class="link">
-                    <img class="linkimage" src="{{url_for('static', filename='storage3.png')}}">
-                    <a  class="linklabel" href="/learn/storage">Storage</a>
-                </div>
-                <div class="link">
-                    <img class="linkimage" src="{{url_for('static', filename='backpack3.png')}}">
-                    <a  class="linklabel" href="/learn/backpacks">Backpack</a>
-                </div>
-                <div class="link">
-                    <img class="linkimage" src="{{url_for('static', filename='dungeon.webp')}}">
-                    <a  class="linklabel" href="/learn/dungeons">Dungeon</a>
-                </div>
-                <div class="link">
-                    <img class="linkimage" src="{{url_for('static', filename='weapon3.png')}}">
-                    <a  class="linklabel" href="/weapon/home">Weapon</a>
-                </div>
-                <div class="link">
-                    <img class="linkimage" src="{{url_for('static', filename='Chisels.webp')}}">
-                    <a  class="linklabel" href="/learn/chisel2">Chisel 2</a>
-                </div>
-                <div class="link">
-                    <img class="linkimage" src="{{url_for('static', filename='bibliocraft2.png')}}">
-                    <a  class="linklabel" href="/learn/bibliocraft">Biblio</a>
-                </div>
-                <div class="link">
-                    <img class="linkimage" src="{{url_for('static', filename='journeymap4.png')}}">
-                    <a  class="linklabel" href="/learn/journeymap">Journey</a>
-                </div>
-            </div>
+            </section>
         </div>
         <div class="intro-block" id="item-4">
             <div class="title-block">
