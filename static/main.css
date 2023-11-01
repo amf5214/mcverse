@@ -304,10 +304,10 @@
 @media (max-width: 1099px) and (min-width: 500px) {
 
     body {
-        background-image: url("homepage67.jpg");
+        background-image: url("landscape.jpg");
         background-repeat: no-repeat;
         background-size: cover;
-        background-size: 150% 100%;
+        background-size: 450% 100%;
         background-position: center;
         margin: 0;
     }
