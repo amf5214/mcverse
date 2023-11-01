@@ -9,7 +9,7 @@ import os
 from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename
 import uuid
-# import logging
+import logging
 from base64 import b64encode
 import base64
 from io import BytesIO #Converts data from Database into bytes
@@ -18,7 +18,7 @@ import pymysql
 from sqlalchemy.dialects.mysql import LONGTEXT
 
 
-# logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
+logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
 
 app = Flask(__name__)
 
@@ -29,7 +29,7 @@ with app.app_context():
     app.config["UPLOAD_FOLDER"] = "static/uploads/"
     app.config["ITEM_FOLDER"] = "static/items/"
     db = SQLAlchemy(app)
-    # logging.info("Database configured")
+    logging.info("Database configured")
 
     class FrequentlyAskedQuestion(db.Model):
         id = db.Column(db.Integer, primary_key=True)
@@ -120,10 +120,20 @@ with app.app_context():
       text = db.Column(db.Text)
       location = db.Column(db.String(64))
       pic_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
       def __repr__(self):
           return f"<FileContent {self.id}>"
-      
-    #   logging.info("Table classes configured")
+
+    class ItemClass(db.Model):
+
+        id = db.Column(db.Integer,  primary_key=True)
+        name = db.Column(db.String(128), nullable=False)
+
+        def __repr__(self):
+          return f"<ItemClass {self.id}>"
+        
+    logging.info("Table classes configured")
+
 
     class image_item():
         def __init__(self, location, rendered_data, id):
@@ -167,16 +177,16 @@ with app.app_context():
 
     def get_account(request):
         token = request.cookies.get("token")
-        # logging.info(f"auth_token={token}")
+        logging.info(f"auth_token={token}")
         if token != None:
             try:
                 auth_account = db.session.execute(db.select(AuthAccount).filter_by(auth_token=token)).scalar_one()
-                # logging.info(f"auth_account_id={auth_account.id}")
+                logging.info(f"auth_account_id={auth_account.id}")
                 account = db.session.execute(db.select(UserAccount).filter_by(auth_account_id=auth_account.id)).scalar_one()
-                # logging.info(f"account_id={account.id}")
+                logging.info(f"account_id={account.id}")
                 account.set_auth(auth_account)
                 account.admin_flag = permission_validation("Admin", account.id)
-                # logging.info(f"admin_flag={account.admin_flag}")
+                logging.info(f"admin_flag={account.admin_flag}")
                 if account.account_image_link != None:
                     image_id = account.account_image_link
                     account.image_flag = True
@@ -189,7 +199,7 @@ with app.app_context():
                     account.image_flag = False
                 image_obj = FileContent.query.get_or_404(image_id)
                 account.profile_img_loc = image_obj.location
-                # logging.info(f"account_image_loc={account.profile_img_loc}")
+                logging.info(f"account_image_loc={account.profile_img_loc}")
                 account.profile_img_data = image_obj.rendered_data
 
                 return account
@@ -255,12 +265,16 @@ with app.app_context():
             db.session.add(newFile)
             db.session.commit() 
             return newFile.id
+        
+    def get_item_classes():
+        item_classes = ItemClass.query.order_by(ItemClass.id).all()
+        return item_classes
 
-    # db.create_all()
+    db.create_all()
 
     Permission_values = ["Admin", "Edit_Pages", "Add_Pages"]
 
-    # logging.info("Backend functions built")
+    logging.info("Backend functions built")
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -316,7 +330,7 @@ def item_report(itemid, editable):
     if editable == "true":
         editable_permisssion = permission_validation("Edit_Pages", account.id)
         if editable_permisssion:
-            return render_template('item.html', page_object=page_object, item_image=item_image, crafting_links=crafting_links, smelting_links=smelting_links, editable=editable_permisssion, useraccount=get_account(request), smeltingdefault=smeltingdefault, craftingdefault=craftingdefault)
+            return render_template('item.html', page_object=page_object, item_image=item_image, crafting_links=crafting_links, smelting_links=smelting_links, editable=editable_permisssion, useraccount=get_account(request), smeltingdefault=smeltingdefault, craftingdefault=craftingdefault, itemclasses=get_item_classes())
         else:
             return redirect(f"/item/{itemid}/false")
     else:
@@ -337,7 +351,7 @@ def item_admin():
         "minecraft_item_id": "Minecraft Item ID",
         "item_type": "Item Type"
         }
-    return render_template('item_admin.html', admin_token=True, items=items, template=template, useraccount=get_account(request))
+    return render_template('item_admin.html', admin_token=True, items=items, template=template, useraccount=get_account(request), itemclasses=get_item_classes())
 
 @app.route('/newitem', methods=['POST'])
 def new_item():
@@ -346,13 +360,20 @@ def new_item():
     if path == None:
         path=1
 
+    try:
+        stack_size  = int(request.form["stack_size"])
+
+    except: 
+        stack_size = 0
+    
+
     new_item = PageObject(
         item_title = request.form["item_title"],
         image_link = path,
         item_description = request.form["description"],
         iframe_video_link = request.form["iframe_video_link"],
         source_mod = request.form["source_mod"],
-        stack_size = request.form["stack_size"],
+        stack_size = stack_size,
         item_rarity = rarity,
         dimension = request.form["dimension"],
         item_type = request.form["item_type"],
@@ -641,5 +662,45 @@ def unlinksmeltingimage(page_object, image):
     db.session.commit()   
     return redirect(f'/item/{page_object}/true')
 
-app.run(debug=False, port=54913)
+@app.route('/itemclasshome')
+def itemclasshome():
+    account = get_account(request)
+    if account == None or account.full_name=="No Account":
+        return redirect('/')
+    else:
+        accountid = account.id
+    if not permission_validation("Admin", accountid):
+        return redirect('/')
+    return render_template('itemclasshome.html', pagename="Item Class", admin_token=True, useraccount=get_account(request), itemclasses=get_item_classes())
+
+@app.route('/newitemclass', methods=['POST'])
+def newitemclass():
+    account = get_account(request)
+    if account == None or account.full_name=="No Account":
+        return redirect('/')
+    else:
+        accountid = account.id
+    if not permission_validation("Admin", accountid):
+        return redirect('/')
+    
+    item_class = ItemClass(name=request.form['class-name'])
+    db.session.add(item_class)
+    db.session.commit()
+    return redirect('/itemclasshome')
+
+@app.route('/deleteitemclass/<classid>')
+def deleteitemclass(classid):
+    account = get_account(request)
+    if account == None or account.full_name=="No Account":
+        return redirect('/')
+    else:
+        accountid = account.id
+    if not permission_validation("Admin", accountid):
+        return redirect('/')
+    itemclass = ItemClass.query.get_or_404(classid)
+    db.session.delete(itemclass)
+    db.session.commit()
+    return redirect('/itemclasshome')
+
+app.run(debug=True, port=54913)
    

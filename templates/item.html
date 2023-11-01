@@ -59,9 +59,9 @@
                     <h3>Item Type:
                         {% if editable == True %}
                             <select enabled id="item_type" class="editable-item" value="{{ page_object.item_type }}">
-                                <option>Item</option>
-                                <option>Weapon</option>
-                                <option>Tool</option>
+                                {% for itemclass in itemclasses %}
+                                    <option>{{ itemclass.name }}</option>
+                                {% endfor %}
                             </select>
                         {% else %}
                         {{ page_object.item_type }}

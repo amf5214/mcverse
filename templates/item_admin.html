@@ -60,9 +60,9 @@
                         </select>
                         <label class="label-element">Type</label>
                         <select class="form-element" name="item_type" id="item_type">
-                            <option>Item</option>
-                            <option>Weapon</option>
-                            <option>Tool</option>
+                            {% for itemclass in itemclasses %}
+                                <option>{{ itemclass.name }}</option>
+                            {% endfor %}
                         </select>
                         <label class="label-element">Item Image</label>
                         <input type="file" accept="image/*" name="file">
