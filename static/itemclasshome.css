@@ -155,8 +155,9 @@ table tr:hover {background-color: #ddd;}
 
 #new-item form {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-content: center;
+    justify-content: center;
     align-items: center;
     color: white;
     font-family: grandstander;
@@ -185,7 +186,9 @@ table tr:hover {background-color: #ddd;}
 
 @media(min-width: 500px) {
     #new-item form {
-        display: grid;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
         grid-template-columns: repeat(4, 1fr);
         align-content: center;
         align-items: center;

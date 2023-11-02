@@ -23,7 +23,6 @@ logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
 app = Flask(__name__)
 
 with app.app_context():
-    # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mcverse.sqlite"
     app.config["SQLALCHEMY_DATABASE_URI"] = "mariadb+pymysql://prod_main:Alhamley3/@mariadb-152364-0.cloudclusters.net:19546/mcverse_prod?charset=utf8mb4"
     app.config["SECRET_KEY"] = "jgjdfk34benrgtgjfhbdnjmkf5784iejkdshjssefwr"
     app.config["UPLOAD_FOLDER"] = "static/uploads/"
@@ -132,8 +131,39 @@ with app.app_context():
         def __repr__(self):
           return f"<ItemClass {self.id}>"
         
-    logging.info("Table classes configured")
+    class WebPage(db.Model):
 
+        id = db.Column(db.Integer,  primary_key=True)
+        text = db.Column(db.Text)
+        div_title = db.Column(db.String(255))
+
+        def __repr__(self):
+          return f"<WebPage {self.id}>"
+        
+    class DivContainer(db.Model):
+
+        id = db.Column(db.Integer,  primary_key=True)
+        text = db.Column(db.Text)
+        div_title = db.Column(db.String(255))
+        display_type = db.Column(db.String(255))
+        flex_direction = db.Column(db.String(255))
+
+        def __repr__(self):
+          return f"<DivContainer {self.id}>"
+        
+    class PageElement(db.Model):
+
+        id = db.Column(db.Integer,  primary_key=True)
+        element_type = db.Column(db.String(255))
+        div_id = db.Column(db.Integer)
+        text = db.Column(db.Text)
+        div_title = db.Column(db.String(255))
+        page_id = db.Column(db.String(255))
+
+        def __repr__(self):
+          return f"<PageElement {self.id}>"
+            
+    logging.info("Table classes configured")
 
     class image_item():
         def __init__(self, location, rendered_data, id):
