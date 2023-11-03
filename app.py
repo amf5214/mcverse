@@ -738,16 +738,30 @@ def deleteitemclass(classid):
 
 @app.route('/managewebpages')
 def managewebpages():
+    account = get_account(request)
+    if account == None or account.full_name=="No Account":
+        return redirect('/')
+    else:
+        accountid = account.id
+    if not permission_validation("Admin", accountid):
+        return redirect('/')
     pages = WebPage.query.order_by(WebPage.id).all()
     return render_template('webpagehome.html', pages=pages, useraccount=get_account(request))
 
 
 @app.route('/createwebpage', methods=['POST'])
 def createwebpage():
-   new_page = WebPage(text=request.form["text"], div_title=request.form["div_title"], path=request.form["path"].lower(), directory=request.form["directory"].lower())
-   db.session.add(new_page)
-   db.session.commit()
-   return redirect('/managewebpages')
+    account = get_account(request)
+    if account == None or account.full_name=="No Account":
+        return redirect('/')
+    else:
+        accountid = account.id
+    if not permission_validation("Admin", accountid):
+        return redirect('/')
+    new_page = WebPage(text=request.form["text"], div_title=request.form["div_title"], path=request.form["path"].lower(), directory=request.form["directory"].lower())
+    db.session.add(new_page)
+    db.session.commit()
+    return redirect('/managewebpages')
 
 @app.route('/deletewebpage/<pageid>')
 def deletewebpage(pageid):
@@ -777,7 +791,6 @@ def learningpages(pagepath, editable):
     for element in elements:
         divs_elements[f"div_{element.div_id}"][1][f"item_{element.placement_order}"] = element
     
-
     account = get_account(request)
     if editable == "true":
         editable_permisssion = permission_validation("Edit_Pages", account.id)
