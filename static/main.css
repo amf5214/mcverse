@@ -54,7 +54,14 @@
 }
 
 .material-symbols-outlined {
-   cursor: pointer; 
+    cursor: pointer; 
+    padding-top: .4rem;
+    padding-bottom: .4rem;
+    padding-left: .6rem;
+    padding-right: .6rem;
+    border-radius: .6rem;
+    border: 0;
+    box-shadow: -5px 5px -5px 5px rgba(0,0,0,0.2);
 }
 
 .menu-items {
