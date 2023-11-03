@@ -764,8 +764,9 @@ def deletewebpage(pageid):
     db.session.commit()
     return redirect('/managewebpages')
 
-@app.route('/learn/<pagepath>')
-def learningpages(pagepath):
+@app.route('/learn/<pagepath>', defaults={"editable":"false"})
+@app.route('/learn/<pagepath>/<editable>')
+def learningpages(pagepath, editable):
     page = db.session.execute(db.select(WebPage).filter_by(path=pagepath)).scalar_one()
     divs = db.session.execute(db.select(DivContainer).filter_by(page_id=page.id)).scalars()
     elements = db.session.execute(db.select(PageElement).filter_by(page_id=page.id)).scalars()
@@ -776,6 +777,15 @@ def learningpages(pagepath):
     for element in elements:
         divs_elements[f"div_{element.div_id}"][1][f"item_{element.placement_order}"] = element
     
-    return render_template("learnpage.html", divs=divs_elements, page=page, useraccount=get_account(request))    
+
+    account = get_account(request)
+    if editable == "true":
+        editable_permisssion = permission_validation("Edit_Pages", account.id)
+        if editable_permisssion:
+            return render_template("learnpage.html", divs=divs_elements, page=page, useraccount=account, editable=editable_permisssion) 
+        else:
+            return redirect(f"/learn/{page.path}/false")
+    else:
+        return render_template("learnpage.html", divs=divs_elements, page=page, useraccount=account, editable=False) 
         
 app.run(debug=True, port=54913)

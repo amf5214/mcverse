@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'learnpage.css') }}"/>
+{% endblock %}
+
+{% block body %} 
+    <div class="homepage">
+        <div class="intro-block" id="item-1">
+            <div class="title-block">
+                <h1 id="item_title" class="editable-item" contenteditable="{{editable}}">
+                    {{ page.div_title }}
+                    <span class="material-symbols-outlined">rocket_launch</span>
+                </h1>
+            </div>
+            <p>{{ page.text }}</p>
+        </div>
+        <div class="rightmenubar">
+            <a href="#item-1">Introduction</a>
+            {% for div in divs %}
+                <a href="#{{ div.id }}">{{ div.div_title }}</a>
+            {% endfor %}
+            <div id="openclosemenudiv">
+                {% if editable == True %}
+                    <button id="close" onclick="window.location.href='/learn/{{page.path}}/false'"><span id="editmenutextspan" class="material-symbols-outlined">done_outline</span></button>
+                {% else %}
+                    <button id="close" onclick="window.location.href='/learn/{{page.path}}/true'"><span id="editmenutextspan" class="material-symbols-outlined">edit</span></button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,134 @@
+.homepage {
+    display: flex;
+    flex-direction: column;
+    margin: auto clamp(.25rem, .25rem + 2vw, 3rem);
+}
+
+.homepage > * {
+    margin: 1rem auto;
+}
+
+@media(min-width: 1000px) {
+    .homepage {
+        flex-direction: row;
+        flex-wrap: wrap;
+        column-gap: 1em;
+        row-gap: 1em;
+    }
+
+    .homepage > * {
+        flex: 0 1 40%;
+        align-self: top center;
+    }
+}
+
+.intro-block {
+    background-color: #21232A;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 2rem;
+    border-radius: 1em;
+    margin: 1em;
+}
+
+.intro-block-image {
+    background-color: #21232A;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    padding: 2rem;
+    border-radius: 1em;
+    margin: 1em;
+}
+
+#item-1 .title-block{
+    justify-content: space-between;
+}
+
+.title-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.title-block h1 {
+    font-family: grandstander;
+    font-size: clamp(.75rem, .75rem + 2vw, 2rem);
+    align-items: center;
+    text-align: center;
+}
+
+.title-block h1 span {
+    color: green;
+}
+
+.title-block p {
+   font-family: grandstander;
+   font-size: clamp(.3rem, .3rem + 2vw, 1rem);
+   line-height: 1.5em;
+   text-align: center;
+}
+
+.intro-block p {
+    font-family: grandstander;
+    font-size: clamp(.3rem, .3rem + 2vw, 1rem);
+    line-height: 1.5em;
+    text-align: center;
+ }
+
+.rightmenubar {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    right: 0;
+    top: 20%;
+    max-width: 10%;
+    max-height: 50%;
+    background-color: #21232A;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    font-family: grandstander;
+    font-size: clamp(.3rem, .3rem + 2vw, 1rem);
+    color: white;
+    text-decoration: none;
+    box-shadow: -3em 0 -1em rgba(0,0,0,0.2);
+    border-radius: .7rem;
+}
+
+.rightmenubar a {
+    font-family: grandstander;
+    font-size: clamp(.3rem, .3rem + 2vw, 1rem);
+    color: white;
+    text-decoration: none;
+}
+
+.rightmenubar a:hover {
+    font-family: grandstander;
+    font-size: clamp(.3rem, .3rem + 2vw, 1rem);
+    color: white;
+    text-decoration: underline;
+}
+
+.rightmenubar > * {
+    margin: 1rem;
+}
+
+#openclosemenudiv {
+    display: flex;
+    flex-direction: column;
+}
