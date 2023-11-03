@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'webpagehome.css') }}" /> 
+    <title>MC Verse</title>
+{% endblock %}
+
+{% block body %}
+    <div class="homepage">
+        <div class="intro-block">
+            <div class="title-block">
+                <h1 id="title">All Web Pages<span class="material-symbols-outlined">rocket_launch</span>
+                </h1>
+                <p id="site-purpose">This is a place to view all current webpages
+                </p>
+            </div>
+            <div class="table-wrapper">
+                <table class="item-section">   
+                    <caption></caption>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Header Text</th>
+                    <th>Url Path</th>
+                    {% for page in pages %}
+                        <tr>
+                            <td><a>{{page.id}}</h3></td>
+                            <td><a>{{page.div_title}}</h3></td>
+                            <td><a>{{page.text}}</h3></td>
+                            <td><a>/{{page.directory}}/{{page.path}}</h3></td>
+                            <td>
+                                <div id="modifiers">
+                                    <a href="/{{page.directory}}/{{page.path}}">Page</a>
+                                    <a href="/deletewebpage/{{page.id}}">Delete</a>
+                                </div>
+                            </td>
+                          
+                        </tr>
+                    {% endfor %}
+                </table>
+                <input type="button" onclick="location.href='#new-item'" value="New Web Page" id="new-item-button">
+                <div id="new-item">
+                    <button id="close" onclick="location.href='#body'">
+                        <span class="material-symbols-outlined" id="background-circle">cancel</span>
+                        <span class="material-symbols-outlined" id="xcircle">close</span>
+                    </button>
+                    <h1></h1>
+                    <form action="/createwebpage" method="POST" enctype="multipart/form-data">
+                        <label class="label-element">Title Name</label>
+                        <input class="form-element" type="text" name="div_title" id="div_title">
+                        <label class="label-element">Header Text</label>
+                        <input class="form-element" type="text" name="text" id="text">
+                        <label class="label-element">Url Path</label>
+                        <h1 class="form-element">www.mcverse.com/learn/<input class="form-element" type="text" name="path" id="path"></h1>
+                        <input class="form-element" type="hidden" name="directory" id="directory" value="learn">
+                        <input type="submit" id="submit-button-item" value="Submit" class="btn">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -106,11 +106,6 @@ with app.app_context():
         def __repr__(self):
             return f"<AuthAccount {self.id}>"
 
-    class Permission():
-        def __init__(self, has, name):
-            self.has=has
-            self.name=name
-
     class FileContent(db.Model):
 
       id = db.Column(db.Integer,  primary_key=True)
@@ -136,6 +131,8 @@ with app.app_context():
         id = db.Column(db.Integer,  primary_key=True)
         text = db.Column(db.Text)
         div_title = db.Column(db.String(255))
+        path = db.Column(db.String(255))
+        directory = db.Column(db.String(255))
 
         def __repr__(self):
           return f"<WebPage {self.id}>"
@@ -147,6 +144,7 @@ with app.app_context():
         div_title = db.Column(db.String(255))
         display_type = db.Column(db.String(255))
         flex_direction = db.Column(db.String(255))
+        page_id = db.Column(db.Integer)
 
         def __repr__(self):
           return f"<DivContainer {self.id}>"
@@ -158,12 +156,18 @@ with app.app_context():
         div_id = db.Column(db.Integer)
         text = db.Column(db.Text)
         div_title = db.Column(db.String(255))
-        page_id = db.Column(db.String(255))
+        page_id = db.Column(db.Integer)
+        placement_order = db.Column(db.Integer)
 
         def __repr__(self):
           return f"<PageElement {self.id}>"
             
     logging.info("Table classes configured")
+
+    class Permission():
+        def __init__(self, has, name):
+            self.has=has
+            self.name=name
 
     class image_item():
         def __init__(self, location, rendered_data, id):
@@ -732,5 +736,46 @@ def deleteitemclass(classid):
     db.session.commit()
     return redirect('/itemclasshome')
 
+@app.route('/managewebpages')
+def managewebpages():
+    pages = WebPage.query.order_by(WebPage.id).all()
+    return render_template('webpagehome.html', pages=pages, useraccount=get_account(request))
+
+
+@app.route('/createwebpage', methods=['POST'])
+def createwebpage():
+   new_page = WebPage(text=request.form["text"], div_title=request.form["div_title"], path=request.form["path"].lower(), directory=request.form["directory"].lower())
+   db.session.add(new_page)
+   db.session.commit()
+   return redirect('/managewebpages')
+
+@app.route('/deletewebpage/<pageid>')
+def deletewebpage(pageid):
+    account = get_account(request)
+    if account == None or account.full_name=="No Account":
+        return redirect('/')
+    else:
+        accountid = account.id
+    if not permission_validation("Admin", accountid):
+        return redirect('/')
+
+    page = db.session.execute(db.select(WebPage).filter_by(id=pageid)).scalar_one()
+    db.session.delete(page)
+    db.session.commit()
+    return redirect('/managewebpages')
+
+@app.route('/learn/<pagepath>')
+def learningpages(pagepath):
+    page = db.session.execute(db.select(WebPage).filter_by(path=pagepath)).scalar_one()
+    divs = db.session.execute(db.select(DivContainer).filter_by(page_id=page.id)).scalars()
+    elements = db.session.execute(db.select(PageElement).filter_by(page_id=page.id)).scalars()
+    divs_elements = {}
+    for div in divs:
+        divs_elements[f"div_{div.id}"] = [div, {}]
+        
+    for element in elements:
+        divs_elements[f"div_{element.div_id}"][1][f"item_{element.placement_order}"] = element
+    
+    return render_template("learnpage.html", divs=divs_elements, page=page, useraccount=get_account(request))    
+        
 app.run(debug=True, port=54913)
-   
