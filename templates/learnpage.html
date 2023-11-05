@@ -16,14 +16,51 @@
             <p>{{ page.text }}</p>
         </div>
         {% for div in divs %}
-            <div class="user_created_page_div" id="user_created_page_div_{{ div.id }}">
+            <div class="intro-block" id="user_created_page_div_{{ div.id }}">
+                <div class="title-block">
+                    <h1 id="item_title" class="editable-item" contenteditable="{{editable}}">
+                        {{ div.div_title }}
+                        <span class="material-symbols-outlined">rocket_launch</span>
+                    </h1>
+                </div>
+                <p>{{ div.text }}</p>
+                {% for element in div.elements %}
+                    {% if element.element_type == "img" %}
+                        <img src="{{ element.text }}">
 
+                    {% elif element.element_type == "h1" %}
+                        <h1>{{ element.text }}</h1>
+
+                    {% elif element.element_type == "h2" %}
+                        <h2>{{ element.text }}</h2>
+
+                    {% elif element.element_type == "p" %}
+                        <p>{{ element.text }}</p>
+                    
+                    {% elif element.element_type == "youtube" %}
+                        <iframe width="560" height="315" src="{{ element.text }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+                    {% elif element.element_type == "image-carousel" %}
+                        <section class="container">
+                            <div class="slider-wrapper">
+                                <div class="slider">
+                                    {% for image in images %}
+                                        <img id="carousel{{ element.id }}-slide{{ loop.index }}" src="{{ image }}" alt="Image"/>
+                                    {% endfor %}
+                                </div>
+                                <div class="slider-nav">
+                                    <a href="#carousel{{ element.id }}-slide{{ loop.index }}"></a>
+                                </div>
+                            </div>
+                        </section>  
+                    {% endif %}
+                {% endfor %}
             </div>
         {% endfor %}
 
         <div class="rightmenubar">
             {% if editable == True %}
-                
+                <h1 class="draggable-obj">Section</h1>
             {% else %}
                 <a href="#item-1">Introduction</a>
                 {% for div in divs %}
@@ -39,4 +76,5 @@
             </div>
         </div>
     </div>
+    <script src="{{url_for('static', filename='draggable.js')}}"
 {% endblock %}
