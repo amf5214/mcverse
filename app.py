@@ -805,16 +805,24 @@ def deletewebpage(pageid):
 @app.route('/learn/<pagepath>/<editable>')
 def learningpages(pagepath, editable):
     page = db.session.execute(db.select(WebPage).filter_by(path=pagepath)).scalar_one()
-    divs = db.session.execute(db.select(DivContainer).filter_by(page_id=page.id)).scalars()
-    elements = db.session.execute(db.select(PageElement).filter_by(page_id=page.id)).scalars()
-    divs_elements = {}
-    for div in divs:
-        divs_elements[f"div_{div.id}"] = [div, {}]
-        
+    divs = db.session.execute(db.select(DivContainer).filter_by(page_id=page.id)).order_by(DivContainer.placement_order).scalars()
+    elements = db.session.execute(db.select(PageElement).filter_by(page_id=page.id)).order_by(PageElement.div_id, PageElement.placement_order).scalars()
+    div_elements = {}
+
     for element in elements:
-        divs_elements[f"div_{element.div_id}"][1][f"item_{element.placement_order}"] = element
-    
-    account = get_account(request)
+        if f"div_{element.div_id}" in div_elements.keys():
+            div_elements[f"div_{element.div_id}"].append(element)
+        else:
+              div_elements[f"div_{element.div_id}"] = [element]
+              
+    div_lst = []
+    for div in divs:
+        if f"div_{element.div_id}" in div_elements.keys():
+            div.elements = div_elements[f"div_{element.div_id}"]
+        else:
+            div.elements = []
+        div_lst.append(div)
+            
     if editable == "true":
         if check_if_editor(request):
             return render_template("learnpage.html", divs=divs_elements, page=page, useraccount=get_account(request), editable=True) 
