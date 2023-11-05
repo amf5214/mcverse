@@ -15,11 +15,21 @@
             </div>
             <p>{{ page.text }}</p>
         </div>
+        {% for div in divs %}
+            <div class="user_created_page_div" id="user_created_page_div_{{ div.id }}">
+
+            </div>
+        {% endfor %}
+
         <div class="rightmenubar">
-            <a href="#item-1">Introduction</a>
-            {% for div in divs %}
-                <a href="#{{ div.id }}">{{ div.div_title }}</a>
-            {% endfor %}
+            {% if editable == True %}
+                
+            {% else %}
+                <a href="#item-1">Introduction</a>
+                {% for div in divs %}
+                    <a href="#user_created_page_div_{{ div.id }}">{{ div.div_title }}</a>
+                {% endfor %}
+            {% endif %}
             <div id="openclosemenudiv">
                 {% if editable == True %}
                     <button id="close" onclick="window.location.href='/learn/{{page.path}}/false'"><span id="editmenutextspan" class="material-symbols-outlined">done_outline</span></button>
