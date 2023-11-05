@@ -2,11 +2,10 @@ from flask import Flask, render_template, request, redirect, url_for, json, Resp
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm.exc import NoResultFound
 from authentication import create_password, validate_password
-from datetime import date
 import sys
 import jwt
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date, timezone
 from werkzeug.utils import secure_filename
 import uuid
 import logging
@@ -113,7 +112,7 @@ with app.app_context():
       rendered_data = db.Column(db.Text(max), nullable=False) #Data to render the pic in browser
       text = db.Column(db.Text)
       location = db.Column(db.String(64))
-      pic_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+      pic_date = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
       def __repr__(self):
           return f"<FileContent {self.id}>"
@@ -145,6 +144,7 @@ with app.app_context():
         display_type = db.Column(db.String(255))
         flex_direction = db.Column(db.String(255))
         page_id = db.Column(db.Integer)
+        placement_order = db.Column(db.Integer)
 
         def __repr__(self):
           return f"<DivContainer {self.id}>"
@@ -215,27 +215,33 @@ with app.app_context():
         if token != None:
             try:
                 auth_account = db.session.execute(db.select(AuthAccount).filter_by(auth_token=token)).scalar_one()
-                logging.info(f"auth_account_id={auth_account.id}")
-                account = db.session.execute(db.select(UserAccount).filter_by(auth_account_id=auth_account.id)).scalar_one()
-                logging.info(f"account_id={account.id}")
-                account.set_auth(auth_account)
-                account.admin_flag = permission_validation("Admin", account.id)
-                logging.info(f"admin_flag={account.admin_flag}")
-                if account.account_image_link != None:
-                    image_id = account.account_image_link
-                    account.image_flag = True
-                    try:
-                        int(image_id)
-                    except:
-                        image_id = 3
+                if auth_account != None:
+                    logging.info(f"auth_account_id={auth_account.id}")
+                    account = db.session.execute(db.select(UserAccount).filter_by(auth_account_id=auth_account.id)).scalar_one()
+                    if account != None:
+                        logging.info(f"account_id={account.id}")
+                        account.set_auth(auth_account)
+                        account.admin_flag = permission_validation("Admin", account.id)
+                        logging.info(f"admin_flag={account.admin_flag}")
+                        if account.account_image_link != None:
+                            image_id = account.account_image_link
+                            account.image_flag = True
+                            try:
+                                int(image_id)
+                            except:
+                                image_id = 3
+                        else:
+                            image_id = 3
+                            account.image_flag = False
+                        image_obj = FileContent.query.get_or_404(image_id)
+                        account.profile_img_loc = image_obj.location
+                        logging.info(f"account_image_loc={account.profile_img_loc}")
+                        account.profile_img_data = image_obj.rendered_data
+                    else:
+                        return UserAccount(full_name="No Account")
                 else:
-                    image_id = 3
-                    account.image_flag = False
-                image_obj = FileContent.query.get_or_404(image_id)
-                account.profile_img_loc = image_obj.location
-                logging.info(f"account_image_loc={account.profile_img_loc}")
-                account.profile_img_data = image_obj.rendered_data
-
+                    return UserAccount(full_name="No Account")
+                
                 return account
             
             except NoResultFound:
@@ -250,6 +256,21 @@ with app.app_context():
                 return True
         
         return False
+    
+    def check_if_admin(request):
+        account = get_account(request)
+        if account.full_name != "No Account":
+            return permission_validation("Admin", account.id)
+        
+    def check_if_editor(request):
+        account = get_account(request)
+        if account.full_name != "No Account":
+            return permission_validation("Edit_Pages", account.id)
+        
+    def check_if_canadd(request):
+        account = get_account(request)
+        if account.full_name != "No Account":
+            return permission_validation("Add_Pages", account.id)
         
     def encode_auth_token(email_account):
             """
@@ -258,8 +279,8 @@ with app.app_context():
             """
             try:
                 payload = {
-                    'exp': datetime.utcnow() + timedelta(days=1, seconds=0),
-                    'iat': datetime.utcnow(),
+                    'exp': datetime.now(timezone.utc) + timedelta(days=1, seconds=0),
+                    'iat': datetime.now(timezone.utc),
                     'sub': email_account
                 }
                 return jwt.encode(
@@ -362,7 +383,7 @@ def item_report(itemid, editable):
     account = get_account(request)
 
     if editable == "true":
-        editable_permisssion = permission_validation("Edit_Pages", account.id)
+        editable_permisssion = check_if_editor(request)
         if editable_permisssion:
             return render_template('item.html', page_object=page_object, item_image=item_image, crafting_links=crafting_links, smelting_links=smelting_links, editable=editable_permisssion, useraccount=get_account(request), smeltingdefault=smeltingdefault, craftingdefault=craftingdefault, itemclasses=get_item_classes())
         else:
@@ -372,6 +393,8 @@ def item_report(itemid, editable):
 
 @app.route('/item/admin')
 def item_admin():
+    if not check_if_admin(request):
+        return redirect('/')
     items = PageObject.query.order_by(PageObject.id).all()
     template = {
         "id": "ID", 
@@ -389,6 +412,7 @@ def item_admin():
 
 @app.route('/newitem', methods=['POST'])
 def new_item():
+    
     rarity = request.form["item_rarity"] if request.form["item_rarity"] != "" else "Common"
     path = uploadimage(request)
     if path == None:
@@ -432,6 +456,8 @@ def get_item_json():
 
 @app.route('/updateitem/<itemid>', methods=["POST"])
 def update_item(itemid):
+    if not check_if_editor(request):
+        return redirect(f"/item/{itemid}/false")
     if request.method == "POST":
         item = PageObject.query.get_or_404(itemid)
 
@@ -494,7 +520,7 @@ def profile():
             permissions_gen.append(Permission(has=False, name=y))
         return render_template("profile.html", useraccount=account, permissions=permissions_gen)
     else:
-        return redirect('/signin')
+        return redirect('/signin/home')
 
 # @app.route('/profile/introduction')
 # def introduction():
@@ -514,6 +540,8 @@ def signinattempt():
             response = make_response(redirect("/"))
             response.set_cookie("token", auth_account.auth_token)
             return response
+        else:
+            return redirect("/signin/failed")
     except NoResultFound: 
         return redirect("/signin/failed")
     
@@ -526,6 +554,9 @@ def sign_out():
 @app.route('/newaccount', methods=["POST"])
 def create_new_account():
 
+    if request.form["logname"]=="No Account":
+        return render_template('signinup.html', signupmessage="Name entry is invalid", useraccount=get_account(request))
+
     password = create_password(request.form["logpass"])
     token = encode_auth_token(str(request.form["logusername"]))
     auth_account = AuthAccount(email_account=request.form["logemail"],hash_password=password, auth_token=token)
@@ -535,16 +566,20 @@ def create_new_account():
     db.session.commit()
 
     authaccountrec = db.session.execute(db.select(AuthAccount).filter_by(email_account=request.form["logemail"])).scalar_one()
-    birthdatedata=birthdate=request.form["logbirthdate"].split("-")
-    birthdate = date(int(birthdatedata[0]), int(birthdatedata[1]), int(birthdatedata[2]))
-
-    account = UserAccount(username=request.form["logusername"],full_name=request.form["logname"],birthdate=birthdate,auth_account_id=authaccountrec.id)
+    try:   
+        birthdatedata=birthdate=request.form["logbirthdate"].split("-")
+        birthdate = date(int(birthdatedata[0]), int(birthdatedata[1]), int(birthdatedata[2]))
+        account = UserAccount(username=request.form["logusername"],full_name=request.form["logname"],birthdate=birthdate,auth_account_id=authaccountrec.id)
+    except ValueError:
+                account = UserAccount(username=request.form["logusername"],full_name=request.form["logname"],auth_account_id=authaccountrec.id)
     db.session.add(account)
     db.session.commit()
     return redirect('/signin/home')
 
 @app.route('/permissions/requests/admin')
 def permissions_requests_admin():
+    if not check_if_admin(request):
+        return redirect('/')
     requests = PermissionsRequest.query.filter_by(is_visible=True).order_by(PermissionsRequest.id).all()
     return render_template("permissions_request_admin.html", admin_token=True, prequests=requests, useraccount=get_account(request))
 
@@ -558,6 +593,8 @@ def create_permission_request(permission, accountid):
 
 @app.route('/prequestdeny/<requestid>')
 def deny_request(requestid):
+    if not check_if_admin(request):
+        return redirect('/')
     permission_request = PermissionsRequest.query.get_or_404(requestid)
     permission_request.is_visible = False
     db.session.commit()
@@ -565,6 +602,8 @@ def deny_request(requestid):
 
 @app.route('/prequestapprove/<requestid>')
 def approve_request(requestid):
+    if not check_if_admin(request):
+        return redirect('/')
     permission_request = PermissionsRequest.query.get_or_404(requestid)
     permission_request.is_visible = False
     db.session.add(AccountPermission(permission_type=permission_request.permission_type, account_id=permission_request.account_id))
@@ -582,6 +621,8 @@ def profileimageupdate():
 
 @app.route('/itemimageupdate', methods=['POST'])
 def itemimageupdate():
+    if not check_if_editor(request):
+        return redirect('/')
     image_id = uploadimage(request)
     picture_item = PageObject.query.get_or_404(request.form["item_id"])
 
@@ -617,6 +658,8 @@ def item_home(type):
     
 @app.route('/admin/uploadimage', methods=["GET"])
 def adminuploadimage():
+    if not check_if_admin(request):
+        return redirect('/')
     useraccount = get_account(request)
     test = permission_validation("Admin", useraccount.id)
     if test:
@@ -626,11 +669,15 @@ def adminuploadimage():
 
 @app.route('/uploadimagedb', methods=["POST"])
 def uploadnewimage():
+    if not check_if_admin(request):
+        return redirect('/')
     image_id = uploadimage(request)
     return redirect('/')
 
 @app.route('/createcraftingimage', methods=['POST'])
 def create_crafting_image():
+    if not check_if_editor(request):
+        return redirect('/')
     itemid = request.form["item_id"]
     pobject = PageObject.query.get_or_404(itemid)
     image_id = uploadimage(request)
@@ -649,6 +696,8 @@ def create_crafting_image():
 
 @app.route('/createsmeltingimage', methods=['POST'])
 def create_smelting_image():
+    if not check_if_editor(request):
+        return redirect('/')
     itemid = request.form["item_id"]
     pobject = PageObject.query.get_or_404(itemid)
     image_id = uploadimage(request)
@@ -666,6 +715,8 @@ def create_smelting_image():
 
 @app.route('/unlinkcraftingimage/<page_object>/<image>')
 def unlinkcraftingimage(page_object, image):
+    if not check_if_editor(request):
+        return redirect('/')
     image_id = str(image)
     pobject = PageObject.query.get_or_404(page_object)
     image_links = pobject.crafting_image_links.strip().split(" ")
@@ -682,6 +733,8 @@ def unlinkcraftingimage(page_object, image):
 
 @app.route('/unlinksmeltingimage/<page_object>/<image>')
 def unlinksmeltingimage(page_object, image):
+    if not check_if_editor(request):
+        return redirect('/')
     image_id = str(image)
     pobject = PageObject.query.get_or_404(page_object)
     image_links = pobject.smelting_image_links.strip().split(" ")
@@ -698,24 +751,14 @@ def unlinksmeltingimage(page_object, image):
 
 @app.route('/itemclasshome')
 def itemclasshome():
-    account = get_account(request)
-    if account == None or account.full_name=="No Account":
-        return redirect('/')
-    else:
-        accountid = account.id
-    if not permission_validation("Admin", accountid):
+    if not check_if_admin(request):
         return redirect('/')
     return render_template('itemclasshome.html', pagename="Item Class", admin_token=True, useraccount=get_account(request), itemclasses=get_item_classes())
 
 @app.route('/newitemclass', methods=['POST'])
 def newitemclass():
-    account = get_account(request)
-    if account == None or account.full_name=="No Account":
-        return redirect('/')
-    else:
-        accountid = account.id
-    if not permission_validation("Admin", accountid):
-        return redirect('/')
+    if not check_if_admin(request):
+            return redirect('/')
     
     item_class = ItemClass(name=request.form['class-name'])
     db.session.add(item_class)
@@ -724,12 +767,7 @@ def newitemclass():
 
 @app.route('/deleteitemclass/<classid>')
 def deleteitemclass(classid):
-    account = get_account(request)
-    if account == None or account.full_name=="No Account":
-        return redirect('/')
-    else:
-        accountid = account.id
-    if not permission_validation("Admin", accountid):
+    if not check_if_admin(request):
         return redirect('/')
     itemclass = ItemClass.query.get_or_404(classid)
     db.session.delete(itemclass)
@@ -738,12 +776,7 @@ def deleteitemclass(classid):
 
 @app.route('/managewebpages')
 def managewebpages():
-    account = get_account(request)
-    if account == None or account.full_name=="No Account":
-        return redirect('/')
-    else:
-        accountid = account.id
-    if not permission_validation("Admin", accountid):
+    if not check_if_admin(request):
         return redirect('/')
     pages = WebPage.query.order_by(WebPage.id).all()
     return render_template('webpagehome.html', pages=pages, useraccount=get_account(request))
@@ -751,12 +784,7 @@ def managewebpages():
 
 @app.route('/createwebpage', methods=['POST'])
 def createwebpage():
-    account = get_account(request)
-    if account == None or account.full_name=="No Account":
-        return redirect('/')
-    else:
-        accountid = account.id
-    if not permission_validation("Admin", accountid):
+    if not check_if_admin(request):
         return redirect('/')
     new_page = WebPage(text=request.form["text"], div_title=request.form["div_title"], path=request.form["path"].lower(), directory=request.form["directory"].lower())
     db.session.add(new_page)
@@ -765,12 +793,7 @@ def createwebpage():
 
 @app.route('/deletewebpage/<pageid>')
 def deletewebpage(pageid):
-    account = get_account(request)
-    if account == None or account.full_name=="No Account":
-        return redirect('/')
-    else:
-        accountid = account.id
-    if not permission_validation("Admin", accountid):
+    if not check_if_admin(request):
         return redirect('/')
 
     page = db.session.execute(db.select(WebPage).filter_by(id=pageid)).scalar_one()
@@ -793,12 +816,11 @@ def learningpages(pagepath, editable):
     
     account = get_account(request)
     if editable == "true":
-        editable_permisssion = permission_validation("Edit_Pages", account.id)
-        if editable_permisssion:
-            return render_template("learnpage.html", divs=divs_elements, page=page, useraccount=account, editable=editable_permisssion) 
+        if check_if_editor(request):
+            return render_template("learnpage.html", divs=divs_elements, page=page, useraccount=get_account(request), editable=True) 
         else:
             return redirect(f"/learn/{page.path}/false")
     else:
-        return render_template("learnpage.html", divs=divs_elements, page=page, useraccount=account, editable=False) 
+        return render_template("learnpage.html", divs=set(div_lst), page=page, useraccount=get_account(request), editable=False) 
         
 app.run(debug=True, port=54913)
