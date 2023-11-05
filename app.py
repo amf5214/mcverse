@@ -811,7 +811,7 @@ def learningpages(pagepath, editable):
 
     for element in elements:
         if element_type == "img":
-            element.text = (create_image(element.text)).src
+            element.text = (create_image(int(element.text))).src
         if f"div_{element.div_id}" in div_elements.keys():
             div_elements[f"div_{element.div_id}"].append(element)
         else:
