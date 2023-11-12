@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'learnpage.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style/learnpage.css') }}"/>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <!-- <script>
@@ -12,6 +12,10 @@
 {% endblock %}
 
 {% block body %} 
+    {% if editable == True %}
+        <input type="hidden" id="master-page-id" value="{{ page.id }}" text="{{ page.id }}">
+        <input type="hidden" id="master-page-name" value="{{ page.path }}" text="{{ page.path }}">
+    {% endif %}
     <div class="homepage">
         <div class="intro-block" id="item-1">
             <div class="title-block">
@@ -23,7 +27,7 @@
             <p>{{ page.text }}</p>
         </div>
         {% for div in divs %}
-            <div class="intro-block" id="user_created_page_div_{{ div.id }}">
+            <div class="intro-block" id="user_created_page_div-{{ div.id }}-{{ div.placement_order }}">
                 <div class="title-block">
                     <h1 id="item_title" class="editable-item" contenteditable="{{editable}}">
                         {{ div.div_title }}
@@ -36,13 +40,13 @@
                         <img src="{{ element.text }}">
 
                     {% elif element.element_type == "h1" %}
-                        <h1>{{ element.text }}</h1>
+                        <h1 class="editable-item" id="div_element-{{ element.id }}">{{ element.text }}</h1>
 
                     {% elif element.element_type == "h2" %}
-                        <h2>{{ element.text }}</h2>
+                        <h2 class="editable-item" id="div_element-{{ element.id }}">{{ element.text }}</h2>
 
                     {% elif element.element_type == "p" %}
-                        <p>{{ element.text }}</p>
+                        <p class="editable-item" id="div_element-{{ element.id }}">{{ element.text }}</p>
                     
                     {% elif element.element_type == "youtube" %}
                         <iframe width="560" height="315" src="{{ element.text }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -64,15 +68,16 @@
                 {% endfor %}
             </div>
         {% endfor %}
-
-        <div class="dropzone" id="drop-container">
-
-        </div>
+        {% if editable == True %}
+            <div  id="drop-container">
+                <img src="{{ images[0].src }}" id="drop-zone-img" class="dropzone">
+            </div>
+        {% endif %}
         
 
         <div class="rightmenubar">
             {% if editable == True %}
-                <a class="draggable-obj" draggable="true">Section</a>
+                <a class="draggable-obj" draggable="true" id="drag_obj-{{ max_placement }}">Section</a>
             {% else %}
                 <a href="#item-1">Introduction</a>
                 {% for div in divs %}
@@ -88,5 +93,7 @@
             </div>
         </div>
     </div>
-    <script src="{{url_for('static', filename='draggable.js')}}"></script>
+    {% if editable == True %}
+        <script src="{{url_for('static', filename='script/draggable.js')}}"></script>
+    {% endif %}
 {% endblock %}
