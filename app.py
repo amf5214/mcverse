@@ -673,6 +673,7 @@ def learningpages(pagepath, editable):
     divs = db.session.execute(db.select(DivContainer).filter_by(page_id=page.id).order_by(DivContainer.placement_order)).scalars()
     elements = db.session.execute(db.select(PageElement).filter_by(page_id=page.id).order_by(PageElement.div_id, PageElement.placement_order)).scalars()
     div_elements = {}
+    max_placement_order = 0
 
     for element in elements:
         if element_type == "img":
@@ -684,18 +685,37 @@ def learningpages(pagepath, editable):
               
     div_lst = []
     for div in divs:
-        if f"div_{element.div_id}" in div_elements.keys():
-            div.elements = div_elements[f"div_{element.div_id}"]
+        if f"div_{div.id}" in div_elements.keys():
+            div.elements = div_elements[f"div_{div.id}"]
         else:
             div.elements = []
         div_lst.append(div)
+        if div.placement_order > max_placement_order:
+            max_placement_order = div.placement_order
             
     if editable == "true":
         if check_if_editor(request):
-            return render_template("learnpage.html", divs=set(div_lst), page=page, useraccount=get_account(request), editable=True) 
+            return render_template("learnpage.html", divs=set(div_lst), page=page, useraccount=get_account(request), editable=True, max_placement=max_placement_order, images=[create_image(25)]) 
         else:
             return redirect(f"/learn/{page.path}/false")
     else:
         return render_template("learnpage.html", divs=set(div_lst), page=page, useraccount=get_account(request), editable=False) 
         
+@app.route('/learningpage/admin/newdiv/<path>/<int:page_id>/<int:placement_order>')
+def create_learning_page_object(path, page_id, placement_order):
+    logging.info(f"Learning Page Div Creator Running ({path}, {page_id}, {placement_order})")
+    if check_if_editor(request):
+        try:
+            page_num = int(page_id)
+            placement_order = int(placement_order)
+            print(f"page_num={page_num}; placement_order={placement_order}")
+            new_div = DivContainer(text="Empty div", div_title="Empty Div", page_id=page_num, placement_order=placement_order)
+            db.session.add(new_div)
+            db.session.commit()
+            return redirect(f'/learn/{path}/true')
+        except:
+            return redirect('/')
+    else:
+        return redirect('/')
+
 app.run(debug=True, port=54913)
