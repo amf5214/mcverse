@@ -2,6 +2,13 @@
 
 {% block head %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'learnpage.css') }}"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <!-- <script>
+        $( function() {
+            $( ".draggable-obj" ).draggable();
+        } );
+    </script> -->
 {% endblock %}
 
 {% block body %} 
@@ -58,9 +65,14 @@
             </div>
         {% endfor %}
 
+        <div class="dropzone" id="drop-container">
+
+        </div>
+        
+
         <div class="rightmenubar">
             {% if editable == True %}
-                <h1 class="draggable-obj">Section</h1>
+                <a class="draggable-obj" draggable="true">Section</a>
             {% else %}
                 <a href="#item-1">Introduction</a>
                 {% for div in divs %}
@@ -76,5 +88,5 @@
             </div>
         </div>
     </div>
-    <script src="{{url_for('static', filename='draggable.js')}}"
+    <script src="{{url_for('static', filename='draggable.js')}}"></script>
 {% endblock %}
