@@ -749,4 +749,21 @@ def update_learning_item():
     
     return redirect(f'/learn/{request.form["page_path"]}/true')
 
+@app.route('/unlinkpageitem/<page_path>/<container_type>/<item_id>')
+def unlink_page_item(page_path, container_type, item_id):
+    if not check_if_editor(request):
+        return redirect(f'/learn/{request.form["page_path"]}/false')
+    if container_type == "div":
+        div = db.session.execute(db.select(DivContainer).filter_by(id=item_id)).scalar_one()
+        div.page_id = -1
+        db.session.commit()
+
+    elif container_type == "element":
+        element = db.session.execute(db.select(PageElement).filter_by(id=item_id)).scalar_one()
+        element.page_id = -1
+        db.session.commit()
+
+    return redirect(f'/learn/{request.form["page_path"]}/true')
+
+
 app.run(debug=True, port=54913)
