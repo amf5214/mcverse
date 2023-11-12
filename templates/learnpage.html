@@ -28,7 +28,9 @@
         </div>
         {% for div in divs %}
             <div class="intro-block user-created-div" id="user_created_page_div-{{ div.id }}-{{ div.placement_order }}">
-                <button class="unlink-div" onclick="window.location.href='/unlinkpageitem/div/{{ div.id }}'"><span class="material-symbols-outlined">close</span></button>
+                {% if editable == True %}
+                    <button class="unlink-div" onclick="window.location.href='/unlinkpageitem/{{ page.path }}/div/{{ div.id }}'"><span class="material-symbols-outlined">close</span></button>
+                {% endif %}
                 <div class="title-block">
                     <h1 id="div-title-{{ div.id }}" class="editable-item" contenteditable="{{editable}}">
                         {{ div.div_title }}
