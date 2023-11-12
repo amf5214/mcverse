@@ -48,6 +48,19 @@
     margin: 1em;
 }
 
+.drop-container {
+    background-color: #21232A;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    padding: 2rem;
+    border-radius: 1em;
+    margin: 1em;
+}
+
 #item-1 .title-block{
     justify-content: space-between;
 }
@@ -121,7 +134,6 @@
     font-family: grandstander;
     font-size: clamp(.3rem, .3rem + 2vw, 1rem);
     color: white;
-    text-decoration: underline;
 }
 
 .rightmenubar > * {
@@ -172,4 +184,13 @@
 
 .slider-nav a:hover {
     opacity: 1;
+}
+
+.draggable-obj {
+    text-decoration: none;
+    cursor: move;
+}
+
+.draggable-obj:hover {
+    text-decoration: none;
 }
