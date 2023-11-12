@@ -27,7 +27,7 @@
     color: white;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     align-content: center;
     padding: 2rem;
@@ -67,8 +67,40 @@
 }
 
 #drop-zone-img-element {
-    max-width: 30%;
-    max-height: 30%;  
+    max-width: 60%;
+    max-height: 60%;  
+}
+
+.user-created-img {
+    max-width: 50%;
+    max-height: 50%;  
+}
+
+#drop-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: white;
+    place-self: center;
+    justify-self: center;
+    align-self: center;
+}
+
+#img-view {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#img-view img {
+    max-width: 100%;
+    max-height: 100%;
 }
 
 #item-1 .title-block{
@@ -119,7 +151,7 @@
     top: 20%;
     max-width: 10%;
     max-height: 50%;
-    background-color: #21232A;
+    background-color: #21232ABB;
     margin-left: 0;
     margin-right: 0;
     margin-top: 2rem;
@@ -207,11 +239,72 @@
 .user-created-div {
     position: relative;
     max-width: 100%;
-    margin: 1rem;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
 }
 
 .user-created-div .unlink-div {
     position: absolute;
     top: 0%;
     left: 0%;
+    border-radius: 1em;
+    background-color: white;
+    border: 0;
+}
+
+.user-created-div .element {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    border-radius: 1em;
+    background-color: white;
+    border: 0;
+}
+
+#pageelementimageupdate {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1em;
+}
+
+#form-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1em;
+}
+
+#pageelementimageupdate .unlink-div {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    border-radius: 1em;
+    background-color: white;
+    border: 0;
+}
+
+#form-wrapper .unlink-element {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    border-radius: 1em;
+    background-color: white;
+    border: 0;
+}
+
+#drop-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }

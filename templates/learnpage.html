@@ -28,6 +28,9 @@
         </div>
         {% for div in divs %}
             <div class="intro-block user-created-div" id="user_created_page_div-{{ div.id }}-{{ div.placement_order }}">
+                {% if editable == True%}
+                    <input type="hidden" id="div_count-{{ div.id }}" value="{{ div.element_count }}" text="{{ div.element_count }}">
+                {% endif %}
                 {% if editable == True %}
                     <button class="unlink-div" onclick="window.location.href='/unlinkpageitem/{{ page.path }}/div/{{ div.id }}'"><span class="material-symbols-outlined">close</span></button>
                 {% endif %}
@@ -37,11 +40,30 @@
                         <span class="material-symbols-outlined">rocket_launch</span>
                     </h1>
                 </div>
-                <p id="div-text-{{ div.id }}" class="editable-item" contenteditable="{{editable}}">{{ div.text }}</p>
+                {% if div.text != "Empty div" or editable == True %}
+                    <p id="div-text-{{ div.id }}" class="editable-item" contenteditable="{{editable}}">{{ div.text }}</p>
+                {% endif%}
                 {% for element in div.elements %}
                     {% if element.element_type == "img" %}
-                        <img src="{{ element.text }}">
-
+                        {% if editable == True %}
+                            <div class="form-wrapper">
+                                <button class="unlink-element" onclick="window.location.href='/unlinkpageitem/{{ page.path }}/element/{{ element.id }}'"><span class="material-symbols-outlined">close</span></button>
+                                <form method="post" action="/pageelementimageupdate" id="pageelementimageupdate" enctype="multipart/form-data">
+                                    <input type="text" hidden name="element_id" value="{{ element.id }}" text="{{ element.id }}">
+                                    <input type="hidden" hidden name="page_path" id="page_path" value="{{ page.path }}" text="{{ page.path }}">
+                                    <div class="intro-block">
+                                        <label id="drop-area">
+                                            <input type="file" value="" text="" name="file" accept="image/png, image/jpeg, image/jpg" hidden id="input-file">
+                                            <div id="img-view">
+                                                <img src="{{ element.text }}" class="user-created-img">
+                                            </div>
+                                        </label>
+                                    </div>
+                                </form>
+                            </div>
+                        {% else %}
+                            <img class="user-created-img" src="{{ element.text }}">
+                        {% endif %}
                     {% elif element.element_type == "h1" %}
                         <h1 class="editable-item" id="element-{{ element.id }}">{{ element.text }}</h1>
 
@@ -58,7 +80,7 @@
                         <section class="container">
                             <div class="slider-wrapper">
                                 <div class="slider">
-                                    {% for image in images %}
+                                    {% for image in element.images %}
                                         <img id="carousel{{ element.id }}-slide{{ loop.index }}" src="{{ image }}" alt="Image"/>
                                     {% endfor %}
                                 </div>
@@ -70,7 +92,7 @@
                     {% endif %}
                 {% endfor %}
                 {% if editable == True %}
-                <div  id="drop-container">
+                <div class="user-created-div" id="drop-container">
                     <img src="{{ images[0].src }}" id="drop-zone-img-element" class="dropzone">
                 </div>
         {% endif %}

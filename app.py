@@ -676,7 +676,7 @@ def learningpages(pagepath, editable):
     max_placement_order = 0
 
     for element in elements:
-        if element_type == "img":
+        if element.element_type == "img":
             element.text = (create_image(int(element.text))).src
         if f"div_{element.div_id}" in div_elements.keys():
             div_elements[f"div_{element.div_id}"].append(element)
@@ -687,8 +687,10 @@ def learningpages(pagepath, editable):
     for div in divs:
         if f"div_{div.id}" in div_elements.keys():
             div.elements = div_elements[f"div_{div.id}"]
+            div.element_count = len(div.elements)
         else:
             div.elements = []
+            div.element_count = len(div.elements)
         div_lst.append(div)
         if div.placement_order > max_placement_order:
             max_placement_order = div.placement_order
@@ -711,6 +713,23 @@ def create_learning_page_object(path, page_id, placement_order):
             print(f"page_num={page_num}; placement_order={placement_order}")
             new_div = DivContainer(text="Empty div", div_title="Empty Div", page_id=page_num, placement_order=placement_order)
             db.session.add(new_div)
+            db.session.commit()
+            return redirect(f'/learn/{path}/true')
+        except:
+            return redirect('/')
+    else:
+        return redirect('/')
+
+@app.route('/learningpage/admin/newimage/<path>/<int:page_id>/<int:placement_order>/<int:div_id>')
+def create_learning_page_image(path, page_id, placement_order, div_id):
+    logging.info(f"Learning Page Image Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
+    if check_if_editor(request):
+        try:
+            page_num = int(page_id)
+            placement_order = int(placement_order)
+            print(f"page_num={page_num}; placement_order={placement_order}")
+            new_image = PageElement(element_type="img", div_id=div_id, text="8", page_id=page_num, placement_order=placement_order)
+            db.session.add(new_image)
             db.session.commit()
             return redirect(f'/learn/{path}/true')
         except:
@@ -751,6 +770,7 @@ def update_learning_item():
 
 @app.route('/unlinkpageitem/<page_path>/<container_type>/<item_id>')
 def unlink_page_item(page_path, container_type, item_id):
+    print(f"page_path={page_path}, container={container_type}, item={item_id}")
     if not check_if_editor(request):
         return redirect(f'/learn/{request.form["page_path"]}/false')
     if container_type == "div":
@@ -763,7 +783,15 @@ def unlink_page_item(page_path, container_type, item_id):
         element.page_id = -1
         db.session.commit()
 
-    return redirect(f'/learn/{request.form["page_path"]}/true')
+    return redirect(f'/learn/{page_path}/true')
 
+@app.route('/pageelementimageupdate', methods=['POST'])
+def update_page_element_image():
+    image_id = uploadimage(request)
+    page_element = PageElement.query.get_or_404(request.form["element_id"])
+
+    page_element.text = str(image_id)
+    db.session.commit()
+    return redirect(f"/learn/{request.form['page_path']}/true")
 
 app.run(debug=True, port=54913)

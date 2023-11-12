@@ -41,11 +41,6 @@ for(const dropzone of dropzones) {
         let elementType = event.dataTransfer.getData("text/plain");
         let elementData = elementType.split("//");
         let placement_order = -1;
-        if(elementData.length > 1) {
-            placement_order = elementData.at(1).split("-").at(1);
-            placement_order = parseInt(placement_order);
-            placement_order += 1;
-        }
         let pageId = document.getElementById("master-page-id").value;
         let pagePath = document.getElementById("master-page-name").value
 
@@ -53,9 +48,24 @@ for(const dropzone of dropzones) {
 
         if(elementData.at(0) == "Section") {
             if(event.target.className == "dropzone") {
+                if(elementData.length > 1) {
+                    placement_order = elementData.at(1).split("-").at(1);
+                    placement_order = parseInt(placement_order);
+                    placement_order += 1;
+                }
                 window.location.replace(`/learningpage/admin/newdiv/${pagePath}/${pageId}/${placement_order}`);
             }
         }  
+        else if(elementData.at(0) == "Image") {
+            let div_id = event.target.parentNode.parentNode.id.split("-")
+            console.log(`div_id_data=${div_id}`);
+            div_id_sel = div_id.at(1);
+            console.log(`div_id_=${div_id_sel}`);
+            placement_order = document.getElementById(`div_count-${div_id_sel}`).value;
+            placement_order = parseInt(placement_order);
+            placement_order += 1;
+            window.location.replace(`/learningpage/admin/newimage/${pagePath}/${pageId}/${placement_order}/${div_id_sel}`);
+        }
     })
 }
 
