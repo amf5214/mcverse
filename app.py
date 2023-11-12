@@ -718,4 +718,35 @@ def create_learning_page_object(path, page_id, placement_order):
     else:
         return redirect('/')
 
+@app.route('/updatelearningitem', methods=['POST'])
+def update_learning_item():
+    if not check_if_editor(request):
+        return redirect(f'/learn/{request.form["page_path"]}/false')
+    container_type = request.form["container"]
+    element_type = request.form["attribute"]
+    item_id = request.form["item"]
+    new_value = request.form["newValue"]
+    if container_type == "page":
+        page = db.session.execute(db.select(WebPage).filter_by(id=item_id)).scalar_one()
+        if element_type == "title":
+            page.div_title = new_value
+            db.session.commit()
+        else:
+            page.text = new_value
+            db.session.commit()
+    elif container_type == "div":
+        div = db.session.execute(db.select(DivContainer).filter_by(id=item_id)).scalar_one()
+        if element_type == "title":
+            div.div_title = new_value
+            db.session.commit()
+        else:
+            div.text = new_value
+            db.session.commit()
+    elif container_type == "element":
+        element = db.session.execute(db.select(PageElement).filter_by(id=item_id)).scalar_one()
+        element.text = new_value
+        db.session.commit()
+    
+    return redirect(f'/learn/{request.form["page_path"]}/true')
+
 app.run(debug=True, port=54913)
