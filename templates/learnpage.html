@@ -69,6 +69,11 @@
                         </section>  
                     {% endif %}
                 {% endfor %}
+                {% if editable == True %}
+                <div  id="drop-container">
+                    <img src="{{ images[0].src }}" id="drop-zone-img-element" class="dropzone">
+                </div>
+        {% endif %}
             </div>
         {% endfor %}
         {% if editable == True %}
