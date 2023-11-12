@@ -198,3 +198,15 @@
 .draggable-obj:hover {
     text-decoration: none;
 }
+
+.user-created-div {
+    position: relative;
+    max-width: 100%;
+    margin: 1rem;
+}
+
+.user-created-div .unlink-div {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+}

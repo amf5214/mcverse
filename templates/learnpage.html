@@ -27,7 +27,8 @@
             <p id="page-text-{{ page.id }}" class="editable-item" contenteditable="{{editable}}">{{ page.text }}</p>
         </div>
         {% for div in divs %}
-            <div class="intro-block" id="user_created_page_div-{{ div.id }}-{{ div.placement_order }}">
+            <div class="intro-block user-created-div" id="user_created_page_div-{{ div.id }}-{{ div.placement_order }}">
+                <button class="unlink-div" onclick="window.location.href='/unlinkpageitem/div/{{ div.id }}'"><span class="material-symbols-outlined">close</span></button>
                 <div class="title-block">
                     <h1 id="div-title-{{ div.id }}" class="editable-item" contenteditable="{{editable}}">
                         {{ div.div_title }}
