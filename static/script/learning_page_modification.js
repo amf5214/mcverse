@@ -1,27 +1,20 @@
 const editable_boxes = document.getElementsByClassName("editable-item");
-let id = document.getElementById("item-num-db");
-
-console.log("Item id: " + id.innerText);
-
+const pagePath = document.getElementById("master-page-name").value
 function addListener(element) {
     element.addEventListener("focusout", function() {
         let attribute = element.id;
-        let newValuedata = element.innerText.split(": ");
-        let newValue;
-        if(newValuedata.length > 1) {
-            newValue = newValuedata[1];
-        } else {
-            newValue = newValuedata[0];
+        let newValuedata = element.innerText;
+        attributePieces = attribute.split("-");
+
+        if(attributePieces.at(1) == "title") {
+            newValuedata = newValuedata.split("rocket_launch")[0].trim()
         }
 
-        if(attribute == "item_title") {
-            newValue = newValue.split(" rocket_launch")[0]
+        if(attributePieces.at(1) == "title" || attributePieces.at(1) == "text") {
+            if(attributePieces.at(0) == "page" || attributePieces.at(0) == "div" || attributePieces.at(0) == "element") {
+                sendData(`/updatelearningitem`, {"page_path": pagePath, "item":attributePieces.at(2), "container": attributePieces.at(0), "attribute": attributePieces.at(1), "newValue": newValuedata});
+            }
         }
-
-        if(attribute == "item_type") {
-            newValue = element.value;
-        }
-        sendData("/updateitem/" + id.innerText, {"item":id.innerText, "attribute": attribute, "newValue": newValue});
     })
 };
 
