@@ -19,34 +19,34 @@
     <div class="homepage">
         <div class="intro-block" id="item-1">
             <div class="title-block">
-                <h1 id="item_title" class="editable-item" contenteditable="{{editable}}">
+                <h1 id="page-title-{{ page.id }}" class="editable-item" contenteditable="{{editable}}">
                     {{ page.div_title }}
                     <span class="material-symbols-outlined">rocket_launch</span>
                 </h1>
             </div>
-            <p>{{ page.text }}</p>
+            <p id="page-text-{{ page.id }}" class="editable-item" contenteditable="{{editable}}">{{ page.text }}</p>
         </div>
         {% for div in divs %}
             <div class="intro-block" id="user_created_page_div-{{ div.id }}-{{ div.placement_order }}">
                 <div class="title-block">
-                    <h1 id="item_title" class="editable-item" contenteditable="{{editable}}">
+                    <h1 id="div-title-{{ div.id }}" class="editable-item" contenteditable="{{editable}}">
                         {{ div.div_title }}
                         <span class="material-symbols-outlined">rocket_launch</span>
                     </h1>
                 </div>
-                <p>{{ div.text }}</p>
+                <p id="div-text-{{ div.id }}" class="editable-item" contenteditable="{{editable}}">{{ div.text }}</p>
                 {% for element in div.elements %}
                     {% if element.element_type == "img" %}
                         <img src="{{ element.text }}">
 
                     {% elif element.element_type == "h1" %}
-                        <h1 class="editable-item" id="div_element-{{ element.id }}">{{ element.text }}</h1>
+                        <h1 class="editable-item" id="element-{{ element.id }}">{{ element.text }}</h1>
 
                     {% elif element.element_type == "h2" %}
-                        <h2 class="editable-item" id="div_element-{{ element.id }}">{{ element.text }}</h2>
+                        <h2 class="editable-item" id="element-{{ element.id }}">{{ element.text }}</h2>
 
                     {% elif element.element_type == "p" %}
-                        <p class="editable-item" id="div_element-{{ element.id }}">{{ element.text }}</p>
+                        <p class="editable-item" id="element-{{ element.id }}">{{ element.text }}</p>
                     
                     {% elif element.element_type == "youtube" %}
                         <iframe width="560" height="315" src="{{ element.text }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -94,6 +94,5 @@
         </div>
     </div>
     {% if editable == True %}
-        <script src="{{url_for('static', filename='script/draggable.js')}}"></script>
     {% endif %}
 {% endblock %}
