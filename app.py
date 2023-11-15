@@ -739,6 +739,23 @@ def create_learning_page_image(path, page_id, placement_order, div_id):
     else:
         return redirect('/')
 
+@app.route('/learningpage/admin/newpara/<path>/<int:page_id>/<int:placement_order>/<int:div_id>')
+def create_learning_page_paragraph(path, page_id, placement_order, div_id):
+    logging.info(f"Learning Page Image Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
+    if check_if_editor(request):
+        try:
+            page_num = int(page_id)
+            placement_order = int(placement_order)
+            print(f"page_num={page_num}; placement_order={placement_order}")
+            new_div = PageElement(element_type="p", div_id=div_id, text="Empty paragraph", page_id=page_num, placement_order=placement_order)
+            db.session.add(new_div)
+            db.session.commit()
+            return redirect(f'/learn/{path}/true')
+        except:
+            return redirect('/')
+    else:
+        return redirect('/')
+
 @app.route('/updatelearningitem', methods=['POST'])
 def update_learning_item():
     if not check_if_editor(request):
