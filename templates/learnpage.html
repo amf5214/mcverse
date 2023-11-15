@@ -69,6 +69,9 @@
 
                     {% elif element.element_type == "h2" %}
                         <h2 class="editable-item" id="element-{{ element.id }}">{{ element.text }}</h2>
+                    {% if editable == True %}
+                        <div class="element-container" id="element_move-{{ element.id }}-{{ page.path }}">
+                    {% endif %}
 
                     {% elif element.element_type == "p" %}
                         <p class="editable-item" id="element-{{ element.id }}">{{ element.text }}</p>
@@ -89,6 +92,8 @@
                                 </div>
                             </div>
                         </section>  
+                    {% if editable == True %}
+                        </div>
                     {% endif %}
                 {% endfor %}
                 {% if editable == True %}
