@@ -787,6 +787,40 @@ def update_learning_item():
     
     return redirect(f'/learn/{request.form["page_path"]}/true')
 
+@app.route('/movelearningelement/<page_path>/<int:element_id>/<direction>')
+def move_learning_element(page_path, element_id, direction):
+    logging.info("Moving page element")
+    if not check_if_editor(request):
+            return redirect(f'/learn/{request.form["page_path"]}/false')
+    try:
+        page = db.session.execute(db.select(WebPage).filter_by(path=page_path)).scalar_one()
+        logging.info(f"learning page located. web_page_id={page.id}")
+        current_element = db.session.execute(db.select(PageElement).filter_by(id=element_id)).scalar_one()
+        logging.info(f"Current element located. element_id={current_element.id}")
+        order = current_element.placement_order
+        original_order = int(order)
+        if direction == "up":
+            order -= 1
+            if order > 0:
+                other_element = db.session.execute(db.select(PageElement).filter_by(page_id=page.id, div_id=current_element.div_id, placement_order=order)).scalar_one()
+                logging.info(f"Other element located. element_id={other_element.id}")
+                logging.info(f"original_order={original_order}, new_order={order}")
+                other_element.placement_order = original_order
+                current_element.placement_order = order
+                db.session.commit()
+        elif direction == "down":
+            order += 1
+            other_element = db.session.execute(db.select(PageElement).filter_by(page_id=page.id, div_id=current_element.div_id, placement_order=order)).scalar_one()
+            logging.info(f"Other element located. element_id={other_element.id}")
+            logging.info(f"original_order={original_order}, new_order={order}")
+            other_element.placement_order = original_order
+            current_element.placement_order = order
+            db.session.commit()
+        return redirect(f"/learn/{page_path}/true")
+    except Exception as e:
+        print(e)
+        return redirect('/')
+
 @app.route('/unlinkpageitem/<page_path>/<container_type>/<item_id>')
 def unlink_page_item(page_path, container_type, item_id):
     print(f"page_path={page_path}, container={container_type}, item={item_id}")
