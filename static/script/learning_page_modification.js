@@ -1,5 +1,8 @@
 const editable_boxes = document.getElementsByClassName("editable-item");
-const pagePath = document.getElementById("master-page-name").value
+const element_containers = document.getElementsByClassName("element-container");
+const up_buttons = document.getElementsByClassName("up-buttons");
+const down_buttons = document.getElementsByClassName("down-buttons");
+const pagePath = document.getElementById("master-page-name").value;
 function addListener(element) {
     element.addEventListener("focusout", function() {
         let attribute = element.id;
@@ -34,6 +37,32 @@ function sendData(path, parameters, method='post') {
         form.appendChild(formField);
     }
     form.submit();
+
+}
+
+function addMoveUpDownBtns(div, elementId) {
+    let id_details = div.id;
+    id_details = id_details.split("-");
+
+    let container = document.createElement("div");
+    container.className = "updownbuttons";
+    container.id = `updownbutton_div-${elementId}`;
+
+    let upbutton = document.createElement("button");
+    let downbutton = document.createElement("button");
+
+    upbutton.className = "up-buttons";
+    upbutton.id = `${id_details.at(2)}/${id_details.at(1)}`
+    downbutton.className = "down-buttons";
+    downbutton.id = `${id_details.at(2)}/${id_details.at(1)}`
+
+    upbutton.innerHTML = `<span id="editmenutextspan" class="material-symbols-outlined">arrow_upward</span>`;
+    downbutton.innerHTML = `<span id="editmenutextspan" class="material-symbols-outlined">arrow_downward</span>`;
+
+    container.appendChild(upbutton);
+    container.appendChild(downbutton);
+
+    div.appendChild(container);
 
 }
 
