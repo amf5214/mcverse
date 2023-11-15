@@ -118,9 +118,29 @@
                                 </div>
                                 <div class="slider-nav">
                                     <a href="#carousel{{ element.id }}-slide{{ loop.index }}"></a>
+                            {% else %}
+                                <p class="editable-item" contenteditable="{{editable}}" id="element-text-{{ element.id }}">{{ element.text }}</p>
+                            {% endif %}
+
+                        {% elif element.element_type == "youtube" %}
+                            <iframe width="560" height="315" src="{{ element.text }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+                        {% elif element.element_type == "image-carousel" %}
+                            <section class="container">
+                                <div class="slider-wrapper">
+                                    <div class="slider">
+                                        {% for image in element.images %}
+                                            <img id="carousel{{ element.id }}-slide{{ loop.index }}" src="{{ image }}" alt="Image"/>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="slider-nav">
+                                        <a href="#carousel{{ element.id }}-slide{{ loop.index }}"></a>
+                                    </div>
                                 </div>
                             </div>
                         </section>  
+                            </section>  
+                        {% endif %}
                     {% if editable == True %}
                         </div>
                     {% endif %}
