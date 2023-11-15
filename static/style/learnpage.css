@@ -88,7 +88,7 @@
     align-self: center;
 }
 
-#img-view {
+.img-view {
     background-color: transparent;
     background-repeat: no-repeat;
     background-size: cover;
@@ -98,7 +98,7 @@
     justify-content: center;
 }
 
-#img-view img {
+.img-view img {
     max-width: 100%;
     max-height: 100%;
 }
@@ -307,4 +307,19 @@
     justify-content: center;
     align-items: center;
     align-content: center;
+}
+
+.element-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.updownbuttons {
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    border-radius: 1em;
+    background-color: white;
+    border: 0;
 }
