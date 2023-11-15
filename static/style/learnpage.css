@@ -1,0 +1,325 @@
+.homepage {
+    display: flex;
+    flex-direction: column;
+    margin: auto clamp(.25rem, .25rem + 2vw, 3rem);
+}
+
+.homepage > * {
+    margin: 1rem auto;
+}
+
+@media(min-width: 1000px) {
+    .homepage {
+        flex-direction: row;
+        flex-wrap: wrap;
+        column-gap: 1em;
+        row-gap: 1em;
+    }
+
+    .homepage > * {
+        flex: 0 1 40%;
+        align-self: top center;
+    }
+}
+
+.intro-block {
+    background-color: #21232A;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    padding: 2rem;
+    border-radius: 1em;
+    margin: 1em;
+}
+
+.intro-block-image {
+    background-color: #21232A;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    padding: 2rem;
+    border-radius: 1em;
+    margin: 1em;
+}
+
+.drop-container {
+    background-color: #21232A;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    padding: 2rem;
+    border-radius: 1em;
+    margin: 1em;
+}
+
+#drop-zone-img {
+    max-width: 100%;
+    max-height: 100%;   
+}
+
+#drop-zone-img-element {
+    max-width: 60%;
+    max-height: 60%;  
+}
+
+.user-created-img {
+    max-width: 50%;
+    max-height: 50%;  
+}
+
+#drop-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: white;
+    place-self: center;
+    justify-self: center;
+    align-self: center;
+}
+
+.img-view {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-view img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#item-1 .title-block{
+    justify-content: space-between;
+}
+
+.title-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.title-block h1 {
+    font-family: grandstander;
+    font-size: clamp(.75rem, .75rem + 2vw, 2rem);
+    align-items: center;
+    text-align: center;
+}
+
+.title-block h1 span {
+    color: green;
+}
+
+.title-block p {
+   font-family: grandstander;
+   font-size: clamp(.3rem, .3rem + 2vw, 1rem);
+   line-height: 1.5em;
+   text-align: center;
+}
+
+.intro-block p {
+    font-family: grandstander;
+    font-size: clamp(.3rem, .3rem + 2vw, 1rem);
+    line-height: 1.5em;
+    text-align: center;
+ }
+
+.rightmenubar {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    right: 0;
+    top: 20%;
+    max-width: 10%;
+    max-height: 50%;
+    background-color: #21232ABB;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    font-family: grandstander;
+    font-size: clamp(.3rem, .3rem + 2vw, 1rem);
+    color: white;
+    text-decoration: none;
+    box-shadow: -3em 0 -1em rgba(0,0,0,0.2);
+    border-radius: .7rem;
+}
+
+.rightmenubar a {
+    font-family: grandstander;
+    font-size: clamp(.3rem, .3rem + 2vw, 1rem);
+    color: white;
+    text-decoration: none;
+}
+
+.rightmenubar a:hover {
+    font-family: grandstander;
+    font-size: clamp(.3rem, .3rem + 2vw, 1rem);
+    color: white;
+}
+
+.rightmenubar > * {
+    margin: 1rem;
+}
+
+#openclosemenudiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.slider {
+    display: flex;
+    aspect-ratio: 16/9;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    box-shadow: 0 1.5 rem 3 rem  -0.75rem hsla(0, 0%, 0% 0.25);
+    border-radius: 0.5rem;
+}
+
+.slider img {
+    flex: 1 0 100%;
+    scroll-snap-align: start;  
+    max-width: 100%;  
+}
+
+.slider-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: .5rem;
+    position: relative;
+    bottom: .75rem;
+    transition: translateX(-50%);
+    z-index: 1;
+}
+
+.slider-nav a {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: #fff;
+    opacity: 0.75;
+    transition: opacity ease 250ms;
+}
+
+.slider-nav a:hover {
+    opacity: 1;
+}
+
+.draggable-obj {
+    text-decoration: none;
+    cursor: move;
+}
+
+.draggable-obj:hover {
+    text-decoration: none;
+}
+
+.user-created-div {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+}
+
+.user-created-div .unlink-div {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    border-radius: 1em;
+    background-color: white;
+    border: 0;
+}
+
+.user-created-div .element {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    border-radius: 1em;
+    background-color: white;
+    border: 0;
+}
+
+#pageelementimageupdate {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1em;
+}
+
+#form-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1em;
+}
+
+#pageelementimageupdate .unlink-div {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    border-radius: 1em;
+    background-color: white;
+    border: 0;
+}
+
+#form-wrapper .unlink-element {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    border-radius: 1em;
+    background-color: white;
+    border: 0;
+}
+
+#drop-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.element-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.updownbuttons {
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    border-radius: 1em;
+    background-color: white;
+    border: 0;
+}

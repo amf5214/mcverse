@@ -7,3 +7,4 @@ werkzeug
 uuid
 gunicorn
 gevent
+pymysql==1.1.0

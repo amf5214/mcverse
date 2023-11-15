@@ -1,7 +1,14 @@
-configure edit permissions
+configure edit permissions <>
 configure profile page to allow you to edit your account page
 configure forgot password tool
-configure signin to handle incorrect password
-add admin drop down to access admin pages
+configure signin to handle incorrect password <>
+add admin drop down to access admin pages <Actually created menu on the homepage>
 build out the backend of the contact us page form
 configure image upload <>
+fix failed signin <>
+fix account creation with missing fields <>
+investigate what happens whenever user account created with full_name=="No Account" <>
+Secure all endpoints <>
+prevent user from being able to edit an item aspect by changing element to contenteditable="True" <>
+secure profile endpoints to verify that you own the account
+fix bug where profile page will redirect to the wrong path whenever no account is signed into <>

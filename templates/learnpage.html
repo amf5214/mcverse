@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style/learnpage.css') }}"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <!-- <script>
+        $( function() {
+            $( ".draggable-obj" ).draggable();
+        } );
+    </script> -->
+{% endblock %}
+
+{% block body %} 
+    {% if editable == True %}
+        <input type="hidden" id="master-page-id" value="{{ page.id }}" text="{{ page.id }}">
+        <input type="hidden" id="master-page-name" value="{{ page.path }}" text="{{ page.path }}">
+    {% endif %}
+    <div class="homepage">
+        <div class="intro-block" id="item-1">
+            <div class="title-block">
+                <h1 id="page-title-{{ page.id }}" class="editable-item" contenteditable="{{editable}}">
+                    {{ page.div_title }}
+                    <span class="material-symbols-outlined">rocket_launch</span>
+                </h1>
+            </div>
+            <p id="page-text-{{ page.id }}" class="editable-item" contenteditable="{{editable}}">{{ page.text }}</p>
+        </div>
+        {% for div in divs %}
+            <div class="intro-block user-created-div" id="user_created_page_div-{{ div.id }}-{{ div.placement_order }}">
+                {% if editable == True%}
+                    <input type="hidden" id="div_count-{{ div.id }}" value="{{ div.element_count }}" text="{{ div.element_count }}">
+                {% endif %}
+                {% if editable == True %}
+                    <button class="unlink-div" onclick="window.location.href='/unlinkpageitem/{{ page.path }}/div/{{ div.id }}'"><span class="material-symbols-outlined">close</span></button>
+                {% endif %}
+                <div class="title-block">
+                    <h1 id="div-title-{{ div.id }}" class="editable-item" contenteditable="{{editable}}">
+                        {{ div.div_title }}
+                        <span class="material-symbols-outlined">rocket_launch</span>
+                    </h1>
+                </div>
+                {% if div.text != "Empty div" or editable == True %}
+                    <p id="div-text-{{ div.id }}" class="editable-item" contenteditable="{{editable}}">{{ div.text }}</p>
+                {% endif%}
+                {% for element in div.elements %}
+                    {% if editable == True %}
+                        <div class="element-container" id="element_move-{{ element.id }}-{{ page.path }}">
+                    {% endif %}
+                        {% if element.element_type == "img" %}
+                            {% if editable == True %}
+                                <div class="form-wrapper">
+                                    <button class="unlink-element" onclick="window.location.href='/unlinkpageitem/{{ page.path }}/element/{{ element.id }}'"><span class="material-symbols-outlined">close</span></button>
+                                    <form method="post" action="/pageelementimageupdate" id="pageelementimageupdate" enctype="multipart/form-data">
+                                        <input type="text" hidden name="element_id" value="{{ element.id }}" text="{{ element.id }}">
+                                        <input type="hidden" hidden name="page_path" id="page_path" value="{{ page.path }}" text="{{ page.path }}">
+                                        <div class="intro-block">
+                                            <label id="drop-area">
+                                                <input type="file" value="" text="" name="file" accept="image/png, image/jpeg, image/jpg" hidden id="input_file-{{ element.id }}" class="file-inputs">
+                                                <div id="img_view-{{ element.id }}" class="img-view">
+                                                    <img src="{{ element.text }}" class="user-created-img">
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </form>
+                                </div>
+                            {% else %}
+                                <img class="user-created-img" src="{{ element.text }}">
+                            {% endif %}
+                        {% elif element.element_type == "h1" %}
+                            <h1 class="editable-item" contenteditable="{{editable}}" id="element-text-{{ element.id }}">{{ element.text }}</h1>
+
+                        {% elif element.element_type == "h2" %}
+                            <h2 class="editable-item" contenteditable="{{editable}}" id="element-text-{{ element.id }}">{{ element.text }}</h2>
+
+                        {% elif element.element_type == "p" %}
+                            {% if editable == True %}
+                                <div class="form-wrapper">
+                                    <button class="unlink-element" onclick="window.location.href='/unlinkpageitem/{{ page.path }}/element/{{ element.id }}'"><span class="material-symbols-outlined">close</span></button>
+                                    <p class="editable-item" contenteditable="{{editable}}" id="element-text-{{ element.id }}">{{ element.text }}</p>
+                                </div>
+                            {% else %}
+                                <p class="editable-item" contenteditable="{{editable}}" id="element-text-{{ element.id }}">{{ element.text }}</p>
+                            {% endif %}
+
+                        {% elif element.element_type == "youtube" %}
+                            <iframe width="560" height="315" src="{{ element.text }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+                        {% elif element.element_type == "image-carousel" %}
+                            <section class="container">
+                                <div class="slider-wrapper">
+                                    <div class="slider">
+                                        {% for image in element.images %}
+                                            <img id="carousel{{ element.id }}-slide{{ loop.index }}" src="{{ image }}" alt="Image"/>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="slider-nav">
+                                        <a href="#carousel{{ element.id }}-slide{{ loop.index }}"></a>
+                                    </div>
+                                </div>
+                            </section>  
+                        {% endif %}
+                    {% if editable == True %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                {% if editable == True %}
+                <div class="user-created-div" id="drop-container">
+                    <img src="{{ images[0].src }}" id="drop-zone-img-element" class="dropzone">
+                </div>
+        {% endif %}
+            </div>
+        {% endfor %}
+        {% if editable == True %}
+            <div  id="drop-container">
+                <img src="{{ images[0].src }}" id="drop-zone-img" class="dropzone">
+            </div>
+        {% endif %}
+        
+
+        <div class="rightmenubar">
+            {% if editable == True %}
+                <a class="draggable-obj" draggable="true" id="drag_obj-{{ max_placement }}">Section</a>
+                <a class="draggable-obj" draggable="true" id="drag_obj-{{ max_placement }}">Image</a>
+                <a class="draggable-obj" draggable="true" id="drag_obj-{{ max_placement }}">Paragraph</a>
+            {% else %}
+                <a href="#item-1">Introduction</a>
+                {% for div in divs %}
+                    <a href="#user_created_page_div_{{ div.id }}">{{ div.div_title }}</a>
+                {% endfor %}
+            {% endif %}
+            <div id="openclosemenudiv">
+                {% if editable == True %}
+                    <button id="close" onclick="window.location.href='/learn/{{page.path}}/false'"><span id="editmenutextspan" class="material-symbols-outlined">done_outline</span></button>
+                {% else %}
+                    <button id="close" onclick="window.location.href='/learn/{{page.path}}/true'"><span id="editmenutextspan" class="material-symbols-outlined">edit</span></button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if editable == True %}
+        <script src="{{ url_for('static', filename='script/draggable.js') }}"></script>
+        <script src="{{ url_for('static', filename='script/learning_page_modification.js') }}"></script>
+    {% endif %}
+{% endblock %}
