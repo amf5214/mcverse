@@ -44,31 +44,6 @@
                     <p id="div-text-{{ div.id }}" class="editable-item" contenteditable="{{editable}}">{{ div.text }}</p>
                 {% endif%}
                 {% for element in div.elements %}
-                    {% if element.element_type == "img" %}
-                        {% if editable == True %}
-                            <div class="form-wrapper">
-                                <button class="unlink-element" onclick="window.location.href='/unlinkpageitem/{{ page.path }}/element/{{ element.id }}'"><span class="material-symbols-outlined">close</span></button>
-                                <form method="post" action="/pageelementimageupdate" id="pageelementimageupdate" enctype="multipart/form-data">
-                                    <input type="text" hidden name="element_id" value="{{ element.id }}" text="{{ element.id }}">
-                                    <input type="hidden" hidden name="page_path" id="page_path" value="{{ page.path }}" text="{{ page.path }}">
-                                    <div class="intro-block">
-                                        <label id="drop-area">
-                                            <input type="file" value="" text="" name="file" accept="image/png, image/jpeg, image/jpg" hidden id="input-file">
-                                            <div id="img-view">
-                                                <img src="{{ element.text }}" class="user-created-img">
-                                            </div>
-                                        </label>
-                                    </div>
-                                </form>
-                            </div>
-                        {% else %}
-                            <img class="user-created-img" src="{{ element.text }}">
-                        {% endif %}
-                    {% elif element.element_type == "h1" %}
-                        <h1 class="editable-item" id="element-{{ element.id }}">{{ element.text }}</h1>
-
-                    {% elif element.element_type == "h2" %}
-                        <h2 class="editable-item" id="element-{{ element.id }}">{{ element.text }}</h2>
                     {% if editable == True %}
                         <div class="element-container" id="element_move-{{ element.id }}-{{ page.path }}">
                     {% endif %}
@@ -95,29 +70,15 @@
                         {% elif element.element_type == "h1" %}
                             <h1 class="editable-item" contenteditable="{{editable}}" id="element-text-{{ element.id }}">{{ element.text }}</h1>
 
-                    {% elif element.element_type == "p" %}
-                        <p class="editable-item" id="element-{{ element.id }}">{{ element.text }}</p>
-                    
-                    {% elif element.element_type == "youtube" %}
-                        <iframe width="560" height="315" src="{{ element.text }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         {% elif element.element_type == "h2" %}
                             <h2 class="editable-item" contenteditable="{{editable}}" id="element-text-{{ element.id }}">{{ element.text }}</h2>
 
-                    {% elif element.element_type == "image-carousel" %}
-                        <section class="container">
-                            <div class="slider-wrapper">
-                                <div class="slider">
-                                    {% for image in element.images %}
-                                        <img id="carousel{{ element.id }}-slide{{ loop.index }}" src="{{ image }}" alt="Image"/>
-                                    {% endfor %}
                         {% elif element.element_type == "p" %}
                             {% if editable == True %}
                                 <div class="form-wrapper">
                                     <button class="unlink-element" onclick="window.location.href='/unlinkpageitem/{{ page.path }}/element/{{ element.id }}'"><span class="material-symbols-outlined">close</span></button>
                                     <p class="editable-item" contenteditable="{{editable}}" id="element-text-{{ element.id }}">{{ element.text }}</p>
                                 </div>
-                                <div class="slider-nav">
-                                    <a href="#carousel{{ element.id }}-slide{{ loop.index }}"></a>
                             {% else %}
                                 <p class="editable-item" contenteditable="{{editable}}" id="element-text-{{ element.id }}">{{ element.text }}</p>
                             {% endif %}
@@ -137,8 +98,6 @@
                                         <a href="#carousel{{ element.id }}-slide{{ loop.index }}"></a>
                                     </div>
                                 </div>
-                            </div>
-                        </section>  
                             </section>  
                         {% endif %}
                     {% if editable == True %}
