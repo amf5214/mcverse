@@ -698,10 +698,12 @@ def learningpages(pagepath, editable):
     if editable == "true":
         if check_if_editor(request):
             return render_template("learnpage.html", divs=set(div_lst), page=page, useraccount=get_account(request), editable=True, max_placement=max_placement_order, images=[create_image(25)]) 
+            return render_template("learnpage.html", divs=div_lst, page=page, useraccount=get_account(request), editable=True, max_placement=max_placement_order, images=[create_image(25)]) 
         else:
             return redirect(f"/learn/{page.path}/false")
     else:
         return render_template("learnpage.html", divs=set(div_lst), page=page, useraccount=get_account(request), editable=False) 
+        return render_template("learnpage.html", divs=div_lst, page=page, useraccount=get_account(request), editable=False) 
         
 @app.route('/learningpage/admin/newdiv/<path>/<int:page_id>/<int:placement_order>')
 def create_learning_page_object(path, page_id, placement_order):
