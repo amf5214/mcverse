@@ -201,6 +201,10 @@ def page_not_found(e):
     # note that we set the 404 status explicitly
     return render_template('comingsoon.html', useraccount=get_account(request)), 404
 
+@app.route('/404')
+def error_404():
+    return render_template('comingsoon.html', useraccount=get_account(request)), 404
+
 @app.route('/')
 def go_home():
     frequently_asked_questions = FrequentlyAskedQuestion.query.order_by(FrequentlyAskedQuestion.id).all()
@@ -669,7 +673,10 @@ def deletewebpage(pageid):
 @app.route('/learn/<pagepath>', defaults={"editable":"false"})
 @app.route('/learn/<pagepath>/<editable>')
 def learningpages(pagepath, editable):
-    page = db.session.execute(db.select(WebPage).filter_by(path=pagepath)).scalar_one()
+    try:
+        page = db.session.execute(db.select(WebPage).filter_by(path=pagepath)).scalar_one()
+    except NoResultFound:
+        return redirect('/404')
     divs = db.session.execute(db.select(DivContainer).filter_by(page_id=page.id).order_by(DivContainer.placement_order)).scalars()
     elements = db.session.execute(db.select(PageElement).filter_by(page_id=page.id).order_by(PageElement.div_id, PageElement.placement_order)).scalars()
     div_elements = {}
