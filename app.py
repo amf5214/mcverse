@@ -697,12 +697,10 @@ def learningpages(pagepath, editable):
             
     if editable == "true":
         if check_if_editor(request):
-            return render_template("learnpage.html", divs=set(div_lst), page=page, useraccount=get_account(request), editable=True, max_placement=max_placement_order, images=[create_image(25)]) 
             return render_template("learnpage.html", divs=div_lst, page=page, useraccount=get_account(request), editable=True, max_placement=max_placement_order, images=[create_image(25)]) 
         else:
             return redirect(f"/learn/{page.path}/false")
     else:
-        return render_template("learnpage.html", divs=set(div_lst), page=page, useraccount=get_account(request), editable=False) 
         return render_template("learnpage.html", divs=div_lst, page=page, useraccount=get_account(request), editable=False) 
         
 @app.route('/learningpage/admin/newdiv/<path>/<int:page_id>/<int:placement_order>')
@@ -758,6 +756,7 @@ def create_learning_page_paragraph(path, page_id, placement_order, div_id):
 
 @app.route('/updatelearningitem', methods=['POST'])
 def update_learning_item():
+    logging.info("Item updating")
     if not check_if_editor(request):
         return redirect(f'/learn/{request.form["page_path"]}/false')
     container_type = request.form["container"]
@@ -783,6 +782,7 @@ def update_learning_item():
     elif container_type == "element":
         element = db.session.execute(db.select(PageElement).filter_by(id=item_id)).scalar_one()
         element.text = new_value
+        print(f"element_id={item_id};text={new_value}")
         db.session.commit()
     
     return redirect(f'/learn/{request.form["page_path"]}/true')
@@ -838,12 +838,14 @@ def unlink_page_item(page_path, container_type, item_id):
 
     return redirect(f'/learn/{page_path}/true')
 
+
 @app.route('/pageelementimageupdate', methods=['POST'])
 def update_page_element_image():
     image_id = uploadimage(request)
     page_element = PageElement.query.get_or_404(request.form["element_id"])
 
     page_element.text = str(image_id)
+    print(f"element_id={page_element.id}. image_id={image_id}")
     db.session.commit()
     return redirect(f"/learn/{request.form['page_path']}/true")
 
