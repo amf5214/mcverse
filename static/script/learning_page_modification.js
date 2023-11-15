@@ -70,27 +70,59 @@ for(let element of editable_boxes) {
     addListener(element);
 }
 
-const dropArea = document.getElementById("drop-area");
-const inputFile = document.getElementById("input-file");
-const imageView = document.getElementById("img-view");
-const profileImageForm = document.getElementById("pageelementimageupdate");
+for(let div of element_containers) {
+    let elementId = div.id.split("-").at(1);
+    addMoveUpDownBtns(div, elementId);
+}
 
-inputFile.addEventListener("change", uploadImage);
+for(let button of up_buttons) {
+    button.addEventListener("click", function() {
+        console.log("onclick fired");
+        console.log(`button id=${button.id}`);
+        console.log(`split id=${button.id.split("/")}`);
+        const pagePath = document.getElementById("master-page-name").value;
+        window.location.href = `/movelearningelement/${pagePath}/${button.id.split("/").at(1)}/up`;
+    });
+}
 
-function uploadImage() {
-    inputFile.files[0];
-    let imgLink = URL.createObjectURL(inputFile.files[0]);
-    // imageView.style.backgroundImage = `url(${imgLink})`;
-    imageView.textContent = "";
-    imageView.style.border = 0;
-    let imageObj = document.createElement('img');
-    imageObj.src = `${imgLink}`;
-    imageView.appendChild(imageObj);
-    imageObj.style.maxHeight = "50%";
-    imageObj.style.maxWidth = "50%";
+for(let button1 of down_buttons) {
+    button1.addEventListener("click", function() {
+        console.log("onclick fired");
+        console.log(`button id=${button1.id}`);
+        console.log(`split id=${button1.id.split("/")}`);
+        const pagePath = document.getElementById("master-page-name").value;
+        window.location.href = `/movelearningelement/${pagePath}/${button1.id.split("/").at(1)}/down`;
+    });
+}
 
-    let submitButtom = document.createElement("input");
-    submitButtom.type = "submit";
-    submitButtom.style.margin = "1rem";
-    imageView.appendChild(submitButtom);
+const fileInputs = document.getElementsByClassName("file-inputs");
+console.log(`File inputs = {${fileInputs}}`);
+
+function uploadImage(input) {
+    input.addEventListener("change", function() {
+        input.files[0];
+        let imgLink = URL.createObjectURL(input.files[0]);
+        let elementId = input.id;
+        let pageElementId = elementId.split("-").at(1);
+        let imageView = document.getElementById("img_view-"+pageElementId);
+        // imageView.style.backgroundImage = `url(${imgLink})`;
+        imageView.textContent = "";
+        imageView.style.border = 0;
+        let imageObj = document.createElement('img');
+        imageObj.src = `${imgLink}`;
+        imageView.appendChild(imageObj);
+        imageObj.style.maxHeight = "50%";
+        imageObj.style.maxWidth = "50%";
+
+        let submitButtom = document.createElement("input");
+        submitButtom.type = "submit";
+        submitButtom.style.margin = "1rem";
+        imageView.appendChild(submitButtom);
+
+
+    })
+}
+
+for(input of fileInputs) {
+    uploadImage(input);
 }
