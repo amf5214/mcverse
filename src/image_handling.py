@@ -28,6 +28,10 @@ class image_item():
             return f"data:image/{self.location};base64,{self.rendered_data}"
         
 def create_image(id):
+    try:
+        id = int(id)
+    except: 
+        return redirect('/404')
     image = FileContent.query.get_or_404(id)
     return image_item(image.location, image.rendered_data, image.id)
 
