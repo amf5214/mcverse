@@ -31,6 +31,25 @@ with app.app_context():
     
     logging.info("Database configured")
 
+    def encode_auth_token(email_account):
+        """
+        Generates the Auth Token
+        :return: string
+        """
+        try:
+            payload = {
+                'exp': datetime.now(timezone.utc) + timedelta(days=1, seconds=0),
+                'iat': datetime.now(timezone.utc),
+                'sub': email_account
+            }
+            return jwt.encode(
+                payload,
+                app.config.get('SECRET_KEY'),
+                algorithm='HS256'
+            )
+        except Exception as e:
+            return e
+
     class Permission():
         def __init__(self, has, name):
             self.has=has
