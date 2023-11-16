@@ -45,7 +45,7 @@
                 {% endif%}
                 {% for element in div.elements %}
                     {% if editable == True %}
-                        <div class="element-container" id="element_move-{{ element.id }}-{{ page.path }}">
+                        <div class="element-container" style="width:100%;" id="element_move-{{ element.id }}-{{ page.path }}">
                             <button class="unlink-element" onclick="window.location.href='/unlinkpageitem/{{ page.path }}/element/{{ element.id }}'"><span class="material-symbols-outlined">close</span></button>
                     {% endif %}
                         {% if element.element_type == "img" %}
