@@ -77,6 +77,18 @@ for(const dropzone of dropzones) {
             placement_order += 1;
             window.location.replace(`/learningpage/admin/newpara/${pagePath}/${pageId}/${placement_order}/${div_id_sel}`);
         }
+
+        else if(elementData.at(0) == "carousel") {
+            let div_id = event.target.parentNode.parentNode.id.split("-")
+            console.log(`div_id_data=${div_id}`);
+            div_id_sel = div_id.at(1);
+            console.log(`div_id_=${div_id_sel}`);
+            placement_order = document.getElementById(`div_count-${div_id_sel}`).value;
+            placement_order = parseInt(placement_order);
+            placement_order += 1;
+            window.location.replace(`/learningpage/admin/newcarousel/${pagePath}/${pageId}/${placement_order}/${div_id_sel}`);
+        
+        }
     })
 }
 

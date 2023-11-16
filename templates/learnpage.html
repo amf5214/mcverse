@@ -46,11 +46,11 @@
                 {% for element in div.elements %}
                     {% if editable == True %}
                         <div class="element-container" id="element_move-{{ element.id }}-{{ page.path }}">
+                            <button class="unlink-element" onclick="window.location.href='/unlinkpageitem/{{ page.path }}/element/{{ element.id }}'"><span class="material-symbols-outlined">close</span></button>
                     {% endif %}
                         {% if element.element_type == "img" %}
                             {% if editable == True %}
                                 <div class="form-wrapper">
-                                    <button class="unlink-element" onclick="window.location.href='/unlinkpageitem/{{ page.path }}/element/{{ element.id }}'"><span class="material-symbols-outlined">close</span></button>
                                     <form method="post" action="/pageelementimageupdate" id="pageelementimageupdate" enctype="multipart/form-data">
                                         <input type="text" hidden name="element_id" value="{{ element.id }}" text="{{ element.id }}">
                                         <input type="hidden" hidden name="page_path" id="page_path" value="{{ page.path }}" text="{{ page.path }}">
@@ -76,7 +76,6 @@
                         {% elif element.element_type == "p" %}
                             {% if editable == True %}
                                 <div class="form-wrapper">
-                                    <button class="unlink-element" onclick="window.location.href='/unlinkpageitem/{{ page.path }}/element/{{ element.id }}'"><span class="material-symbols-outlined">close</span></button>
                                     <p class="editable-item" contenteditable="{{editable}}" id="element-text-{{ element.id }}">{{ element.text }}</p>
                                 </div>
                             {% else %}
@@ -91,7 +90,7 @@
                                 <div class="slider-wrapper">
                                     <div class="slider">
                                         {% for image in element.images %}
-                                            <img id="carousel{{ element.id }}-slide{{ loop.index }}" src="{{ image }}" alt="Image"/>
+                                            <img id="carousel{{ element.id }}-slide{{ loop.index }}" src="{{ image.src }}" alt="Image"/>
                                         {% endfor %}
                                     </div>
                                     <div class="slider-nav">

@@ -59,6 +59,16 @@ with app.app_context():
         item_classes = ItemClass.query.order_by(ItemClass.id).all()
         return item_classes
 
+    def process_carousel_element(element):
+        if element.element_type == "image-carousel":
+            image_links = element.text.split("-")
+            element.images = []
+            for x in image_links:
+                image = create_image(x)
+                element.images.append(image)
+            return True
+        else: return False
+
     db.create_all()
 
     Permission_values = ["Admin", "Edit_Pages", "Add_Pages"]
@@ -554,6 +564,10 @@ def learningpages(pagepath, editable):
     for element in elements:
         if element.element_type == "img":
             element.text = (create_image(int(element.text))).src
+        elif element.element_type == "image-carousel":
+            element_updated = process_carousel_element(element)
+            if not element_updated:
+                element.images = [create_image(8)]
         if f"div_{element.div_id}" in div_elements.keys():
             div_elements[f"div_{element.div_id}"].append(element)
         else:
@@ -714,6 +728,22 @@ def unlink_page_item(page_path, container_type, item_id):
 
     return redirect(f'/learn/{page_path}/true')
 
+@app.route('/learningpage/admin/newcarousel/<path>/<int:page_id>/<int:placement_order>/<int:div_id>')
+def create_learning_page_carousel(path, page_id, placement_order, div_id):
+    logging.info(f"Learning Page Image Carousel Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
+    if check_if_editor(request):
+        try:
+            page_num = int(page_id)
+            placement_order = int(placement_order)
+            print(f"page_num={page_num}; placement_order={placement_order}")
+            new_image = PageElement(element_type="image-carousel", div_id=div_id, text="25", page_id=page_num, placement_order=placement_order)
+            db.session.add(new_image)
+            db.session.commit()
+            return redirect(f'/learn/{path}/true')
+        except:
+            return redirect('/')
+    else:
+        return redirect('/')
 
 @app.route('/pageelementimageupdate', methods=['POST'])
 def update_page_element_image():

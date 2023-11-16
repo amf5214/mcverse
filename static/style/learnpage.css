@@ -67,13 +67,13 @@
 }
 
 #drop-zone-img-element {
-    max-width: 60%;
-    max-height: 60%;  
+    max-width: 100%;
+    max-height: 100%;  
 }
 
 .user-created-img {
-    max-width: 50%;
-    max-height: 50%;  
+    max-width: 65%;
+    max-height: 65%;  
 }
 
 #drop-area {
@@ -187,6 +187,20 @@
     flex-direction: column;
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.slider-wrapper {
+    max-width: 100%;
+    max-height: 100%;
+}
+
 .slider {
     display: flex;
     aspect-ratio: 16/9;
@@ -280,6 +294,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    justify-content: center;
     border-radius: 1em;
 }
 
@@ -292,7 +307,7 @@
     border: 0;
 }
 
-#form-wrapper .unlink-element {
+.form-wrapper .unlink-element {
     position: absolute;
     top: 0%;
     left: 0%;
@@ -301,18 +316,31 @@
     border: 0;
 }
 
+.unlink-element {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    border-radius: 1em;
+    background-color: white;
+    border: 0;
+    z-index: 54;
+}
+
 #drop-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     align-content: center;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 .element-container {
     display: flex;
     flex-direction: column;
     position: relative;
+    align-items: center;
 }
 
 .updownbuttons {
