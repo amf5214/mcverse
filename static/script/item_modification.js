@@ -20,6 +20,8 @@ function addListener(element) {
 
         if(attribute == "item_type") {
             newValue = element.value;
+            console.log(`element_value=${element.value}`)
+            console.log(`element_text=${element.text}`)
         }
         sendData("/updateitem/" + id.innerText, {"item":id.innerText, "attribute": attribute, "newValue": newValue});
     })

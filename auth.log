@@ -1,0 +1,375 @@
+INFO:root:Database configured
+INFO:root:Backend functions built
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 138-293-436
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name INFO:werkzeug: * Restarting with stat
+count_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:17] "GET /item/2/true HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:17] "[36mGET /static/style/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:17] "[36mGET /static/style/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:17] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:17] "[36mGET /static/script/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:17] "[36mGET /static/script/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:17] "[36mGET /static/script/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:17] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:17] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:28] "[32mPOST /updateitem/2 HTTP/1.1[0m" 302 -
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:29] "GET /item/2 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:29] "[36mGET /static/style/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:29] "[36mGET /static/style/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:29] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:29] "[36mGET /static/script/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:29] "[36mGET /static/script/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:29] "[36mGET /static/script/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:29] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:30] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:35] "GET /item/2/true HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:35] "[36mGET /static/style/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:35] "[36mGET /static/style/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:35] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:35] "[36mGET /static/script/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:35] "[36mGET /static/script/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:35] "[36mGET /static/script/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:35] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:36] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:42] "[32mPOST /updateitem/2 HTTP/1.1[0m" 302 -
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:43] "GET /item/2 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:43] "[36mGET /static/style/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:43] "[36mGET /static/style/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:43] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:43] "[36mGET /static/script/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:43] "[36mGET /static/script/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:43] "[36mGET /static/script/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:43] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:43] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:47] "GET /item/2/true HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:47] "[36mGET /static/style/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:47] "[36mGET /static/style/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:47] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:47] "[36mGET /static/script/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:48] "[36mGET /static/script/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:48] "[36mGET /static/script/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:48] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:48] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:account_image_loc=png
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:54] "[32mPOST /updateitem/2 HTTP/1.1[0m" 302 -
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:54] "GET /item/2 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:54] "[36mGET /static/style/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:54] "[36mGET /static/style/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:54] "[36mGET /static/script/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:54] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:54] "[36mGET /static/script/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:54] "[36mGET /static/script/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:55] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:55] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:58] "GET /item/2/true HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:58] "[36mGET /static/style/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:58] "[36mGET /static/style/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:58] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:58] "[36mGET /static/script/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:58] "[36mGET /static/script/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:58] "[36mGET /static/script/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:59] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:10:59] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:account_image_loc=png
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:05] "[32mPOST /updateitem/2 HTTP/1.1[0m" 302 -
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:06] "GET /item/2 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:07] "[36mGET /static/style/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:07] "[36mGET /static/style/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:07] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:07] "[36mGET /static/script/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:07] "[36mGET /static/script/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:07] "[36mGET /static/script/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:07] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:07] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:11] "GET /item/2/true HTTP/1.1" 200 -
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:13] "GET /item/2/true HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:13] "[36mGET /static/style/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:13] "[36mGET /static/style/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:13] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:13] "[36mGET /static/script/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:13] "[36mGET /static/script/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:13] "[36mGET /static/script/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:13] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:13] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:account_image_loc=png
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:22] "[32mPOST /updateitem/2 HTTP/1.1[0m" 302 -
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:23] "GET /item/2 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:23] "[36mGET /static/style/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:23] "[36mGET /static/style/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:23] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:23] "[36mGET /static/script/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:23] "[36mGET /static/script/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:23] "[36mGET /static/script/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:24] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:24] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:27] "GET /item/2/true HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:27] "[36mGET /static/style/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:27] "[36mGET /static/style/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:27] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:27] "[36mGET /static/script/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:27] "[36mGET /static/script/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:27] "[36mGET /static/script/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:28] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:28] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:37] "[32mPOST /updateitem/2 HTTP/1.1[0m" 302 -
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:37] "GET /item/2 HTTP/1.1" 200 -
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:38] "GET /item/2 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:38] "[36mGET /static/style/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:38] "[36mGET /static/style/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:38] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:38] "[36mGET /static/script/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:38] "[36mGET /static/script/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:38] "[36mGET /static/script/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:38] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:38] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:41] "GET /item/2/true HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:41] "[36mGET /static/style/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:42] "[36mGET /static/style/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:42] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:42] "[36mGET /static/script/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:42] "[36mGET /static/script/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:42] "[36mGET /static/script/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:42] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:42] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:auth_token=name 'app' is not defined
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:root:account_image_loc=png
+INFO:root:auth_token=name 'app' is not defined
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:49] "[32mPOST /updateitem/2 HTTP/1.1[0m" 302 -
+INFO:root:auth_account_id=1
+INFO:root:account_id=1
+INFO:root:admin_flag=True
+INFO:root:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:49] "GET /item/2 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:49] "[36mGET /static/style/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:49] "[36mGET /static/style/item.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:49] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:49] "[36mGET /static/script/item_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:49] "[36mGET /static/script/item.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:49] "[36mGET /static/script/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:49] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Nov/2023 00:11:50] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug: * Detected change in '/Users/austinfraley/Desktop/www.mcverse.com/src/authentication.py', reloading

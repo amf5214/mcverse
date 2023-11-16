@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, json, Response, jsonify, make_response, flash
 from sqlalchemy.orm.exc import NoResultFound
-from authentication import create_password, validate_password
 import sys
 import jwt
 import os
@@ -13,7 +12,10 @@ import base64
 from io import BytesIO #Converts data from Database into bytes
 from sqlalchemy import create_engine
 import pymysql
+
 from src.models import *
+from src.image_handling import *
+from src.authentication import *
 
 logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
 
@@ -34,158 +36,6 @@ with app.app_context():
             self.has=has
             self.name=name
 
-    class image_item():
-        def __init__(self, location, rendered_data, id):
-            self.location = location
-            self.rendered_data = rendered_data
-            self.id = id
-            self.src = self.create_src()
-
-        def create_src(self):
-            return f"data:image/{self.location};base64,{self.rendered_data}"
-        
-    def create_image(id):
-        image = FileContent.query.get_or_404(id)
-        return image_item(image.location, image.rendered_data, image.id)
-
-    def create_image_item(id):
-        item = PageObject.query.get_or_404(id)
-        if item.image_link != None:
-            image_id = item.image_link
-            try:
-                int(image_id)
-            except:
-                image_id = 7
-        else:
-            image_id = 7
-        image = FileContent.query.get_or_404(image_id)
-        return image_item(image.location, image.rendered_data, image.id)
-    
-    def create_image_item_2(item):
-        image_id = item.image_link
-        if item.image_link != None:
-            image_id = item.image_link
-            try:
-                int(image_id)
-            except:
-                image_id = 7
-        else:
-            image_id = 7
-        image = FileContent.query.get_or_404(image_id)
-        return image_item(image.location, image.rendered_data, image.id)
-
-    def get_account(request):
-        token = request.cookies.get("token")
-        logging.info(f"auth_token={token}")
-        if token != None:
-            try:
-                auth_account = db.session.execute(db.select(AuthAccount).filter_by(auth_token=token)).scalar_one()
-                if auth_account != None:
-                    logging.info(f"auth_account_id={auth_account.id}")
-                    account = db.session.execute(db.select(UserAccount).filter_by(auth_account_id=auth_account.id)).scalar_one()
-                    if account != None:
-                        logging.info(f"account_id={account.id}")
-                        account.set_auth(auth_account)
-                        account.admin_flag = permission_validation("Admin", account.id)
-                        logging.info(f"admin_flag={account.admin_flag}")
-                        if account.account_image_link != None:
-                            image_id = account.account_image_link
-                            account.image_flag = True
-                            try:
-                                int(image_id)
-                            except:
-                                image_id = 3
-                        else:
-                            image_id = 3
-                            account.image_flag = False
-                        image_obj = FileContent.query.get_or_404(image_id)
-                        account.profile_img_loc = image_obj.location
-                        logging.info(f"account_image_loc={account.profile_img_loc}")
-                        account.profile_img_data = image_obj.rendered_data
-                    else:
-                        return UserAccount(full_name="No Account")
-                else:
-                    return UserAccount(full_name="No Account")
-                
-                return account
-            
-            except NoResultFound:
-                return UserAccount(full_name="No Account")
-        else:
-            return UserAccount(full_name="No Account")
-        
-    def permission_validation(permission, accountid):
-        user_perms = db.session.execute(db.select(AccountPermission).filter_by(account_id=accountid)).scalars()
-        for permissionx in user_perms:
-            if permissionx.permission_type == permission:
-                return True
-        
-        return False
-    
-    def check_if_admin(request):
-        account = get_account(request)
-        if account.full_name != "No Account":
-            return permission_validation("Admin", account.id)
-        
-    def check_if_editor(request):
-        account = get_account(request)
-        if account.full_name != "No Account":
-            return permission_validation("Edit_Pages", account.id)
-        
-    def check_if_canadd(request):
-        account = get_account(request)
-        if account.full_name != "No Account":
-            return permission_validation("Add_Pages", account.id)
-        
-    def encode_auth_token(email_account):
-            """
-            Generates the Auth Token
-            :return: string
-            """
-            try:
-                payload = {
-                    'exp': datetime.now(timezone.utc) + timedelta(days=1, seconds=0),
-                    'iat': datetime.now(timezone.utc),
-                    'sub': email_account
-                }
-                return jwt.encode(
-                    payload,
-                    app.config.get('SECRET_KEY'),
-                    algorithm='HS256'
-                )
-            except Exception as e:
-                return e
-            
-    def save_item(request):
-        user_file = request.files["file"]
-        if user_file.filename == '':
-            return None
-        if user_file:
-            filename = secure_filename(user_file.filename)
-            pic_name = str(uuid.uuid1()) + "_" + filename
-            user_file.save(os.path.join(app.config["ITEM_FOLDER"], pic_name))
-            return pic_name
-
-    def render_picture(data):
-        render_pic = base64.b64encode(data).decode('ascii') 
-        return render_pic
-
-    def uploadimage(request):
-        file = request.files['file']
-        if file.filename == '':
-            return None
-        if file:
-            data = file.read()
-            render_file = render_picture(data)
-            filename = secure_filename(file.filename)
-            pic_name = str(uuid.uuid1()) + "_" + filename
-            location = file.filename.split(".")[1]
-
-            newFile = FileContent(name=file.filename, rendered_data=render_file, text=pic_name, location=location)
-            db.session.add(newFile)
-            db.session.commit() 
-            return newFile.id
-        
     def get_item_classes():
         item_classes = ItemClass.query.order_by(ItemClass.id).all()
         return item_classes
