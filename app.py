@@ -71,6 +71,24 @@ with app.app_context():
             return True
         else: return False
 
+    def process_nested_div(element):
+        element_ids = element.text.split("-")
+        print(f"element_ids_nested={element_ids}")
+        if element.text == "" or element.text == "NULL":
+                return False
+        element.nested_elements = []
+        for x in element_ids:
+            try:
+                nested_element_id = int(x)
+                nested_element = db.session.execute(db.select(PageElement).filter_by(id=nested_element_id)).scalar_one()
+                print(nested_element)
+                if nested_element.element_type == "img":
+                    nested_element.text = (create_image(int(nested_element.text))).src
+                element.nested_elements.append(nested_element)
+            except Exception as e:
+                print(f"Error found at {x}. Error: {e}")
+        return True
+
     def convert_image_to_json(image_obj):
         json_obj = {}
         json_obj["id"] = image_obj.id
