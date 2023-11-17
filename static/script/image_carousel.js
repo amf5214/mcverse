@@ -16,3 +16,22 @@ async function getCarouselItems(queryUrl) {
     return imageList;
 
 }
+
+function sendData(path, parameters, method='post') {
+
+    const form = document.createElement('form');
+    form.method = method;
+    form.action = path;
+    document.body.appendChild(form);
+  
+    for (const key in parameters) {
+        const formField = document.createElement('input');
+        formField.type = 'hidden';
+        formField.name = key;
+        formField.value = parameters[key];
+  
+        form.appendChild(formField);
+    }
+    form.submit();
+
+}
