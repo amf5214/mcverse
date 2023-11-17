@@ -720,9 +720,12 @@ def update_learning_item():
             db.session.commit()
     elif container_type == "element":
         element = db.session.execute(db.select(PageElement).filter_by(id=item_id)).scalar_one()
-        element.text = new_value
-        print(f"element_id={item_id};text={new_value}")
-        db.session.commit()
+        if element_type == "title":
+            element.div_title = new_value
+            db.session.commit()
+        else:
+            element.text = new_value
+            db.session.commit()
     
     return redirect(f'/learn/{request.form["page_path"]}/true')
 
