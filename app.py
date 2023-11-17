@@ -805,8 +805,16 @@ def create_learning_page_section(path, page_id, placement_order, div_id):
             page_num = int(page_id)
             placement_order = int(placement_order)
             print(f"page_num={page_num}; placement_order={placement_order}")
-            new_section = PageElement(element_type="div", div_id=div_id, text="", page_id=page_num, placement_order=placement_order)
+            new_section_part1 = PageElement(element_type="img", div_id=0, text="25", page_id=page_num, placement_order=0)
+            new_section_part2 = PageElement(element_type="p", div_id=0, text="Empty paragraph", page_id=page_num, placement_order=0)
+            db.session.add(new_section_part1)
+            db.session.add(new_section_part2)
+
+            db.session.commit()
+            
+            new_section = PageElement(element_type="div", div_id=div_id, text=f"{new_section_part1.id}-{new_section_part2.id}", page_id=page_num, placement_order=placement_order)
             db.session.add(new_section)
+
             db.session.commit()
             return redirect(f'/learn/{path}/true')
         except:
