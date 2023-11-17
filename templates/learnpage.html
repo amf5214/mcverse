@@ -137,7 +137,7 @@
             {% else %}
                 <a href="#item-1">Introduction</a>
                 {% for div in divs %}
-                    <a href="#user_created_page_div_{{ div.id }}">{{ div.div_title }}</a>
+                    <a href="#user_created_page_div-{{ div.id }}-{{ div.placement_order }}">{{ div.div_title }}</a>
                 {% endfor %}
             {% endif %}
             <div id="openclosemenudiv">
