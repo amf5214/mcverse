@@ -416,4 +416,16 @@ body {
     justify-content: center;
 }
 
+#leftmenu-close {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    border-radius: 1em;
+    background-color: white;
+    border: 0;
+    z-index: 54;
+}
+
+.carousel-image-remove {
+    margin: 1rem;
 }
