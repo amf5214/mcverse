@@ -604,6 +604,7 @@ def learningpages(pagepath, editable):
         return redirect('/404')
     divs = db.session.execute(db.select(DivContainer).filter_by(page_id=page.id).order_by(DivContainer.placement_order)).scalars()
     elements = db.session.execute(db.select(PageElement).filter_by(page_id=page.id).order_by(PageElement.div_id, PageElement.placement_order)).scalars()
+    elements = db.session.execute(db.select(PageElement).filter_by(page_id=page.id).filter(PageElement.div_id!=0).order_by(PageElement.div_id, PageElement.placement_order)).scalars()
     div_elements = {}
     max_placement_order = 0
 
@@ -614,6 +615,8 @@ def learningpages(pagepath, editable):
             element_updated = process_carousel_element(element)
             if not element_updated:
                 element.images = [create_image(8)]
+        elif element.element_type == "div":
+            elements_found = process_nested_div(element)
         if f"div_{element.div_id}" in div_elements.keys():
             div_elements[f"div_{element.div_id}"].append(element)
         else:
