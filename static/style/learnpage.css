@@ -305,6 +305,7 @@ body {
     align-items: center;
     justify-content: center;
     border-radius: 1em;
+    max-width: 50%;
 }
 
 .form-wrapper img {
