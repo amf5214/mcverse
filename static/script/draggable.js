@@ -46,14 +46,23 @@ for(const dropzone of dropzones) {
 
         event.preventDefault();
 
-        if(elementData.at(0) == "Section") {
-            if(event.target.className == "dropzone") {
+        if(elementData.at(0) == "Block") {
+            if(event.target.parentNode.className == "new-div-droparea") {
                 if(elementData.length > 1) {
                     placement_order = elementData.at(1).split("-").at(1);
                     placement_order = parseInt(placement_order);
                     placement_order += 1;
                 }
                 window.location.replace(`/learningpage/admin/newdiv/${pagePath}/${pageId}/${placement_order}`);
+            } else {
+                console.log(modified_data);
+                modified_data.forEach( x => {
+                    let obj = document.getElementById(x.at(0));
+                    obj.style.border = x.at(1);
+                });
+        
+                modified.splice(0, modified.length);
+                modified_data.splice(0, modified_data.length);
             }
         }  
         else if(elementData.at(0) == "Image") {
@@ -90,7 +99,7 @@ for(const dropzone of dropzones) {
         
         }
 
-        else if(elementData.at(0) == "carousel") {
+        else if(elementData.at(0) == "Section") {
             let div_id = event.target.parentNode.parentNode.id.split("-")
             console.log(`div_id_data=${div_id}`);
             div_id_sel = div_id.at(1);
@@ -98,7 +107,7 @@ for(const dropzone of dropzones) {
             placement_order = document.getElementById(`div_count-${div_id_sel}`).value;
             placement_order = parseInt(placement_order);
             placement_order += 1;
-            window.location.replace(`/learningpage/admin/newcarousel/${pagePath}/${pageId}/${placement_order}/${div_id_sel}`);
+            window.location.replace(`/learningpage/admin/newsection/${pagePath}/${pageId}/${placement_order}/${div_id_sel}`);
         
         }
     })
