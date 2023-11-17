@@ -100,6 +100,9 @@
                             </section>  
                         {% endif %}
                     {% if editable == True %}
+                        {% if element.element_type == "image-carousel" %}
+                            <button class="carousel-menu" id="carousel-menu-{{ element.id }}" onclick="open_carousel_menu(event)"><span class="material-symbols-outlined">menu</span></button>
+                        {% endif %}
                         </div>
                     {% endif %}
                 {% endfor %}
