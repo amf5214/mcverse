@@ -371,4 +371,49 @@ body {
     background-color: white;
     border: 0;
 }
+
+.leftmenubar {
+    position: fixed;
+    display: none;
+    flex-direction: column;
+    max-height: 70%;
+    max-width: 30%;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    left: 0;
+    top: 20%;
+    background-color: #21232ABB;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    font-family: grandstander;
+    font-size: clamp(.3rem, .3rem + 2vw, 1rem);
+    color: white;
+    text-decoration: none;
+    box-shadow: -3em 0 -1em rgba(0,0,0,0.2);
+    border-radius: .7rem;
+    z-index: 100;
+}
+
+.leftmenubar-content {
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+.carousel-editor-row {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
 }
