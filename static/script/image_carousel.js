@@ -84,6 +84,44 @@ async function open_carousel_menu(event) {
 
         console.log(item);
     })
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = "/adminaddcarouselimage";
+    form.enctype ="multipart/form-data"
+
+    let encapsulatingLabel = document.createElement("label");
+    let newImageBtn = document.createElement("input");
+    let carouselIdLbl = document.createElement("input");
+    let pagePathLbl = document.createElement("input");
+    let uploadParagraph = document.createElement("p");
+
+    newImageBtn.type = "file";
+    newImageBtn.style.display = "none";
+    newImageBtn.name = "file";
+    newImageBtn.id = "new-image-file";
+
+    carouselIdLbl.name = "carousel-id";
+    carouselIdLbl.type = "hidden";
+    carouselIdLbl.value = `${carouselId}`;
+    carouselIdLbl.id = `carousel-id-${carouselId}`;
+
+    pagePathLbl.name = "page-path";
+    pagePathLbl.type = "hidden";
+    pagePathLbl.value = `${page_path.value}`;
+    pagePathLbl.id = `page-path-${page_path.value}`
+
+    uploadParagraph.innerHTML = `<span id="editmenutextspan" class="material-symbols-outlined">upload_file</span>`;
+    newImageBtn.addEventListener("change", (event) => {
+        form.submit();
+    })
+
+    encapsulatingLabel.appendChild(newImageBtn);
+    encapsulatingLabel.appendChild(uploadParagraph);
+    form.appendChild(carouselIdLbl);
+    form.appendChild(pagePathLbl);
+    form.appendChild(encapsulatingLabel);
+    leftMenuBarContent.appendChild(form);
+
     let closeLeftMenu = document.createElement("button");
     closeLeftMenu.id = "leftmenu-close";
     closeLeftMenu.innerHTML = '<span class="material-symbols-outlined">close</span>';
