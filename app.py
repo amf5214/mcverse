@@ -773,6 +773,8 @@ def create_learning_page_carousel(path, page_id, placement_order, div_id):
 
 @app.route('/pageelementimageupdate', methods=['POST'])
 def update_page_element_image():
+    if not check_if_editor(request):
+        return redirect('/')
     image_id = uploadimage(request)
     page_element = PageElement.query.get_or_404(request.form["element_id"])
 
