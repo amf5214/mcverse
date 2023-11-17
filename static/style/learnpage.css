@@ -402,7 +402,6 @@ body {
     display: flex;
     flex-direction: column;
     overflow: scroll;
-    justify-content: center;
     align-items: center;
     align-content: center;
     text-align: center;
