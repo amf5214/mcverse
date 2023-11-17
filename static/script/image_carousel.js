@@ -84,4 +84,12 @@ async function open_carousel_menu(event) {
 
         console.log(item);
     })
+    let closeLeftMenu = document.createElement("button");
+    closeLeftMenu.id = "leftmenu-close";
+    closeLeftMenu.innerHTML = '<span class="material-symbols-outlined">close</span>';
+    closeLeftMenu.addEventListener("click", (event) => {
+        leftMenuBarContent.innerHTML = "";
+        leftMenuBar.style.display = "none";
+    });
+    leftMenuBarContent.appendChild(closeLeftMenu);
 }
