@@ -1,14 +1,21 @@
+body {
+    background-image: url("/static/learningpage_1.jpeg");
+    background-repeat: repeat-x;
+    background-size: auto;
+}
+
 .homepage {
     display: flex;
     flex-direction: column;
     margin: auto clamp(.25rem, .25rem + 2vw, 3rem);
+    margin: 1rem 5rem;
 }
 
 .homepage > * {
     margin: 1rem auto;
 }
 
-@media(min-width: 1000px) {
+/* @media(min-width: 1000px) {
     .homepage {
         flex-direction: row;
         flex-wrap: wrap;
@@ -20,7 +27,7 @@
         flex: 0 1 40%;
         align-self: top center;
     }
-}
+} */
 
 .intro-block {
     background-color: #21232A;
@@ -32,7 +39,7 @@
     align-content: center;
     padding: 2rem;
     border-radius: 1em;
-    margin: 1em;
+    margin: 1rem 5rem;
 }
 
 .intro-block-image {
