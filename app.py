@@ -783,4 +783,10 @@ def update_page_element_image():
     db.session.commit()
     return redirect(f"/learn/{request.form['page_path']}/true")
 
+@app.route('/admingetcarousel/<int:element_id>')
+def carousel_items(element_id):
+    if not check_if_editor(request):
+        return redirect('/')
+    return jsonify(get_carousel_items(element_id))
+
 app.run(debug=True, port=54913)
