@@ -823,4 +823,33 @@ def remove_carousel_image():
         response_obj.headers.set('content-type', 'text/plain')
         return response_obj
 
+@app.route('/adminaddcarouselimage', methods=["POST"])
+def add_carousel_image():
+    if not check_if_editor(request):
+        return redirect('/')
+    image_id = uploadimage(request)
+    try:
+        carousel_id = request.form["carousel-id"]
+        page_path = request.form["page-path"]
+        carousel_id = int(carousel_id)
+        carousel = db.session.execute(db.select(PageElement).filter_by(id=carousel_id)).scalar_one()
+        images = carousel.text.split("-")
+        images.append(image_id)
+        return_string = ""
+        for i, x in enumerate(images):
+            if i == 0:
+                return_string += str(x)
+            else:
+                return_string += "-"
+                return_string += str(x)
+        carousel.text = return_string
+        
+        db.session.commit()
+
+        return redirect(f"/learn/{page_path}/true")
+    
+    except Exception as e:
+        print(e)
+        return redirect("/")
+
 app.run(debug=True, port=54913)
