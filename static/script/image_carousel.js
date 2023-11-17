@@ -50,4 +50,16 @@ async function open_carousel_menu(event) {
     let queryUrl = "/admingetcarousel/" + carouselId;
     console.log(`queryUrl=${queryUrl}`);
     let imageList = await getCarouselItems(queryUrl);
+    imageList.forEach((item) => {
+        let container = document.createElement('div');
+        container.className = "carousel-editor-row";
+        let image = document.createElement("img");
+        image.src = item.src;
+        image.style.maxHeight = "50%";
+        image.style.maxWidth = "50%";
+
+        leftMenuBarContent.appendChild(container);
+
+        console.log(item);
+    })
 }
