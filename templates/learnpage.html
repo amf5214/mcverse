@@ -101,7 +101,11 @@
                                 </div>
                             </section> 
                         {% elif element.element_type == "div" %}
-                        
+                            <div class="nested-user-created-div" id="nested-div-{{ element.id }}">
+                                {% for nested in element.nested_elements %}
+                                
+                                {% endfor %}
+                            </div>
                         {% endif %}
                     {% if editable == True %}
                         {% if element.element_type == "image-carousel" %}
