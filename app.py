@@ -789,4 +789,38 @@ def carousel_items(element_id):
         return redirect('/')
     return jsonify(get_carousel_items(element_id))
 
+@app.route('/removecarouselimage', methods=['POST'])
+def remove_carousel_image():
+    if not check_if_editor(request):
+        return redirect('/')
+    request_data = request.get_json()
+    carousel_id = request_data['carousel_id']
+    image_id = request_data['image_id']
+    page_path = request_data['page_path']
+    try:
+        carousel = db.session.execute(db.select(PageElement).filter_by(id=carousel_id)).scalar_one()
+        text = carousel.text
+        images = text.split("-")
+        print(f"images={images}; image_id={str(image_id)}")
+        images.remove(str(image_id))
+        return_string = ""
+        for i, x in enumerate(images):
+            if i == 0:
+                return_string += str(x)
+            else:
+                return_string += "-"
+                return_string += str(x)
+        carousel.text = return_string
+        db.session.commit()
+        print(f"newpath=/learn/{page_path}/true")
+        body = {"redirect": f"/learn/{page_path}/true"}
+        response_obj = make_response(jsonify(body))
+        response_obj.headers.set('content-type', 'text/plain')
+        return response_obj
+    except Exception as e:
+        print(e)
+        response_obj = make_response("/")
+        response_obj.headers.set('content-type', 'text/plain')
+        return response_obj
+
 app.run(debug=True, port=54913)
