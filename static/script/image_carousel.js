@@ -35,3 +35,19 @@ function sendData(path, parameters, method='post') {
     form.submit();
 
 }
+
+async function open_carousel_menu(event) {
+
+    leftMenuBar.style.display = "flex";
+    let divTitle = document.createElement("h1");
+    divTitle.className = "leftmenu-title";
+    divTitle.innerText = "Carousel Editor";
+    leftMenuBarContent.appendChild(divTitle);
+    let buttonId = event.target.parentNode.id
+    console.log(`buttonID=${buttonId}`);
+    let carouselId = buttonId.split("-").at(2);
+    console.log(`carouselId=${carouselId}`);
+    let queryUrl = "/admingetcarousel/" + carouselId;
+    console.log(`queryUrl=${queryUrl}`);
+    let imageList = await getCarouselItems(queryUrl);
+}
