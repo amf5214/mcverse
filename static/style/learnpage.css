@@ -8,7 +8,7 @@ body {
     display: flex;
     flex-direction: column;
     margin: auto clamp(.25rem, .25rem + 2vw, 3rem);
-    margin: 1rem 5rem;
+    margin: 1rem 20%;
 }
 
 .homepage > * {
@@ -39,7 +39,6 @@ body {
     align-content: center;
     padding: 2rem;
     border-radius: 1em;
-    margin: 1rem 7rem;
 }
 
 .intro-block-image {
@@ -156,7 +155,7 @@ body {
     align-content: center;
     right: 0;
     top: 20%;
-    max-width: 10%;
+    max-width: 20%;
     max-height: 50%;
     background-color: #21232ABB;
     margin-left: 0;
@@ -186,7 +185,7 @@ body {
 }
 
 .rightmenubar > * {
-    margin: 1rem;
+    margin: 20%;
 }
 
 #openclosemenudiv {
@@ -269,7 +268,6 @@ body {
     justify-content: flex-start;
     align-items: center;
     align-content: center;
-    margin: 1rem 7rem;
 }
 
 .user-created-div .unlink-div {
