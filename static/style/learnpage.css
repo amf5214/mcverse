@@ -73,7 +73,7 @@ body {
     max-height: 100%;   
 }
 
-#drop-zone-img-element {
+.drop-zone-img-element {
     max-width: 100%;
     max-height: 100%;  
 }
