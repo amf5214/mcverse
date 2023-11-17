@@ -106,8 +106,8 @@ body {
 }
 
 .img-view img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 60%;
+    max-height: 60%;
 }
 
 #item-1 .title-block{
@@ -199,12 +199,12 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 60%;  
+    max-height: 60%;
 }
 
 .slider-wrapper {
-    max-width: 100%;
+    max-width: 100%;  
     max-height: 100%;
 }
 
@@ -216,12 +216,15 @@ body {
     scroll-behavior: smooth;
     box-shadow: 0 1.5 rem 3 rem  -0.75rem hsla(0, 0%, 0% 0.25);
     border-radius: 0.5rem;
+    max-width: 100%;  
+    max-height: 100%;
 }
 
 .slider img {
     flex: 1 0 100%;
     scroll-snap-align: start;  
     max-width: 100%;  
+    max-height: 100%;
 }
 
 .slider-nav {
@@ -266,6 +269,7 @@ body {
     justify-content: flex-start;
     align-items: center;
     align-content: center;
+    margin: 1rem 7rem;
 }
 
 .user-created-div .unlink-div {
