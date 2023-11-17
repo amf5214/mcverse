@@ -58,6 +58,14 @@ async function open_carousel_menu(event) {
         image.style.maxHeight = "50%";
         image.style.maxWidth = "50%";
 
+        let removeButton = document.createElement("button");
+        removeButton.innerHTML = '<span class="material-symbols-outlined">delete</span>';
+        removeButton.className = "carousel-image-remove";
+        removeButton.addEventListener("click", (event) => {
+        })
+
+        container.appendChild(image);
+        container.appendChild(removeButton);
         leftMenuBarContent.appendChild(container);
 
         console.log(item);
