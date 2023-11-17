@@ -297,7 +297,6 @@ body {
     border-radius: 1em;
 }
 
-#form-wrapper {
 .form-wrapper {
     position: relative;
     display: flex;
