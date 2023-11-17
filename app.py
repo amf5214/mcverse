@@ -69,6 +69,32 @@ with app.app_context():
             return True
         else: return False
 
+    def convert_image_to_json(image_obj):
+        json_obj = {}
+        json_obj["id"] = image_obj.id
+        json_obj["rendered_data"] = image_obj.rendered_data
+        json_obj["location"] = image_obj.location
+        json_obj["src"] = image_obj.src
+        return json_obj
+
+    def get_carousel_items(element_id):
+        try:
+            element_id = int(element_id)
+            carousel = db.session.execute(db.select(PageElement).filter_by(id=element_id)).scalar_one()
+        except Exception as e:
+            print(e)
+
+        images = carousel.text.split("-")
+        image_objects = []
+        for x in images:
+            image_objects.append(create_image(x))
+        
+        json_data = []
+        for y in image_objects:
+            json_data.append(convert_image_to_json(y))
+        
+        return {"jdata": json_data}
+
     db.create_all()
 
     Permission_values = ["Admin", "Edit_Pages", "Add_Pages"]
