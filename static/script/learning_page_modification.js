@@ -10,7 +10,11 @@ function addListener(element) {
         attributePieces = attribute.split("-");
 
         if(attributePieces.at(1) == "title") {
-            newValuedata = newValuedata.split("rocket_launch")[0].trim()
+            newValuedata = newValuedata.split("rocket_launch")[0].trim();
+            let valueData2 = newValuedata.split("expand_circle_right");
+            if(valueData2.length > 1) {
+                newValuedata = valueData2.at(1);
+            }
         }
 
         if(attributePieces.at(1) == "title" || attributePieces.at(1) == "text") {
