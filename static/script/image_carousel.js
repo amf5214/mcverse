@@ -62,6 +62,20 @@ async function open_carousel_menu(event) {
         removeButton.innerHTML = '<span class="material-symbols-outlined">delete</span>';
         removeButton.className = "carousel-image-remove";
         removeButton.addEventListener("click", (event) => {
+            fetch("/removecarouselimage", {
+                method: "POST",
+                body: JSON.stringify({
+                    carousel_id: carouselId,
+                    image_id: item.id,
+                    page_path: page_path.value
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            }).then((response) => response.json())
+            .then((data) => {
+                window.location = data.redirect;
+            })
         })
 
         container.appendChild(image);
