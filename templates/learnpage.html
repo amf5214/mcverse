@@ -94,7 +94,9 @@
                                         {% endfor %}
                                     </div>
                                     <div class="slider-nav">
-                                        <a href="#carousel{{ element.id }}-slide{{ loop.index }}"></a>
+                                        {% for image in element.images %}
+                                            <a href="#carousel{{ element.id }}-slide{{ loop.index }}"></a>
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </section>  
@@ -126,7 +128,6 @@
             </div>
         {% endif %}
         
-
         <div class="rightmenubar">
             {% if editable == True %}
                 <a class="draggable-obj" draggable="true" id="drag_obj-{{ max_placement }}">Section</a>
