@@ -771,6 +771,23 @@ def create_learning_page_carousel(path, page_id, placement_order, div_id):
     else:
         return redirect('/')
 
+@app.route('/learningpage/admin/newsection/<path>/<int:page_id>/<int:placement_order>/<int:div_id>')
+def create_learning_page_section(path, page_id, placement_order, div_id):
+    logging.info(f"Learning Page Image Carousel Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
+    if check_if_editor(request):
+        try:
+            page_num = int(page_id)
+            placement_order = int(placement_order)
+            print(f"page_num={page_num}; placement_order={placement_order}")
+            new_section = PageElement(element_type="div", div_id=div_id, text="", page_id=page_num, placement_order=placement_order)
+            db.session.add(new_section)
+            db.session.commit()
+            return redirect(f'/learn/{path}/true')
+        except:
+            return redirect('/')
+    else:
+        return redirect('/')
+        
 @app.route('/pageelementimageupdate', methods=['POST'])
 def update_page_element_image():
     if not check_if_editor(request):
