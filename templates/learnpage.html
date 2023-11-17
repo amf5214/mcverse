@@ -99,7 +99,9 @@
                                         {% endfor %}
                                     </div>
                                 </div>
-                            </section>  
+                            </section> 
+                        {% elif element.element_type == "div" %}
+                        
                         {% endif %}
                     {% if editable == True %}
                         {% if element.element_type == "image-carousel" %}
@@ -130,6 +132,7 @@
         
         <div class="rightmenubar">
             {% if editable == True %}
+                <a class="draggable-obj" draggable="true" id="drag_obj-{{ max_placement }}">Block</a>
                 <a class="draggable-obj" draggable="true" id="drag_obj-{{ max_placement }}">Section</a>
                 <a class="draggable-obj" draggable="true" id="drag_obj-{{ max_placement }}">Image</a>
                 <a class="draggable-obj" draggable="true" id="drag_obj-{{ max_placement }}">Carousel</a>
