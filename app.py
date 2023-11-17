@@ -61,6 +61,8 @@ with app.app_context():
 
     def process_carousel_element(element):
         if element.element_type == "image-carousel":
+            if element.text == "" or element.text == "NULL":
+                return False
             image_links = element.text.split("-")
             element.images = []
             for x in image_links:
