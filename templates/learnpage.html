@@ -101,10 +101,50 @@
                                 </div>
                             </section> 
                         {% elif element.element_type == "div" %}
-                            <div class="nested-user-created-div" id="nested-div-{{ element.id }}">
-                                {% for nested in element.nested_elements %}
-                                
-                                {% endfor %}
+                            {% if loop.last == True %}
+                                <div class="nested-user-created-div-wrapper-last">
+                            {% else %}
+                                <div class="nested-user-created-div-wrapper">
+                            {% endif %}
+                            {% if editable == True or element.div_title != None %}
+                                <h3 id="element-title-{{ element.id }}" class="nested-div-title editable-item" contenteditable="{{editable}}"><span class="material-symbols-outlined">expand_circle_right</span>{{element.div_title}}</h3>
+                            {% endif %}
+                                <div class="nested-user-created-div" id="nested-div-{{ element.id }}">
+                                    {% for nested in element.nested_elements %}
+                                        {% if nested.element_type == "img" %}
+                                            {% if editable == True %}
+                                                <div class="form-wrapper" style="width: 50%">
+                                                    <form method="post" action="/pageelementimageupdate" id="pageelementimageupdatenested" enctype="multipart/form-data" style="width: 100%">
+                                                        <input type="text" hidden name="element_id" value="{{ nested.id }}" text="{{ nested.id }}">
+                                                        <input type="hidden" hidden name="page_path" id="page_path" value="{{ page.path }}" text="{{ page.path }}">
+                                                        <div class="intro-block" style="width: 100%">
+                                                            <label id="drop-area" style="width: 100%">
+                                                                <input type="file" value="" text="" name="file" accept="image/png, image/jpeg, image/jpg" hidden id="input_file-{{ nested.id }}" class="file-inputs">
+                                                                <div id="img_view-{{ nested.id }}" class="img-view" style="width: 100%">
+                                                                    <img src="{{ nested.text }}" class="user-created-img-nested" style="width: 100%">
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            {% else %}
+                                                <div class="form-wrapper">
+                                                    <img class="user-created-img-nested" src="{{ nested.text }}">
+                                                </div>
+                                            {% endif %}
+                                        {% elif nested.element_type == "p" %}
+                                            {% if editable == True %}
+                                                <div class="form-wrapper wrapper-p" style="width: 50%">
+                                                    <p class="editable-item nested-paragraph" contenteditable="{{editable}}" id="element-text-{{ nested.id }}" style="width: 100%">{{ nested.text }}</p>
+                                                </div>
+                                            {% else %}
+                                                <div class="form-wrapper wrapper-p" style="width: 50%">
+                                                    <p class="editable-item nested-paragraph" contenteditable="{{editable}}" id="element-text-{{ nested.id }}">{{ nested.text }}</p>
+                                                </div>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
                             </div>
                         {% endif %}
                     {% if editable == True %}
