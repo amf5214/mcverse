@@ -5,11 +5,11 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <script>
+    <!-- <script>
     $( function() {
         $( "#editing-menu" ).draggable();
     } );
-    </script>
+    </script> -->
 
 {% endblock %}
 
@@ -101,7 +101,9 @@
         {% endif %}
         {% if page_object.iframe_video_link != "" %}
         <div class="video">
-            <iframe width="560" height="315" src="{{page_object.iframe_video_link}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen contenteditable="{{editable}}"></iframe>
+            <section>
+                <iframe width="560" height="315" src="{{page_object.iframe_video_link}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen contenteditable="{{editable}}"></iframe>
+            </section>
         </div>
         {% endif %}
         {% if editable == True %}
@@ -137,7 +139,12 @@
                 <div>
                     <h1>Edit Video Link</h1>
                     <div class="option-block" id="video-block">
-                        <img id="item-image-video" src="{{ videoimage.src }}">
+                        <label class="drop-area-2" id="drop-area4" style="width: 100%; height: 100%; margin: 0;">
+                            <input type="button" value="" text="" onclick="open_video_edit()" hidden id="edit-youtube">
+                            <div class="img-view" id="img-view4">
+                                <img id="item-image-video" src="{{ videoimage.src }}">
+                            </div>
+                        </label>
                     </div>
                 </div>
             </div>
