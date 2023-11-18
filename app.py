@@ -603,7 +603,6 @@ def learningpages(pagepath, editable):
     except NoResultFound:
         return redirect('/404')
     divs = db.session.execute(db.select(DivContainer).filter_by(page_id=page.id).order_by(DivContainer.placement_order)).scalars()
-    elements = db.session.execute(db.select(PageElement).filter_by(page_id=page.id).order_by(PageElement.div_id, PageElement.placement_order)).scalars()
     elements = db.session.execute(db.select(PageElement).filter_by(page_id=page.id).filter(PageElement.div_id!=0).order_by(PageElement.div_id, PageElement.placement_order)).scalars()
     div_elements = {}
     max_placement_order = 0
@@ -733,7 +732,7 @@ def update_learning_item():
 def move_learning_element(page_path, element_id, direction):
     logging.info("Moving page element")
     if not check_if_editor(request):
-            return redirect(f'/learn/{request.form["page_path"]}/false')
+        return redirect(f'/learn/{request.form["page_path"]}/false')
     try:
         page = db.session.execute(db.select(WebPage).filter_by(path=page_path)).scalar_one()
         logging.info(f"learning page located. web_page_id={page.id}")
@@ -757,6 +756,40 @@ def move_learning_element(page_path, element_id, direction):
             logging.info(f"original_order={original_order}, new_order={order}")
             other_element.placement_order = original_order
             current_element.placement_order = order
+            db.session.commit()
+        return redirect(f"/learn/{page_path}/true")
+    except Exception as e:
+        print(e)
+        return redirect('/')
+        
+@app.route('/movelearningdiv/<page_path>/<int:div_id>/<direction>')
+def move_learning_div(page_path, div_id, direction):
+    logging.info("Moving page div")
+    if not check_if_editor(request):
+        return redirect(f'/learn/{request.form["page_path"]}/false')
+    try:
+        page = db.session.execute(db.select(WebPage).filter_by(path=page_path)).scalar_one()
+        logging.info(f"learning page located. web_page_id={page.id}")
+        current_div = db.session.execute(db.select(DivContainer).filter_by(id=div_id)).scalar_one()
+        logging.info(f"Current div located. div_id={current_div.id}")
+        order = current_div.placement_order
+        original_order = int(order)
+        if direction == "up":
+            order -= 1
+            if order > 0:
+                logging.info(f"original_order={original_order}, new_order={order}")
+                other_div = db.session.execute(db.select(DivContainer).filter_by(page_id=page.id, placement_order=order)).scalar_one()
+                logging.info(f"Other div located. div_id={other_div.id}")
+                other_div.placement_order = original_order
+                current_div.placement_order = order
+                db.session.commit()
+        elif direction == "down":
+            order += 1
+            other_div = db.session.execute(db.select(DivContainer).filter_by(page_id=page.id, placement_order=order)).scalar_one()
+            logging.info(f"Other element located. element_id={other_div.id}")
+            logging.info(f"original_order={original_order}, new_order={order}")
+            other_div.placement_order = original_order
+            current_div.placement_order = order
             db.session.commit()
         return redirect(f"/learn/{page_path}/true")
     except Exception as e:
@@ -811,7 +844,7 @@ def create_learning_page_section(path, page_id, placement_order, div_id):
             db.session.add(new_section_part2)
 
             db.session.commit()
-            
+
             new_section = PageElement(element_type="div", div_id=div_id, text=f"{new_section_part1.id}-{new_section_part2.id}", page_id=page_num, placement_order=placement_order)
             db.session.add(new_section)
 
