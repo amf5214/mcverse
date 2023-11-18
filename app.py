@@ -17,9 +17,9 @@ from src.models import *
 from src.image_handling import *
 from src.authentication import *
 
-logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
-
 app = Flask(__name__)
+
+logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
 
 with app.app_context():
     app.config["SQLALCHEMY_DATABASE_URI"] = "mariadb+pymysql://prod_main:Alhamley3/@mariadb-152364-0.cloudclusters.net:19546/mcverse_prod?charset=utf8mb4"
@@ -179,7 +179,7 @@ def item_report(itemid, editable):
     if editable == "true":
         editable_permisssion = check_if_editor(request)
         if editable_permisssion:
-            return render_template('item.html', page_object=page_object, item_image=item_image, crafting_links=crafting_links, smelting_links=smelting_links, editable=editable_permisssion, useraccount=get_account(request), smeltingdefault=smeltingdefault, craftingdefault=craftingdefault, itemclasses=get_item_classes())
+            return render_template('item.html', page_object=page_object, item_image=item_image, crafting_links=crafting_links, smelting_links=smelting_links, editable=editable_permisssion, useraccount=get_account(request), smeltingdefault=smeltingdefault, craftingdefault=craftingdefault, itemclasses=get_item_classes(), videoimage=create_image(int(59)))
         else:
             return redirect(f"/item/{itemid}/false")
     else:
@@ -229,7 +229,9 @@ def new_item():
         item_rarity = rarity,
         dimension = request.form["dimension"],
         item_type = request.form["item_type"],
-        minecraft_item_id = request.form["minecraft_item_id"]
+        minecraft_item_id = request.form["minecraft_item_id"],
+        crafting_image_links = "",
+        smelting_image_links = ""
     )
     db.session.add(new_item)
     db.session.commit()
@@ -290,6 +292,7 @@ def update_item(itemid):
 @app.route('/admin/items')
 def all_items():
     return jsonify(get_item_json())
+
 
 @app.route('/signin/home')
 def signin():
@@ -760,9 +763,9 @@ def move_learning_element(page_path, element_id, direction):
         if direction == "up":
             order -= 1
             if order > 0:
+                logging.info(f"original_order={original_order}, new_order={order}")
                 other_element = db.session.execute(db.select(PageElement).filter_by(page_id=page.id, div_id=current_element.div_id, placement_order=order)).scalar_one()
                 logging.info(f"Other element located. element_id={other_element.id}")
-                logging.info(f"original_order={original_order}, new_order={order}")
                 other_element.placement_order = original_order
                 current_element.placement_order = order
                 db.session.commit()

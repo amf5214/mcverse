@@ -226,11 +226,10 @@
     right: 0;
     top: 0;
     z-index: 9;
-    background-color: #21232A;
+    background-color: #21232ABB;
     color: white;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     align-content: center;
     padding: 2rem;
@@ -289,3 +288,10 @@
 #img-view3 img, #img-view2 img {
     border-radius: 0;;
 }
+
+#item-image-video {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 2rem;
+}
+
