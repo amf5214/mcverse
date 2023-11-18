@@ -34,7 +34,7 @@
                         </div>
                     </form>
                 {% else %}
-                    <img id="item-image" src="{{item_image.src}}" contenteditable="{{editable}}">
+                    <img id="item-image" src="{{item_image.src}}" contenteditable="{{editable}}" style="max-width: 60%; max-height: 60%;">
                 {% endif %}
 
             </div>
@@ -102,7 +102,7 @@
         {% if page_object.iframe_video_link != "" %}
         <div class="video">
             <section>
-                <iframe width="560" height="315" src="{{page_object.iframe_video_link}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen contenteditable="{{editable}}"></iframe>
+                <iframe src="{{page_object.iframe_video_link}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen contenteditable="{{editable}}"></iframe>
             </section>
         </div>
         {% endif %}
