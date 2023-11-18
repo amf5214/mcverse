@@ -17,7 +17,7 @@ import pymysql
 
 from src.models import AuthAccount, UserAccount, FileContent, AccountPermission, db
 
-logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="a")
+logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
 
 def create_password(password_string):
     return sha256_crypt.encrypt(password_string)
