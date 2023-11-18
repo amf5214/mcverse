@@ -51,7 +51,7 @@ body {
 }
 
 #item-1 .title-block{
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .title-block {
