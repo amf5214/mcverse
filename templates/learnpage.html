@@ -82,8 +82,8 @@
                                 <p class="editable-item" contenteditable="{{editable}}" id="element-text-{{ element.id }}">{{ element.text }}</p>
                             {% endif %}
 
-                        {% elif element.element_type == "youtube" %}
-                            <iframe width="560" height="315" src="{{ element.text }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        {% elif element.element_type == "video" %}
+                            <iframe class="youtube-video" src="{{ element.text }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
 
                         {% elif element.element_type == "image-carousel" %}
                             <section class="container">
