@@ -2,6 +2,7 @@ body {
     background-image: url("/static/learningpage_1.jpeg");
     background-repeat: repeat-x;
     background-size: auto;
+    background-position: top;
 }
 
 .homepage {
@@ -21,6 +22,7 @@ body {
         flex-wrap: wrap;
         column-gap: 1em;
         row-gap: 1em;
+        margin: 1rem auto;
     }
 
     .homepage > * {
@@ -155,7 +157,7 @@ body {
     align-content: center;
     right: 0;
     top: 20%;
-    max-width: 20%;
+    max-width: 30%;
     max-height: 50%;
     background-color: #21232ABB;
     margin-left: 0;
@@ -176,6 +178,7 @@ body {
     font-size: clamp(.3rem, .3rem + 2vw, 1rem);
     color: white;
     text-decoration: none;
+    text-wrap: nowrap;
 }
 
 .rightmenubar a:hover {
