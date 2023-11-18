@@ -204,7 +204,8 @@ def item_admin():
 
 @app.route('/newitem', methods=['POST'])
 def new_item():
-    
+    if not check_if_editor(request):
+        return redirect('/item/home/item')
     rarity = request.form["item_rarity"] if request.form["item_rarity"] != "" else "Common"
     path = uploadimage(request)
     if path == None:
