@@ -77,8 +77,8 @@
 
                         {% elif element.element_type == "video" %}
                                 <iframe class="youtube-video" src="{{ element.text }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
-                                {% if editable==True %}
-                                    <p class="editable-item" id="element-text-{{ element.id }}" hidden="{{ hidden }}" contenteditable="{{editable}}">{{ element.text }}</p>
+                                {% if editable == True %}
+                                    <p class="editable-item" id="element-text-{{ element.id }}" contenteditable="{{editable}}">{{ element.text }}</p>
                                 {% endif %}
                             {% elif element.element_type == "image-carousel" %}
                             <section class="container">
