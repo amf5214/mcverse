@@ -4,11 +4,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style/learnpage.css') }}"/>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <!-- <script>
-        $( function() {
-            $( ".draggable-obj" ).draggable();
-        } );
-    </script> -->
 {% endblock %}
 
 {% block body %} 
@@ -30,8 +25,6 @@
             <div class="intro-block user-created-div" id="user_created_page_div-{{ div.id }}-{{ div.placement_order }}">
                 {% if editable == True%}
                     <input type="hidden" id="div_count-{{ div.id }}" value="{{ div.element_count }}" text="{{ div.element_count }}">
-                {% endif %}
-                {% if editable == True %}
                     <button class="unlink-div" onclick="window.location.href='/unlinkpageitem/{{ page.path }}/div/{{ div.id }}'"><span class="material-symbols-outlined">close</span></button>
                 {% endif %}
                 <div class="title-block">
@@ -83,13 +76,11 @@
                             {% endif %}
 
                         {% elif element.element_type == "video" %}
-                            {% if editable == True %}
                                 <iframe class="youtube-video" src="{{ element.text }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
-                                <p class="editable-item" id="element-text-{{ element.id }}" contenteditable="{{editable}}">{{ element.text }}</p>
-                            {% else %}
-                                <iframe class="youtube-video" src="{{ element.text }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
-                            {% endif %}
-                        {% elif element.element_type == "image-carousel" %}
+                                {% if editable==True %}
+                                    <p class="editable-item" id="element-text-{{ element.id }}" hidden="{{ hidden }}" contenteditable="{{editable}}">{{ element.text }}</p>
+                                {% endif %}
+                            {% elif element.element_type == "image-carousel" %}
                             <section class="container">
                                 <div class="slider-wrapper">
                                     <div class="slider">
