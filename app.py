@@ -174,8 +174,6 @@ def item_report(itemid, editable):
     else:
         smelting_links = ""
 
-    account = get_account(request)
-
     if editable == "true":
         editable_permisssion = check_if_editor(request)
         if editable_permisssion:
