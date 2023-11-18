@@ -7,6 +7,7 @@ function addListener(element) {
     element.addEventListener("focusout", function() {
         let attribute = element.id;
         let newValuedata = element.innerText.split(": ");
+        console.log(`innerText=${element.innerText}; newValuedata=${newValuedata.at(0)}`);
         let newValue;
         if(newValuedata.length > 1) {
             newValue = newValuedata[1];
@@ -50,3 +51,14 @@ for(let element of editable_boxes) {
     addListener(element);
 }
 
+function open_video_edit() {
+    let videoLink = document.createElement("h3");
+    videoLink.id = "iframe_video_link";
+    videoLink.className = "editable-item iframe-link";
+    videoLink.contentEditable = "true";
+    videoLink.innerText = 'Text';
+    videoLink.style.cursor = "text";
+    addListener(videoLink);
+    let box = document.getElementById("editing-menu");
+    box.appendChild(videoLink);
+}
