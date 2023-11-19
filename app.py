@@ -22,6 +22,7 @@ from src.routing_functions.item_page_rendering import ItemPageRendering
 from src.routing_functions.profile_page_rendering import ProfilePageRendering
 from src.routing_functions.learning_page_rendering import LearningPageRendering
 from src.routing_functions.learning_page_helperfunctions import LearningPageHelperFunctions
+from src.routing_functions.question_page_rendering import FAQPageRendering
 
 app = Flask(__name__)
 
@@ -155,6 +156,7 @@ app.add_url_rule('/deleteitem/<itemid>', view_func=ItemPageRendering.delete_item
 app.add_url_rule('/updateitem/<itemid>', methods=["POST"], view_func=ItemPageRendering.update_item)
 
 # Routing for question pages
+app.add_url_rule('/newquestion', methods=['POST'], view_func=FAQPageRendering.new_question)
 
 # Routing for admin pages
 app.add_url_rule('/item/admin', view_func=AdminPageRendering.item_admin)
@@ -193,14 +195,6 @@ app.add_url_rule('/pageelementimageupdate', methods=['POST'], view_func=Learning
 app.add_url_rule('/admingetcarousel/<int:element_id>', view_func=LearningPageHelperFunctions.carousel_items)
 app.add_url_rule('/removecarouselimage', methods=['POST'], view_func=LearningPageHelperFunctions.remove_carousel_image)
 app.add_url_rule('/adminaddcarouselimage', methods=["POST"], view_func=LearningPageHelperFunctions.add_carousel_image)
-
-@app.route('/newquestion', methods=['POST'])
-def new_question():
-    new_question = FrequentlyAskedQuestion(author_user=str(request.form["username"]), question=str(request.form["question"]))
-    
-    db.session.add(new_question)
-    db.session.commit()
-    return redirect('/')
 
 @app.route('/admin/items')
 def all_items():
