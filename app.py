@@ -16,6 +16,7 @@ import pymysql
 from src.models import *
 from src.image_handling import *
 from src.authentication import *
+from src.aux_page_rendering import AuxPageRendering
 
 app = Flask(__name__)
 
@@ -135,14 +136,9 @@ def go_home():
     frequently_asked_questions = FrequentlyAskedQuestion.query.order_by(FrequentlyAskedQuestion.id).all()
     return render_template('index.html', questions=frequently_asked_questions, useraccount=get_account(request))
 
+app.add_url_rule('/aboutus', view_func=AuxPageRendering.aboutus)
+app.add_url_rule('/contactus', view_func=AuxPageRendering.contactus)
 
-@app.route('/aboutus')
-def aboutus():
-    return render_template('aboutus.html', useraccount=get_account(request))
-
-@app.route('/contactus')
-def contactus():
-    return render_template('contactus.html', useraccount=get_account(request))
 
 @app.route('/newquestion', methods=['POST'])
 def new_question():
