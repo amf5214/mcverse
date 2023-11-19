@@ -38,92 +38,6 @@ with app.app_context():
     
     logging.info("Database configured")
 
-    def encode_auth_token(email_account):
-        """
-        Generates the Auth Token
-        :return: string
-        """
-        try:
-            payload = {
-                'exp': datetime.now(timezone.utc) + timedelta(days=1, seconds=0),
-                'iat': datetime.now(timezone.utc),
-                'sub': email_account
-            }
-            return jwt.encode(
-                payload,
-                app.config.get('SECRET_KEY'),
-                algorithm='HS256'
-            )
-        except Exception as e:
-            return e
-
-    def get_item_classes():
-        item_classes = ItemClass.query.order_by(ItemClass.id).all()
-        return item_classes
-
-    def process_carousel_element(element):
-        if element.element_type == "image-carousel":
-            if element.text == "" or element.text == "NULL":
-                return False
-            image_links = element.text.split("-")
-            element.images = []
-            for x in image_links:
-                image = create_image(x)
-                element.images.append(image)
-            return True
-        else: return False
-
-    def process_nested_div(element):
-        element_ids = element.text.split("-")
-        print(f"element_ids_nested={element_ids}")
-        if element.text == "" or element.text == "NULL":
-                return False
-        element.nested_elements = []
-        for x in element_ids:
-            try:
-                nested_element_id = int(x)
-                nested_element = db.session.execute(db.select(PageElement).filter_by(id=nested_element_id)).scalar_one()
-                print(nested_element)
-                if nested_element.element_type == "img":
-                    nested_element.text = (create_image(int(nested_element.text))).src
-                element.nested_elements.append(nested_element)
-            except Exception as e:
-                print(f"Error found at {x}. Error: {e}")
-        return True
-
-    def convert_image_to_json(image_obj):
-        json_obj = {}
-        json_obj["id"] = image_obj.id
-        json_obj["rendered_data"] = image_obj.rendered_data
-        json_obj["location"] = image_obj.location
-        json_obj["src"] = image_obj.src
-        return json_obj
-
-    def get_carousel_items(element_id):
-        try:
-            element_id = int(element_id)
-            carousel = db.session.execute(db.select(PageElement).filter_by(id=element_id)).scalar_one()
-        except Exception as e:
-            print(e)
-
-        images = carousel.text.split("-")
-        image_objects = []
-        for x in images:
-            image_objects.append(create_image(x))
-        
-        json_data = []
-        for y in image_objects:
-            json_data.append(convert_image_to_json(y))
-        
-        return {"jdata": json_data}
-
-    def get_item_json():
-        objects = PageObject.query.order_by(PageObject.id).all()
-        json_data = []
-        for x in objects:
-            json_data.append([x.item_title, x.id])
-        return {"jdata": json_data}
-
     db.create_all()
 
     Permission_values = ["Admin", "Edit_Pages", "Add_Pages"]
@@ -154,6 +68,11 @@ app.add_url_rule('/item/<itemid>/<editable>', view_func=ItemPageRendering.item_r
 app.add_url_rule('/newitem', methods=['POST'], view_func=ItemPageRendering.new_item)
 app.add_url_rule('/deleteitem/<itemid>', view_func=ItemPageRendering.delete_item)
 app.add_url_rule('/updateitem/<itemid>', methods=["POST"], view_func=ItemPageRendering.update_item)
+app.add_url_rule('/itemimageupdate', methods=['POST'], view_func=ItemPageRendering.itemimageupdate)
+app.add_url_rule('/createcraftingimage', methods=['POST'], view_func=ItemPageRendering.create_crafting_image)
+app.add_url_rule('/createsmeltingimage', methods=['POST'], view_func=ItemPageRendering.create_smelting_image)
+app.add_url_rule('/unlinkcraftingimage/<page_object>/<image>', view_func=ItemPageRendering.unlinkcraftingimage)
+app.add_url_rule('/unlinksmeltingimage/<page_object>/<image>', view_func=ItemPageRendering.unlinksmeltingimage)
 
 # Routing for question pages
 app.add_url_rule('/newquestion', methods=['POST'], view_func=FAQPageRendering.new_question)
@@ -167,6 +86,12 @@ app.add_url_rule('/uploadimagedb', methods=["POST"], view_func=AdminPageRenderin
 app.add_url_rule('/managewebpages', view_func=AdminPageRendering.managewebpages)
 app.add_url_rule('/createwebpage', methods=['POST'], view_func=AdminPageRendering.createwebpage)
 app.add_url_rule('/deletewebpage/<pageid>', view_func=AdminPageRendering.deletewebpage)
+app.add_url_rule('/admin/uploadimage', methods=["GET"], view_func=AdminPageRendering.adminuploadimage)
+app.add_url_rule('/admin/items', view_func=AdminPageRendering.all_items)
+app.add_url_rule('/item/home/<type>', view_func=AdminPageRendering.item_home)
+app.add_url_rule('/itemclasshome', view_func=AdminPageRendering.itemclasshome)
+app.add_url_rule('/newitemclass', methods=['POST'], view_func=AdminPageRendering.newitemclass)
+app.add_url_rule('/deleteitemclass/<classid>', view_func=AdminPageRendering.deleteitemclass)
 
 # Routing for profile pages
 app.add_url_rule('/signin/home', view_func=ProfilePageRendering.signin)
@@ -176,6 +101,7 @@ app.add_url_rule('/attemptedsignin', methods=["POST"], view_func=ProfilePageRend
 app.add_url_rule('/signout', view_func=ProfilePageRendering.sign_out)
 app.add_url_rule('/newaccount', methods=["POST"], view_func=ProfilePageRendering.create_new_account)
 app.add_url_rule('/requestpermission/<permission>/<accountid>', view_func=ProfilePageRendering.create_permission_request)
+app.add_url_rule('/profileimageupdate', methods=['POST'], view_func=ProfilePageRendering.profileimageupdate)
 
 # Routing for learning pages
 app.add_url_rule('/learn/<pagepath>', defaults={"editable":"false"}, view_func=LearningPageRendering.learningpages)
@@ -196,166 +122,5 @@ app.add_url_rule('/pageelementimageupdate', methods=['POST'], view_func=Learning
 app.add_url_rule('/admingetcarousel/<int:element_id>', view_func=LearningPageHelperFunctions.carousel_items)
 app.add_url_rule('/removecarouselimage', methods=['POST'], view_func=LearningPageHelperFunctions.remove_carousel_image)
 app.add_url_rule('/adminaddcarouselimage', methods=["POST"], view_func=LearningPageHelperFunctions.add_carousel_image)
-
-@app.route('/admin/items')
-def all_items():
-    return jsonify(get_item_json())
-
-@app.route('/profileimageupdate', methods=['POST'])
-def profileimageupdate():
-    image_id = uploadimage(request)
-    picture_account = UserAccount.query.get_or_404(request.form["user_id"])
-
-    picture_account.account_image_link = str(image_id)
-    db.session.commit()
-    return redirect("/profile")
-
-@app.route('/itemimageupdate', methods=['POST'])
-def itemimageupdate():
-    if not check_if_editor(request):
-        return redirect('/')
-    image_id = uploadimage(request)
-    picture_item = PageObject.query.get_or_404(request.form["item_id"])
-
-    picture_item.image_link = str(image_id)
-    db.session.commit()
-    return redirect(f"/item/{request.form['item_id']}/false")
-  
-@app.route('/item/home/<type>')
-def item_home(type):
-    if type in ["item", "weapon", "tool"]:
-        items = db.session.execute(db.select(PageObject).filter_by(item_type=type)).scalars()
-        item_list = []
-        image_dict = {}
-        for x in items:
-            image_dict[x.id] = create_image_item_2(x)
-            item_list.append(x)
-        
-        template = {
-            "id": "ID", 
-            "item_title": "Title", 
-            "description": "Description",
-            "iframe_video_link": "Youtube video", 
-            "source_mod": "Source Mod", 
-            "stack_size": "Stack Size", 
-            "item_rarity": "Rarity", 
-            "dimension": "Dimension",
-            "minecraft_item_id": "Minecraft Item ID",
-            "item_type": "Item Type"
-            }
-        return render_template('itemhome.html', pagename=type.upper(), image_dict=image_dict, items=item_list, template=template, useraccount=get_account(request))
-    else:
-        return redirect("/")
-    
-@app.route('/admin/uploadimage', methods=["GET"])
-def adminuploadimage():
-    if not check_if_admin(request):
-        return redirect('/')
-    useraccount = get_account(request)
-    test = permission_validation("Admin", useraccount.id)
-    if test:
-        return render_template('uploadimage.html', useraccount=useraccount, baseimage=create_image_item(2))
-    else:
-        return redirect('/')
-
-@app.route('/createcraftingimage', methods=['POST'])
-def create_crafting_image():
-    if not check_if_editor(request):
-        return redirect('/')
-    itemid = request.form["item_id"]
-    pobject = PageObject.query.get_or_404(itemid)
-    image_id = uploadimage(request)
-    image_links = pobject.crafting_image_links.strip().split(" ")
-    image_links.append(str(image_id))
-    new_str = ""
-    for i, x in enumerate(image_links):
-        if i == 0:
-            new_str = str(x)
-        else:
-            new_str = new_str + " " + str(x)
-    pobject.crafting_image_links = new_str
-    db.session.commit()    
-    return redirect(f'item/{itemid}/true')
-
-
-@app.route('/createsmeltingimage', methods=['POST'])
-def create_smelting_image():
-    if not check_if_editor(request):
-        return redirect('/')
-    itemid = request.form["item_id"]
-    pobject = PageObject.query.get_or_404(itemid)
-    image_id = uploadimage(request)
-    image_links = pobject.smelting_image_links.strip().split(" ")
-    image_links.append(str(image_id))
-    new_str = ""
-    for i, x in enumerate(image_links):
-        if i == 0:
-            new_str = str(x)
-        else:
-            new_str = new_str + " " + str(x)
-    pobject.smelting_image_links = new_str
-    db.session.commit()    
-    return redirect(f'item/{itemid}/true')
-
-@app.route('/unlinkcraftingimage/<page_object>/<image>')
-def unlinkcraftingimage(page_object, image):
-    if not check_if_editor(request):
-        return redirect('/')
-    image_id = str(image)
-    pobject = PageObject.query.get_or_404(page_object)
-    image_links = pobject.crafting_image_links.strip().split(" ")
-    image_links.remove(image_id)
-    new_str = ""
-    for i, x in enumerate(image_links):
-        if i == 0:
-            new_str = str(x)
-        else:
-            new_str = new_str + " " + str(x)
-    pobject.crafting_image_links = new_str
-    db.session.commit()   
-    return redirect(f'/item/{page_object}/true')
-
-@app.route('/unlinksmeltingimage/<page_object>/<image>')
-def unlinksmeltingimage(page_object, image):
-    if not check_if_editor(request):
-        return redirect('/')
-    image_id = str(image)
-    pobject = PageObject.query.get_or_404(page_object)
-    image_links = pobject.smelting_image_links.strip().split(" ")
-    image_links.remove(image_id)
-    new_str = ""
-    for i, x in enumerate(image_links):
-        if i == 0:
-            new_str = str(x)
-        else:
-            new_str = new_str + " " + str(x)
-    pobject.smelting_image_links = new_str
-    db.session.commit()   
-    return redirect(f'/item/{page_object}/true')
-
-@app.route('/itemclasshome')
-def itemclasshome():
-    if not check_if_admin(request):
-        return redirect('/')
-    return render_template('itemclasshome.html', pagename="Item Class", admin_token=True, useraccount=get_account(request), itemclasses=get_item_classes())
-
-@app.route('/newitemclass', methods=['POST'])
-def newitemclass():
-    if not check_if_admin(request):
-            return redirect('/')
-    
-    item_class = ItemClass(name=request.form['class-name'])
-    db.session.add(item_class)
-    db.session.commit()
-    return redirect('/itemclasshome')
-
-@app.route('/deleteitemclass/<classid>')
-def deleteitemclass(classid):
-    if not check_if_admin(request):
-        return redirect('/')
-    itemclass = ItemClass.query.get_or_404(classid)
-    db.session.delete(itemclass)
-    db.session.commit()
-    return redirect('/itemclasshome')
 
 app.run(debug=True, port=54913)

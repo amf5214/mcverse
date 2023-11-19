@@ -1,15 +1,22 @@
-from flask import render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for, json, Response, jsonify, make_response, flash
 import logging
 
-from src.models import db, PageObject, ItemClass, PermissionsRequest, WebPage, DivContainer, PageElement
-from src.authentication import check_if_admin, get_account
-from src.image_handling import create_image
+from src.models import *
+from src.authentication import *
+from src.image_handling import *
 
 logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
 
 def get_item_classes():
         item_classes = ItemClass.query.order_by(ItemClass.id).all()
         return item_classes
+
+def get_item_json():
+        objects = PageObject.query.order_by(PageObject.id).all()
+        json_data = []
+        for x in objects:
+            json_data.append([x.item_title, x.id])
+        return {"jdata": json_data}
 
 class AdminPageRendering():
     def item_admin():
@@ -81,3 +88,63 @@ class AdminPageRendering():
             return redirect('/')
         pages = WebPage.query.order_by(WebPage.id).all()
         return render_template('webpagehome.html', pages=pages, useraccount=get_account(request))
+
+    def adminuploadimage():
+        if not check_if_admin(request):
+            return redirect('/')
+        useraccount = get_account(request)
+        test = permission_validation("Admin", useraccount.id)
+        if test:
+            return render_template('uploadimage.html', useraccount=useraccount, baseimage=create_image_item(2))
+        else:
+            return redirect('/')
+
+    def all_items():
+        return jsonify(get_item_json())
+
+    def item_home(type):
+        if type in ["item", "weapon", "tool"]:
+            items = db.session.execute(db.select(PageObject).filter_by(item_type=type)).scalars()
+            item_list = []
+            image_dict = {}
+            for x in items:
+                image_dict[x.id] = create_image_item_2(x)
+                item_list.append(x)
+            
+            template = {
+                "id": "ID", 
+                "item_title": "Title", 
+                "description": "Description",
+                "iframe_video_link": "Youtube video", 
+                "source_mod": "Source Mod", 
+                "stack_size": "Stack Size", 
+                "item_rarity": "Rarity", 
+                "dimension": "Dimension",
+                "minecraft_item_id": "Minecraft Item ID",
+                "item_type": "Item Type"
+                }
+            return render_template('itemhome.html', pagename=type.upper(), image_dict=image_dict, items=item_list, template=template, useraccount=get_account(request))
+        else:
+            return redirect("/")
+
+    def itemclasshome():
+        if not check_if_admin(request):
+            return redirect('/')
+        return render_template('itemclasshome.html', pagename="Item Class", admin_token=True, useraccount=get_account(request), itemclasses=get_item_classes())
+
+    def newitemclass():
+        if not check_if_admin(request):
+                return redirect('/')
+        
+        item_class = ItemClass(name=request.form['class-name'])
+        db.session.add(item_class)
+        db.session.commit()
+        return redirect('/itemclasshome')
+
+    def deleteitemclass(classid):
+        if not check_if_admin(request):
+            return redirect('/')
+        itemclass = ItemClass.query.get_or_404(classid)
+        db.session.delete(itemclass)
+        db.session.commit()
+        return redirect('/itemclasshome')

@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, json, Response, jsonify, make_response, flash
 import logging
+from sqlalchemy.orm.exc import NoResultFound
 
-from src.authentication import get_account
+from src.authentication import *
+from src.image_handling import *
 from src.models import AccountPermission, AuthAccount, UserAccount, PermissionsRequest, db
 
 logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
@@ -90,3 +92,11 @@ class ProfilePageRendering():
         db.session.add(request)
         db.session.commit()
         return redirect('/profile')
+
+    def profileimageupdate():
+        image_id = uploadimage(request)
+        picture_account = UserAccount.query.get_or_404(request.form["user_id"])
+
+        picture_account.account_image_link = str(image_id)
+        db.session.commit()
+        return redirect("/profile")

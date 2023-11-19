@@ -6,6 +6,31 @@ from src.authentication import *
 
 logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
 
+def convert_image_to_json(image_obj):
+        json_obj = {}
+        json_obj["id"] = image_obj.id
+        json_obj["rendered_data"] = image_obj.rendered_data
+        json_obj["location"] = image_obj.location
+        json_obj["src"] = image_obj.src
+        return json_obj
+
+def get_carousel_items(element_id):
+    try:
+        element_id = int(element_id)
+        carousel = db.session.execute(db.select(PageElement).filter_by(id=element_id)).scalar_one()
+    except Exception as e:
+        print(e)
+
+    images = carousel.text.split("-")
+    image_objects = []
+    for x in images:
+        image_objects.append(create_image(x))
+    
+    json_data = []
+    for y in image_objects:
+        json_data.append(convert_image_to_json(y))
+    return {"jdata": json_data}
+
 class LearningPageHelperFunctions():
     def create_learning_page_object(path, page_id, placement_order):
         logging.info(f"Learning Page Div Creator Running ({path}, {page_id}, {placement_order})")

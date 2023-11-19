@@ -14,10 +14,13 @@ import base64
 from io import BytesIO #Converts data from Database into bytes
 from sqlalchemy import create_engine
 import pymysql
+import secrets
 
 from src.models import AuthAccount, UserAccount, FileContent, AccountPermission, db
 
 logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
+
+secret_key = secrets.token_hex(30)
 
 def create_password(password_string):
     return sha256_crypt.encrypt(password_string)
@@ -88,3 +91,21 @@ def check_if_canadd(request):
     if account.full_name != "No Account":
         return permission_validation("Add_Pages", account.id)
     
+def encode_auth_token(email_account):
+        """
+        Generates the Auth Token
+        :return: string
+        """
+        try:
+            payload = {
+                'exp': datetime.now(timezone.utc) + timedelta(days=1, seconds=0),
+                'iat': datetime.now(timezone.utc),
+                'sub': email_account
+            }
+            return jwt.encode(
+                payload,
+                secret_key,
+                algorithm='HS256'
+            )
+        except Exception as e:
+            return e

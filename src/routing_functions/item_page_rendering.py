@@ -2,8 +2,8 @@ from flask import render_template, redirect, request
 import logging
 
 from src.models import PageObject
-from src.image_handling import create_image_item, create_image
-from src.authentication import check_if_editor, get_account
+from src.image_handling import *
+from src.authentication import *
 
 logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
 
@@ -118,3 +118,82 @@ class ItemPageRendering():
             except:
                 pass
 
+    def itemimageupdate():
+        if not check_if_editor(request):
+            return redirect('/')
+        image_id = uploadimage(request)
+        picture_item = PageObject.query.get_or_404(request.form["item_id"])
+
+        picture_item.image_link = str(image_id)
+        db.session.commit()
+        return redirect(f"/item/{request.form['item_id']}/false")
+
+    def create_crafting_image():
+        if not check_if_editor(request):
+            return redirect('/')
+        itemid = request.form["item_id"]
+        pobject = PageObject.query.get_or_404(itemid)
+        image_id = uploadimage(request)
+        image_links = pobject.crafting_image_links.strip().split(" ")
+        image_links.append(str(image_id))
+        new_str = ""
+        for i, x in enumerate(image_links):
+            if i == 0:
+                new_str = str(x)
+            else:
+                new_str = new_str + " " + str(x)
+        pobject.crafting_image_links = new_str
+        db.session.commit()    
+        return redirect(f'item/{itemid}/true')
+
+    def create_smelting_image():
+        if not check_if_editor(request):
+            return redirect('/')
+        itemid = request.form["item_id"]
+        pobject = PageObject.query.get_or_404(itemid)
+        image_id = uploadimage(request)
+        image_links = pobject.smelting_image_links.strip().split(" ")
+        image_links.append(str(image_id))
+        new_str = ""
+        for i, x in enumerate(image_links):
+            if i == 0:
+                new_str = str(x)
+            else:
+                new_str = new_str + " " + str(x)
+        pobject.smelting_image_links = new_str
+        db.session.commit()    
+        return redirect(f'item/{itemid}/true')
+
+    def unlinkcraftingimage(page_object, image):
+        if not check_if_editor(request):
+            return redirect('/')
+        image_id = str(image)
+        pobject = PageObject.query.get_or_404(page_object)
+        image_links = pobject.crafting_image_links.strip().split(" ")
+        image_links.remove(image_id)
+        new_str = ""
+        for i, x in enumerate(image_links):
+            if i == 0:
+                new_str = str(x)
+            else:
+                new_str = new_str + " " + str(x)
+        pobject.crafting_image_links = new_str
+        db.session.commit()   
+        return redirect(f'/item/{page_object}/true')
+
+    def unlinksmeltingimage(page_object, image):
+        if not check_if_editor(request):
+            return redirect('/')
+        image_id = str(image)
+        pobject = PageObject.query.get_or_404(page_object)
+        image_links = pobject.smelting_image_links.strip().split(" ")
+        image_links.remove(image_id)
+        new_str = ""
+        for i, x in enumerate(image_links):
+            if i == 0:
+                new_str = str(x)
+            else:
+                new_str = new_str + " " + str(x)
+        pobject.smelting_image_links = new_str
+        db.session.commit()   
+        return redirect(f'/item/{page_object}/true')
