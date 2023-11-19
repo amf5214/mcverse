@@ -19,6 +19,7 @@ from src.authentication import *
 from src.aux_page_rendering import AuxPageRendering
 from src.admin_page_rendering import AdminPageRendering
 from src.item_page_rendering import ItemPageRendering
+from src.profile_page_rendering import ProfilePageRendering
 
 app = Flask(__name__)
 
@@ -52,11 +53,6 @@ with app.app_context():
             )
         except Exception as e:
             return e
-
-    class Permission():
-        def __init__(self, has, name):
-            self.has=has
-            self.name=name
 
     def get_item_classes():
         item_classes = ItemClass.query.order_by(ItemClass.id).all()
@@ -156,8 +152,18 @@ app.add_url_rule('/newitem', methods=['POST'], view_func=ItemPageRendering.new_i
 app.add_url_rule('/deleteitem/<itemid>', view_func=ItemPageRendering.delete_item)
 app.add_url_rule('/updateitem/<itemid>', methods=["POST"], view_func=ItemPageRendering.update_item)
 
+# Routing for question pages
+
 # Routing for admin pages
 app.add_url_rule('/item/admin', view_func=AdminPageRendering.item_admin)
+
+# Routing for profile pages
+app.add_url_rule('/signin/home', view_func=ProfilePageRendering.signin)
+app.add_url_rule('/signin/failed', view_func=ProfilePageRendering.failed_signin)
+app.add_url_rule('/profile', view_func=ProfilePageRendering.profile)
+app.add_url_rule('/attemptedsignin', methods=["POST"], view_func=ProfilePageRendering.signinattempt)
+app.add_url_rule('/signout', view_func=ProfilePageRendering.sign_out)
+app.add_url_rule('/newaccount', methods=["POST"], view_func=ProfilePageRendering.create_new_account)
 
 
 @app.route('/newquestion', methods=['POST'])
@@ -168,91 +174,9 @@ def new_question():
     db.session.commit()
     return redirect('/')
 
-
-
 @app.route('/admin/items')
 def all_items():
     return jsonify(get_item_json())
-
-
-@app.route('/signin/home')
-def signin():
-    return render_template('signinup.html', useraccount=get_account(request))
-
-@app.route('/signin/failed')
-def failed_signin():
-    return render_template('signinup.html', message="Username/Password Invalid. Please try again.", useraccount=get_account(request))
-
-@app.route('/profile')
-def profile():
-    account = get_account(request)
-    if account.full_name != "No Account":
-        permissions = db.session.execute(db.select(AccountPermission).filter_by(account_id=account.id)).scalars()
-        permissions_gen = []
-        remaining_permissions = [z for z in Permission_values]
-        for x in permissions:
-            perm_type = x.permission_type
-            permissions_gen.append(Permission(has=True, name=perm_type))
-            remaining_permissions.remove(perm_type)
-        for y in remaining_permissions:
-            permissions_gen.append(Permission(has=False, name=y))
-        return render_template("profile.html", useraccount=account, permissions=permissions_gen)
-    else:
-        return redirect('/signin/home')
-
-# @app.route('/profile/introduction')
-# def introduction():
-#     return render_template("introduction.html", useraccount=get_account(request))
-
-
-@app.route('/attemptedsignin', methods=["POST"])
-def signinattempt():
-    try:
-        given_pass = request.form["logpass"]
-
-        auth_account = db.session.execute(db.select(AuthAccount).filter_by(email_account=request.form["logemail"])).scalar_one()
-
-        if(validate_password(given_pass, auth_account.hash_password)):
-            auth_account.auth_token = encode_auth_token(request.form["logemail"])
-            db.session.commit()
-            response = make_response(redirect("/"))
-            response.set_cookie("token", auth_account.auth_token)
-            return response
-        else:
-            return redirect("/signin/failed")
-    except NoResultFound: 
-        return redirect("/signin/failed")
-    
-@app.route('/signout')
-def sign_out():
-    response = make_response(redirect("/"))
-    response.set_cookie("token", "None")
-    return response
-
-@app.route('/newaccount', methods=["POST"])
-def create_new_account():
-
-    if request.form["logname"]=="No Account":
-        return render_template('signinup.html', signupmessage="Name entry is invalid", useraccount=get_account(request))
-
-    password = create_password(request.form["logpass"])
-    token = encode_auth_token(str(request.form["logusername"]))
-    auth_account = AuthAccount(email_account=request.form["logemail"],hash_password=password, auth_token=token)
-
-    db.session.add(auth_account)
-
-    db.session.commit()
-
-    authaccountrec = db.session.execute(db.select(AuthAccount).filter_by(email_account=request.form["logemail"])).scalar_one()
-    try:   
-        birthdatedata=birthdate=request.form["logbirthdate"].split("-")
-        birthdate = date(int(birthdatedata[0]), int(birthdatedata[1]), int(birthdatedata[2]))
-        account = UserAccount(username=request.form["logusername"],full_name=request.form["logname"],birthdate=birthdate,auth_account_id=authaccountrec.id)
-    except ValueError:
-                account = UserAccount(username=request.form["logusername"],full_name=request.form["logname"],auth_account_id=authaccountrec.id)
-    db.session.add(account)
-    db.session.commit()
-    return redirect('/signin/home')
 
 @app.route('/permissions/requests/admin')
 def permissions_requests_admin():
