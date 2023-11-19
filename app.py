@@ -156,6 +156,10 @@ app.add_url_rule('/updateitem/<itemid>', methods=["POST"], view_func=ItemPageRen
 
 # Routing for admin pages
 app.add_url_rule('/item/admin', view_func=AdminPageRendering.item_admin)
+app.add_url_rule('/permissions/requests/admin', view_func=AdminPageRendering.permissions_requests_admin)
+app.add_url_rule('/prequestdeny/<requestid>', view_func=AdminPageRendering.deny_request)
+app.add_url_rule('/prequestapprove/<requestid>', view_func=AdminPageRendering.approve_request)
+app.add_url_rule('/uploadimagedb', methods=["POST"], view_func=AdminPageRendering.uploadnewimage)
 
 # Routing for profile pages
 app.add_url_rule('/signin/home', view_func=ProfilePageRendering.signin)
@@ -164,6 +168,7 @@ app.add_url_rule('/profile', view_func=ProfilePageRendering.profile)
 app.add_url_rule('/attemptedsignin', methods=["POST"], view_func=ProfilePageRendering.signinattempt)
 app.add_url_rule('/signout', view_func=ProfilePageRendering.sign_out)
 app.add_url_rule('/newaccount', methods=["POST"], view_func=ProfilePageRendering.create_new_account)
+app.add_url_rule('/requestpermission/<permission>/<accountid>', view_func=ProfilePageRendering.create_permission_request)
 
 
 @app.route('/newquestion', methods=['POST'])
@@ -177,40 +182,6 @@ def new_question():
 @app.route('/admin/items')
 def all_items():
     return jsonify(get_item_json())
-
-@app.route('/permissions/requests/admin')
-def permissions_requests_admin():
-    if not check_if_admin(request):
-        return redirect('/')
-    requests = PermissionsRequest.query.filter_by(is_visible=True).order_by(PermissionsRequest.id).all()
-    return render_template("permissions_request_admin.html", admin_token=True, prequests=requests, useraccount=get_account(request))
-
-@app.route('/requestpermission/<permission>/<accountid>')
-def create_permission_request(permission, accountid):
-    account = UserAccount.query.get_or_404(accountid)
-    request = PermissionsRequest(account_id=accountid, permission_type=permission, username=account.username, grant_date=date.today())
-    db.session.add(request)
-    db.session.commit()
-    return redirect('/profile')
-
-@app.route('/prequestdeny/<requestid>')
-def deny_request(requestid):
-    if not check_if_admin(request):
-        return redirect('/')
-    permission_request = PermissionsRequest.query.get_or_404(requestid)
-    permission_request.is_visible = False
-    db.session.commit()
-    return redirect('/permissions/requests/admin')
-
-@app.route('/prequestapprove/<requestid>')
-def approve_request(requestid):
-    if not check_if_admin(request):
-        return redirect('/')
-    permission_request = PermissionsRequest.query.get_or_404(requestid)
-    permission_request.is_visible = False
-    db.session.add(AccountPermission(permission_type=permission_request.permission_type, account_id=permission_request.account_id))
-    db.session.commit()
-    return redirect('/permissions/requests/admin')
 
 @app.route('/profileimageupdate', methods=['POST'])
 def profileimageupdate():
@@ -268,13 +239,6 @@ def adminuploadimage():
         return render_template('uploadimage.html', useraccount=useraccount, baseimage=create_image_item(2))
     else:
         return redirect('/')
-
-@app.route('/uploadimagedb', methods=["POST"])
-def uploadnewimage():
-    if not check_if_admin(request):
-        return redirect('/')
-    image_id = uploadimage(request)
-    return redirect('/')
 
 @app.route('/createcraftingimage', methods=['POST'])
 def create_crafting_image():

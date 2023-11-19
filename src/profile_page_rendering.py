@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, json, Response, jsonify, make_response, flash
 
 from src.authentication import get_account
-from src.models import AccountPermission, AuthAccount, UserAccount
+from src.models import AccountPermission, AuthAccount, UserAccount, PermissionsRequest, db
 
 class Permission():
         def __init__(self, has, name):
@@ -80,3 +80,10 @@ class ProfilePageRendering():
         db.session.add(account)
         db.session.commit()
         return redirect('/signin/home')
+
+    def create_permission_request(permission, accountid):
+        account = UserAccount.query.get_or_404(accountid)
+        request = PermissionsRequest(account_id=accountid, permission_type=permission, username=account.username, grant_date=date.today())
+        db.session.add(request)
+        db.session.commit()
+        return redirect('/profile')
