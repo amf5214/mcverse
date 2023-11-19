@@ -1,8 +1,11 @@
 from flask import render_template, redirect, request
+import logging
 
 from src.models import PageObject
 from src.image_handling import create_image_item, create_image
 from src.authentication import check_if_editor, get_account
+
+logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
 
 def get_item_classes():
         item_classes = ItemClass.query.order_by(ItemClass.id).all()

@@ -20,6 +20,8 @@ from src.aux_page_rendering import AuxPageRendering
 from src.admin_page_rendering import AdminPageRendering
 from src.item_page_rendering import ItemPageRendering
 from src.profile_page_rendering import ProfilePageRendering
+from src.learning_page_rendering import LearningPageRendering
+from src.learning_page_helperfunctions import LearningPageHelperFunctions
 
 app = Flask(__name__)
 
@@ -160,6 +162,8 @@ app.add_url_rule('/permissions/requests/admin', view_func=AdminPageRendering.per
 app.add_url_rule('/prequestdeny/<requestid>', view_func=AdminPageRendering.deny_request)
 app.add_url_rule('/prequestapprove/<requestid>', view_func=AdminPageRendering.approve_request)
 app.add_url_rule('/uploadimagedb', methods=["POST"], view_func=AdminPageRendering.uploadnewimage)
+app.add_url_rule('/createwebpage', methods=['POST'], view_func=AdminPageRendering.createwebpage)
+app.add_url_rule('/deletewebpage/<pageid>', view_func=AdminPageRendering.deletewebpage)
 
 # Routing for profile pages
 app.add_url_rule('/signin/home', view_func=ProfilePageRendering.signin)
@@ -169,6 +173,21 @@ app.add_url_rule('/attemptedsignin', methods=["POST"], view_func=ProfilePageRend
 app.add_url_rule('/signout', view_func=ProfilePageRendering.sign_out)
 app.add_url_rule('/newaccount', methods=["POST"], view_func=ProfilePageRendering.create_new_account)
 app.add_url_rule('/requestpermission/<permission>/<accountid>', view_func=ProfilePageRendering.create_permission_request)
+
+# Routing for learning pages
+app.add_url_rule('/learn/<pagepath>', defaults={"editable":"false"}, view_func=LearningPageRendering.learningpages)
+app.add_url_rule('/learn/<pagepath>/<editable>', view_func=LearningPageRendering.learningpages)
+
+# Routing for learning page helper functions
+app.add_url_rule('/learningpage/admin/newdiv/<path>/<int:page_id>/<int:placement_order>', view_func=LearningPageHelperFunctions.create_learning_page_object)
+app.add_url_rule('/learningpage/admin/newimage/<path>/<int:page_id>/<int:placement_order>', view_func=LearningPageHelperFunctions.create_learning_page_image)
+app.add_url_rule('/learningpage/admin/newpara/<path>/<int:page_id>/<int:placement_order>', view_func=LearningPageHelperFunctions.create_learning_page_paragraph)
+app.add_url_rule('/learningpage/admin/newvideo/<path>/<int:page_id>/<int:placement_order>', view_func=LearningPageHelperFunctions.create_learning_page_video)
+app.add_url_rule('/learningpage/admin/newcarousel/<path>/<int:page_id>/<int:placement_order>', view_func=LearningPageHelperFunctions.create_learning_page_carousel)
+app.add_url_rule('/learningpage/admin/newsection/<path>/<int:page_id>/<int:placement_order>', view_func=LearningPageHelperFunctions.create_learning_page_section)
+app.add_url_rule('/updatelearningitem', methods=['POST'], view_func=LearningPageHelperFunctions.update_learning_item)
+app.add_url_rule('/movelearningelement/<page_path>/<int:element_id>/<direction>', view_func=LearningPageHelperFunctions.move_learning_element)
+app.add_url_rule('/movelearningdiv/<page_path>/<int:div_id>/<direction>', view_func=LearningPageHelperFunctions.move_learning_div)
 
 
 @app.route('/newquestion', methods=['POST'])
@@ -340,251 +359,6 @@ def deleteitemclass(classid):
     db.session.commit()
     return redirect('/itemclasshome')
 
-@app.route('/managewebpages')
-def managewebpages():
-    if not check_if_admin(request):
-        return redirect('/')
-    pages = WebPage.query.order_by(WebPage.id).all()
-    return render_template('webpagehome.html', pages=pages, useraccount=get_account(request))
-
-
-@app.route('/createwebpage', methods=['POST'])
-def createwebpage():
-    if not check_if_admin(request):
-        return redirect('/')
-    new_page = WebPage(text=request.form["text"], div_title=request.form["div_title"], path=request.form["path"].lower(), directory=request.form["directory"].lower())
-    db.session.add(new_page)
-    db.session.commit()
-    return redirect('/managewebpages')
-
-@app.route('/deletewebpage/<pageid>')
-def deletewebpage(pageid):
-    if not check_if_admin(request):
-        return redirect('/')
-
-    page = db.session.execute(db.select(WebPage).filter_by(id=pageid)).scalar_one()
-    db.session.delete(page)
-    db.session.commit()
-    return redirect('/managewebpages')
-
-@app.route('/learn/<pagepath>', defaults={"editable":"false"})
-@app.route('/learn/<pagepath>/<editable>')
-def learningpages(pagepath, editable):
-    try:
-        page = db.session.execute(db.select(WebPage).filter_by(path=pagepath)).scalar_one()
-    except NoResultFound:
-        return redirect('/404')
-    divs = db.session.execute(db.select(DivContainer).filter_by(page_id=page.id).order_by(DivContainer.placement_order)).scalars()
-    elements = db.session.execute(db.select(PageElement).filter_by(page_id=page.id).filter(PageElement.div_id!=0).order_by(PageElement.div_id, PageElement.placement_order)).scalars()
-    div_elements = {}
-    max_placement_order = 0
-
-    for element in elements:
-        if element.element_type == "img":
-            element.text = (create_image(int(element.text))).src
-        elif element.element_type == "image-carousel":
-            element_updated = process_carousel_element(element)
-            if not element_updated:
-                element.images = [create_image(8)]
-        elif element.element_type == "div":
-            elements_found = process_nested_div(element)
-        if f"div_{element.div_id}" in div_elements.keys():
-            div_elements[f"div_{element.div_id}"].append(element)
-        else:
-              div_elements[f"div_{element.div_id}"] = [element]
-              
-    div_lst = []
-    for div in divs:
-        if f"div_{div.id}" in div_elements.keys():
-            div.elements = div_elements[f"div_{div.id}"]
-            div.element_count = len(div.elements)
-        else:
-            div.elements = []
-            div.element_count = len(div.elements)
-        div_lst.append(div)
-        if div.placement_order > max_placement_order:
-            max_placement_order = div.placement_order
-            
-    if editable == "true":
-        if check_if_editor(request):
-            return render_template("learnpage.html", divs=div_lst, page=page, useraccount=get_account(request), editable=True, max_placement=max_placement_order, images=[create_image(25)]) 
-        else:
-            return redirect(f"/learn/{page.path}/false")
-    else:
-        return render_template("learnpage.html", divs=div_lst, page=page, useraccount=get_account(request), editable=False) 
-        
-@app.route('/learningpage/admin/newdiv/<path>/<int:page_id>/<int:placement_order>')
-def create_learning_page_object(path, page_id, placement_order):
-    logging.info(f"Learning Page Div Creator Running ({path}, {page_id}, {placement_order})")
-    if check_if_editor(request):
-        try:
-            page_num = int(page_id)
-            placement_order = int(placement_order)
-            print(f"page_num={page_num}; placement_order={placement_order}")
-            new_div = DivContainer(text="Empty div", div_title="Empty Div", page_id=page_num, placement_order=placement_order)
-            db.session.add(new_div)
-            db.session.commit()
-            return redirect(f'/learn/{path}/true')
-        except:
-            return redirect('/')
-    else:
-        return redirect('/')
-
-@app.route('/learningpage/admin/newimage/<path>/<int:page_id>/<int:placement_order>/<int:div_id>')
-def create_learning_page_image(path, page_id, placement_order, div_id):
-    logging.info(f"Learning Page Image Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
-    if check_if_editor(request):
-        try:
-            page_num = int(page_id)
-            placement_order = int(placement_order)
-            print(f"page_num={page_num}; placement_order={placement_order}")
-            new_image = PageElement(element_type="img", div_id=div_id, text="8", page_id=page_num, placement_order=placement_order)
-            db.session.add(new_image)
-            db.session.commit()
-            return redirect(f'/learn/{path}/true')
-        except:
-            return redirect('/')
-    else:
-        return redirect('/')
-
-@app.route('/learningpage/admin/newpara/<path>/<int:page_id>/<int:placement_order>/<int:div_id>')
-def create_learning_page_paragraph(path, page_id, placement_order, div_id):
-    logging.info(f"Learning Page Image Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
-    if check_if_editor(request):
-        try:
-            page_num = int(page_id)
-            placement_order = int(placement_order)
-            print(f"page_num={page_num}; placement_order={placement_order}")
-            new_div = PageElement(element_type="p", div_id=div_id, text="Empty paragraph", page_id=page_num, placement_order=placement_order)
-            db.session.add(new_div)
-            db.session.commit()
-            return redirect(f'/learn/{path}/true')
-        except:
-            return redirect('/')
-    else:
-        return redirect('/')
-
-@app.route('/learningpage/admin/newvideo/<path>/<int:page_id>/<int:placement_order>/<int:div_id>')
-def create_learning_page_video(path, page_id, placement_order, div_id):
-    logging.info(f"Learning Page Image Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
-    if check_if_editor(request):
-        try:
-            page_num = int(page_id)
-            placement_order = int(placement_order)
-            print(f"page_num={page_num}; placement_order={placement_order}")
-            new_div = PageElement(element_type="video", div_id=div_id, text="https://www.youtube.com/embed/xopvkx6CpNs?si=xMM2Uq-gklaNK4_g", page_id=page_num, placement_order=placement_order)
-            db.session.add(new_div)
-            db.session.commit()
-            return redirect(f'/learn/{path}/true')
-        except:
-            return redirect('/')
-    else:
-        return redirect('/')
-
-@app.route('/updatelearningitem', methods=['POST'])
-def update_learning_item():
-    logging.info("Item updating")
-    if not check_if_editor(request):
-        return redirect(f'/learn/{request.form["page_path"]}/false')
-    container_type = request.form["container"]
-    element_type = request.form["attribute"]
-    item_id = request.form["item"]
-    new_value = request.form["newValue"]
-    if container_type == "page":
-        page = db.session.execute(db.select(WebPage).filter_by(id=item_id)).scalar_one()
-        if element_type == "title":
-            page.div_title = new_value
-            db.session.commit()
-        else:
-            page.text = new_value
-            db.session.commit()
-    elif container_type == "div":
-        div = db.session.execute(db.select(DivContainer).filter_by(id=item_id)).scalar_one()
-        if element_type == "title":
-            div.div_title = new_value
-            db.session.commit()
-        else:
-            div.text = new_value
-            db.session.commit()
-    elif container_type == "element":
-        element = db.session.execute(db.select(PageElement).filter_by(id=item_id)).scalar_one()
-        if element_type == "title":
-            element.div_title = new_value
-            db.session.commit()
-        else:
-            element.text = new_value
-            db.session.commit()
-    
-    return redirect(f'/learn/{request.form["page_path"]}/true')
-
-@app.route('/movelearningelement/<page_path>/<int:element_id>/<direction>')
-def move_learning_element(page_path, element_id, direction):
-    logging.info("Moving page element")
-    if not check_if_editor(request):
-        return redirect(f'/learn/{request.form["page_path"]}/false')
-    try:
-        page = db.session.execute(db.select(WebPage).filter_by(path=page_path)).scalar_one()
-        logging.info(f"learning page located. web_page_id={page.id}")
-        current_element = db.session.execute(db.select(PageElement).filter_by(id=element_id)).scalar_one()
-        logging.info(f"Current element located. element_id={current_element.id}")
-        order = current_element.placement_order
-        original_order = int(order)
-        if direction == "up":
-            order -= 1
-            if order > 0:
-                logging.info(f"original_order={original_order}, new_order={order}")
-                other_element = db.session.execute(db.select(PageElement).filter_by(page_id=page.id, div_id=current_element.div_id, placement_order=order)).scalar_one()
-                logging.info(f"Other element located. element_id={other_element.id}")
-                other_element.placement_order = original_order
-                current_element.placement_order = order
-                db.session.commit()
-        elif direction == "down":
-            order += 1
-            other_element = db.session.execute(db.select(PageElement).filter_by(page_id=page.id, div_id=current_element.div_id, placement_order=order)).scalar_one()
-            logging.info(f"Other element located. element_id={other_element.id}")
-            logging.info(f"original_order={original_order}, new_order={order}")
-            other_element.placement_order = original_order
-            current_element.placement_order = order
-            db.session.commit()
-        return redirect(f"/learn/{page_path}/true")
-    except Exception as e:
-        print(e)
-        return redirect('/')
-        
-@app.route('/movelearningdiv/<page_path>/<int:div_id>/<direction>')
-def move_learning_div(page_path, div_id, direction):
-    logging.info("Moving page div")
-    if not check_if_editor(request):
-        return redirect(f'/learn/{request.form["page_path"]}/false')
-    try:
-        page = db.session.execute(db.select(WebPage).filter_by(path=page_path)).scalar_one()
-        logging.info(f"learning page located. web_page_id={page.id}")
-        current_div = db.session.execute(db.select(DivContainer).filter_by(id=div_id)).scalar_one()
-        logging.info(f"Current div located. div_id={current_div.id}")
-        order = current_div.placement_order
-        original_order = int(order)
-        if direction == "up":
-            order -= 1
-            if order > 0:
-                logging.info(f"original_order={original_order}, new_order={order}")
-                other_div = db.session.execute(db.select(DivContainer).filter_by(page_id=page.id, placement_order=order)).scalar_one()
-                logging.info(f"Other div located. div_id={other_div.id}")
-                other_div.placement_order = original_order
-                current_div.placement_order = order
-                db.session.commit()
-        elif direction == "down":
-            order += 1
-            other_div = db.session.execute(db.select(DivContainer).filter_by(page_id=page.id, placement_order=order)).scalar_one()
-            logging.info(f"Other element located. element_id={other_div.id}")
-            logging.info(f"original_order={original_order}, new_order={order}")
-            other_div.placement_order = original_order
-            current_div.placement_order = order
-            db.session.commit()
-        return redirect(f"/learn/{page_path}/true")
-    except Exception as e:
-        print(e)
-        return redirect('/')
-
 @app.route('/unlinkpageitem/<page_path>/<container_type>/<item_id>')
 def unlink_page_item(page_path, container_type, item_id):
     print(f"page_path={page_path}, container={container_type}, item={item_id}")
@@ -602,48 +376,6 @@ def unlink_page_item(page_path, container_type, item_id):
 
     return redirect(f'/learn/{page_path}/true')
 
-@app.route('/learningpage/admin/newcarousel/<path>/<int:page_id>/<int:placement_order>/<int:div_id>')
-def create_learning_page_carousel(path, page_id, placement_order, div_id):
-    logging.info(f"Learning Page Image Carousel Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
-    if check_if_editor(request):
-        try:
-            page_num = int(page_id)
-            placement_order = int(placement_order)
-            print(f"page_num={page_num}; placement_order={placement_order}")
-            new_image = PageElement(element_type="image-carousel", div_id=div_id, text="25", page_id=page_num, placement_order=placement_order)
-            db.session.add(new_image)
-            db.session.commit()
-            return redirect(f'/learn/{path}/true')
-        except:
-            return redirect('/')
-    else:
-        return redirect('/')
-
-@app.route('/learningpage/admin/newsection/<path>/<int:page_id>/<int:placement_order>/<int:div_id>')
-def create_learning_page_section(path, page_id, placement_order, div_id):
-    logging.info(f"Learning Page Image Carousel Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
-    if check_if_editor(request):
-        try:
-            page_num = int(page_id)
-            placement_order = int(placement_order)
-            print(f"page_num={page_num}; placement_order={placement_order}")
-            new_section_part1 = PageElement(element_type="img", div_id=0, text="25", page_id=page_num, placement_order=0)
-            new_section_part2 = PageElement(element_type="p", div_id=0, text="Empty paragraph", page_id=page_num, placement_order=0)
-            db.session.add(new_section_part1)
-            db.session.add(new_section_part2)
-
-            db.session.commit()
-
-            new_section = PageElement(element_type="div", div_id=div_id, text=f"{new_section_part1.id}-{new_section_part2.id}", page_id=page_num, placement_order=placement_order)
-            db.session.add(new_section)
-
-            db.session.commit()
-            return redirect(f'/learn/{path}/true')
-        except:
-            return redirect('/')
-    else:
-        return redirect('/')
-        
 @app.route('/pageelementimageupdate', methods=['POST'])
 def update_page_element_image():
     if not check_if_editor(request):

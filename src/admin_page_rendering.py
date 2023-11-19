@@ -1,7 +1,11 @@
 from flask import render_template, request, redirect
-from src.models import db, PageObject, ItemClass, PermissionsRequest
+import logging
+
+from src.models import db, PageObject, ItemClass, PermissionsRequest, WebPage, DivContainer, PageElement
 from src.authentication import check_if_admin, get_account
 from src.image_handling import create_image
+
+logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
 
 def get_item_classes():
         item_classes = ItemClass.query.order_by(ItemClass.id).all()
@@ -54,3 +58,26 @@ class AdminPageRendering():
             return redirect('/')
         image_id = uploadimage(request)
         return redirect('/')
+
+    def createwebpage():
+        if not check_if_admin(request):
+            return redirect('/')
+        new_page = WebPage(text=request.form["text"], div_title=request.form["div_title"], path=request.form["path"].lower(), directory=request.form["directory"].lower())
+        db.session.add(new_page)
+        db.session.commit()
+        return redirect('/managewebpages')
+
+    def deletewebpage(pageid):
+        if not check_if_admin(request):
+            return redirect('/')
+
+        page = db.session.execute(db.select(WebPage).filter_by(id=pageid)).scalar_one()
+        db.session.delete(page)
+        db.session.commit()
+        return redirect('/managewebpages')
+
+    def managewebpages():
+        if not check_if_admin(request):
+            return redirect('/')
+        pages = WebPage.query.order_by(WebPage.id).all()
+        return render_template('webpagehome.html', pages=pages, useraccount=get_account(request))

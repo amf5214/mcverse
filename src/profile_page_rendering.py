@@ -1,7 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, json, Response, jsonify, make_response, flash
+import logging
 
 from src.authentication import get_account
 from src.models import AccountPermission, AuthAccount, UserAccount, PermissionsRequest, db
+
+logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
 
 class Permission():
         def __init__(self, has, name):
