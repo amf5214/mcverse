@@ -18,6 +18,7 @@ from src.image_handling import *
 from src.authentication import *
 from src.aux_page_rendering import AuxPageRendering
 from src.admin_page_rendering import AdminPageRendering
+from src.item_page_rendering import ItemPageRendering
 
 app = Flask(__name__)
 
@@ -117,6 +118,13 @@ with app.app_context():
         
         return {"jdata": json_data}
 
+    def get_item_json():
+        objects = PageObject.query.order_by(PageObject.id).all()
+        json_data = []
+        for x in objects:
+            json_data.append([x.item_title, x.id])
+        return {"jdata": json_data}
+
     db.create_all()
 
     Permission_values = ["Admin", "Edit_Pages", "Add_Pages"]
@@ -141,6 +149,13 @@ def go_home():
 app.add_url_rule('/aboutus', view_func=AuxPageRendering.aboutus)
 app.add_url_rule('/contactus', view_func=AuxPageRendering.contactus)
 
+# Routing for item pages
+app.add_url_rule('/item/<itemid>', defaults={"editable":"false"}, view_func=ItemPageRendering.item_report)
+app.add_url_rule('/item/<itemid>/<editable>', view_func=ItemPageRendering.item_report)
+app.add_url_rule('/newitem', methods=['POST'], view_func=ItemPageRendering.new_item)
+app.add_url_rule('/deleteitem/<itemid>', view_func=ItemPageRendering.delete_item)
+app.add_url_rule('/updateitem/<itemid>', methods=["POST"], view_func=ItemPageRendering.update_item)
+
 # Routing for admin pages
 app.add_url_rule('/item/admin', view_func=AdminPageRendering.item_admin)
 
@@ -153,117 +168,7 @@ def new_question():
     db.session.commit()
     return redirect('/')
 
-@app.route('/item/<itemid>', defaults={"editable":"false"})
-@app.route('/item/<itemid>/<editable>')
-def item_report(itemid, editable):
-    page_object = PageObject.query.get_or_404(itemid)
-    item_image = create_image_item(itemid) 
-    craftingdefault = create_image(10) 
-    smeltingdefault = create_image(9) 
 
-    if page_object.crafting_image_links != "":
-        crafting_links = page_object.crafting_image_links.strip().split(" ")
-        for i, link in enumerate(crafting_links):
-            crafting_links[i] = create_image(link)
-    else:
-        crafting_links = ""
-
-    if page_object.smelting_image_links != "":
-        smelting_links = page_object.smelting_image_links.strip().split(" ")
-        for i, link in enumerate(smelting_links):
-            smelting_links[i] = create_image(int(link))
-    else:
-        smelting_links = ""
-
-    if editable == "true":
-        editable_permisssion = check_if_editor(request)
-        if editable_permisssion:
-            return render_template('item.html', page_object=page_object, item_image=item_image, crafting_links=crafting_links, smelting_links=smelting_links, editable=editable_permisssion, useraccount=get_account(request), smeltingdefault=smeltingdefault, craftingdefault=craftingdefault, itemclasses=get_item_classes(), videoimage=create_image(int(59)))
-        else:
-            return redirect(f"/item/{itemid}/false")
-    else:
-        return render_template('item.html', page_object=page_object, item_image=item_image, crafting_links=crafting_links, smelting_links=smelting_links, editable=False, useraccount=get_account(request))
-
-
-@app.route('/newitem', methods=['POST'])
-def new_item():
-    if not check_if_editor(request):
-        return redirect('/item/home/item')
-    rarity = request.form["item_rarity"] if request.form["item_rarity"] != "" else "Common"
-    path = uploadimage(request)
-    if path == None:
-        path=1
-
-    try:
-        stack_size  = int(request.form["stack_size"])
-
-    except: 
-        stack_size = 0
-    
-
-    new_item = PageObject(
-        item_title = request.form["item_title"],
-        image_link = path,
-        item_description = request.form["description"],
-        iframe_video_link = request.form["iframe_video_link"],
-        source_mod = request.form["source_mod"],
-        stack_size = stack_size,
-        item_rarity = rarity,
-        dimension = request.form["dimension"],
-        item_type = request.form["item_type"],
-        minecraft_item_id = request.form["minecraft_item_id"],
-        crafting_image_links = "",
-        smelting_image_links = ""
-    )
-    db.session.add(new_item)
-    db.session.commit()
-    return redirect('/item/home/item')
-
-@app.route('/deleteitem/<itemid>')
-def delete_item(itemid):
-    db.session.delete(PageObject.query.get_or_404(itemid))
-    db.session.commit()
-    return redirect('/item/admin')
-
-
-@app.route('/updateitem/<itemid>', methods=["POST"])
-def update_item(itemid):
-    if not check_if_editor(request):
-        return redirect(f"/item/{itemid}/false")
-    if request.method == "POST":
-        item = PageObject.query.get_or_404(itemid)
-
-        if request.form["attribute"] == "item_title":
-            item.item_title = request.form["newValue"]
-        elif request.form["attribute"] == "item_description":
-            item.item_description = request.form["newValue"]
-        elif request.form["attribute"] == "source_mod":
-            item.source_mod = request.form["newValue"]
-        elif request.form["attribute"] == "stack_size":
-            item.stack_size = int(request.form["newValue"])
-        elif request.form["attribute"] == "item_rarity":
-            item.item_rarity = request.form["newValue"]
-        elif request.form["attribute"] == "dimension":
-            item.dimension = request.form["newValue"]
-        elif request.form["attribute"] == "item_type":
-            item.item_type = request.form["newValue"]
-        elif request.form["attribute"] == "smelting_image_links":
-            item.smelting_image_links = request.form["newValue"]
-        elif request.form["attribute"] == "crafting_image_links":
-            item.crafting_image_links = request.form["newValue"]
-        elif request.form["attribute"] == "iframe_video_link":
-            item.iframe_video_link = request.form["newValue"]
-        elif request.form["attribute"] == "image_link":
-            item.image_link = request.form["newValue"]
-        elif request.form["attribute"] == "minecraft_item_id":
-            item.minecraft_item_id = request.form["newValue"]
-        
-        try:
-            db.session.commit()
-            return redirect(f"/item/{itemid}/true")
-        
-        except:
-            pass
 
 @app.route('/admin/items')
 def all_items():
