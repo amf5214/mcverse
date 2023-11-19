@@ -17,6 +17,7 @@ from src.models import *
 from src.image_handling import *
 from src.authentication import *
 from src.aux_page_rendering import AuxPageRendering
+from src.admin_page_rendering import AdminPageRendering
 
 app = Flask(__name__)
 
@@ -136,8 +137,12 @@ def go_home():
     frequently_asked_questions = FrequentlyAskedQuestion.query.order_by(FrequentlyAskedQuestion.id).all()
     return render_template('index.html', questions=frequently_asked_questions, useraccount=get_account(request))
 
+# Routing for aux pages
 app.add_url_rule('/aboutus', view_func=AuxPageRendering.aboutus)
 app.add_url_rule('/contactus', view_func=AuxPageRendering.contactus)
+
+# Routing for admin pages
+app.add_url_rule('/item/admin', view_func=AdminPageRendering.item_admin)
 
 
 @app.route('/newquestion', methods=['POST'])
@@ -179,24 +184,6 @@ def item_report(itemid, editable):
     else:
         return render_template('item.html', page_object=page_object, item_image=item_image, crafting_links=crafting_links, smelting_links=smelting_links, editable=False, useraccount=get_account(request))
 
-@app.route('/item/admin')
-def item_admin():
-    if not check_if_admin(request):
-        return redirect('/')
-    items = PageObject.query.order_by(PageObject.id).all()
-    template = {
-        "id": "ID", 
-        "item_title": "Title", 
-        "description": "Description",
-        "iframe_video_link": "Youtube video", 
-        "source_mod": "Source Mod", 
-        "stack_size": "Stack Size", 
-        "item_rarity": "Rarity", 
-        "dimension": "Dimension",
-        "minecraft_item_id": "Minecraft Item ID",
-        "item_type": "Item Type"
-        }
-    return render_template('item_admin.html', admin_token=True, items=items, template=template, useraccount=get_account(request), itemclasses=get_item_classes())
 
 @app.route('/newitem', methods=['POST'])
 def new_item():
@@ -238,12 +225,6 @@ def delete_item(itemid):
     db.session.commit()
     return redirect('/item/admin')
 
-def get_item_json():
-    objects = PageObject.query.order_by(PageObject.id).all()
-    json_data = []
-    for x in objects:
-        json_data.append([x.item_title, x.id])
-    return {"jdata": json_data}
 
 @app.route('/updateitem/<itemid>', methods=["POST"])
 def update_item(itemid):
