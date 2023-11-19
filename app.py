@@ -164,6 +164,7 @@ app.add_url_rule('/permissions/requests/admin', view_func=AdminPageRendering.per
 app.add_url_rule('/prequestdeny/<requestid>', view_func=AdminPageRendering.deny_request)
 app.add_url_rule('/prequestapprove/<requestid>', view_func=AdminPageRendering.approve_request)
 app.add_url_rule('/uploadimagedb', methods=["POST"], view_func=AdminPageRendering.uploadnewimage)
+app.add_url_rule('/managewebpages', view_func=AdminPageRendering.managewebpages)
 app.add_url_rule('/createwebpage', methods=['POST'], view_func=AdminPageRendering.createwebpage)
 app.add_url_rule('/deletewebpage/<pageid>', view_func=AdminPageRendering.deletewebpage)
 
