@@ -16,12 +16,12 @@ import pymysql
 from src.models import *
 from src.image_handling import *
 from src.authentication import *
-from src.aux_page_rendering import AuxPageRendering
-from src.admin_page_rendering import AdminPageRendering
-from src.item_page_rendering import ItemPageRendering
-from src.profile_page_rendering import ProfilePageRendering
-from src.learning_page_rendering import LearningPageRendering
-from src.learning_page_helperfunctions import LearningPageHelperFunctions
+from src.routing_functions.aux_page_rendering import AuxPageRendering
+from src.routing_functions.admin_page_rendering import AdminPageRendering
+from src.routing_functions.item_page_rendering import ItemPageRendering
+from src.routing_functions.profile_page_rendering import ProfilePageRendering
+from src.routing_functions.learning_page_rendering import LearningPageRendering
+from src.routing_functions.learning_page_helperfunctions import LearningPageHelperFunctions
 
 app = Flask(__name__)
 
@@ -188,7 +188,11 @@ app.add_url_rule('/learningpage/admin/newsection/<path>/<int:page_id>/<int:place
 app.add_url_rule('/updatelearningitem', methods=['POST'], view_func=LearningPageHelperFunctions.update_learning_item)
 app.add_url_rule('/movelearningelement/<page_path>/<int:element_id>/<direction>', view_func=LearningPageHelperFunctions.move_learning_element)
 app.add_url_rule('/movelearningdiv/<page_path>/<int:div_id>/<direction>', view_func=LearningPageHelperFunctions.move_learning_div)
-
+app.add_url_rule('/unlinkpageitem/<page_path>/<container_type>/<item_id>', view_func=LearningPageHelperFunctions.unlink_page_item)
+app.add_url_rule('/pageelementimageupdate', methods=['POST'], view_func=LearningPageHelperFunctions.update_page_element_image)
+app.add_url_rule('/admingetcarousel/<int:element_id>', view_func=LearningPageHelperFunctions.carousel_items)
+app.add_url_rule('/removecarouselimage', methods=['POST'], view_func=LearningPageHelperFunctions.remove_carousel_image)
+app.add_url_rule('/adminaddcarouselimage', methods=["POST"], view_func=LearningPageHelperFunctions.add_carousel_image)
 
 @app.route('/newquestion', methods=['POST'])
 def new_question():
@@ -358,103 +362,5 @@ def deleteitemclass(classid):
     db.session.delete(itemclass)
     db.session.commit()
     return redirect('/itemclasshome')
-
-@app.route('/unlinkpageitem/<page_path>/<container_type>/<item_id>')
-def unlink_page_item(page_path, container_type, item_id):
-    print(f"page_path={page_path}, container={container_type}, item={item_id}")
-    if not check_if_editor(request):
-        return redirect(f'/learn/{request.form["page_path"]}/false')
-    if container_type == "div":
-        div = db.session.execute(db.select(DivContainer).filter_by(id=item_id)).scalar_one()
-        div.page_id = -1
-        db.session.commit()
-
-    elif container_type == "element":
-        element = db.session.execute(db.select(PageElement).filter_by(id=item_id)).scalar_one()
-        element.page_id = -1
-        db.session.commit()
-
-    return redirect(f'/learn/{page_path}/true')
-
-@app.route('/pageelementimageupdate', methods=['POST'])
-def update_page_element_image():
-    if not check_if_editor(request):
-        return redirect('/')
-    image_id = uploadimage(request)
-    page_element = PageElement.query.get_or_404(request.form["element_id"])
-
-    page_element.text = str(image_id)
-    print(f"element_id={page_element.id}. image_id={image_id}")
-    db.session.commit()
-    return redirect(f"/learn/{request.form['page_path']}/true")
-
-@app.route('/admingetcarousel/<int:element_id>')
-def carousel_items(element_id):
-    if not check_if_editor(request):
-        return redirect('/')
-    return jsonify(get_carousel_items(element_id))
-
-@app.route('/removecarouselimage', methods=['POST'])
-def remove_carousel_image():
-    if not check_if_editor(request):
-        return redirect('/')
-    request_data = request.get_json()
-    carousel_id = request_data['carousel_id']
-    image_id = request_data['image_id']
-    page_path = request_data['page_path']
-    try:
-        carousel = db.session.execute(db.select(PageElement).filter_by(id=carousel_id)).scalar_one()
-        text = carousel.text
-        images = text.split("-")
-        print(f"images={images}; image_id={str(image_id)}")
-        images.remove(str(image_id))
-        return_string = ""
-        for i, x in enumerate(images):
-            if i == 0:
-                return_string += str(x)
-            else:
-                return_string += "-"
-                return_string += str(x)
-        carousel.text = return_string
-        db.session.commit()
-        print(f"newpath=/learn/{page_path}/true")
-        body = {"redirect": f"/learn/{page_path}/true"}
-        response_obj = make_response(jsonify(body))
-        response_obj.headers.set('content-type', 'text/plain')
-        return response_obj
-    except Exception as e:
-        print(e)
-        response_obj = make_response("/")
-        response_obj.headers.set('content-type', 'text/plain')
-        return response_obj
-
-@app.route('/adminaddcarouselimage', methods=["POST"])
-def add_carousel_image():
-    if not check_if_editor(request):
-        return redirect('/')
-    image_id = uploadimage(request)
-    try:
-        carousel_id = request.form["carousel-id"]
-        page_path = request.form["page-path"]
-        carousel_id = int(carousel_id)
-        carousel = db.session.execute(db.select(PageElement).filter_by(id=carousel_id)).scalar_one()
-        images = carousel.text.split("-")
-        images.append(image_id)
-        return_string = ""
-        for i, x in enumerate(images):
-            if i == 0:
-                return_string += str(x)
-            else:
-                return_string += "-"
-                return_string += str(x)
-        carousel.text = return_string
-        
-        db.session.commit()
-
-        return redirect(f"/learn/{page_path}/true")
-    
-    except Exception as e:
-        print(e)
-        return redirect("/")
 
 app.run(debug=True, port=54913)

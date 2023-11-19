@@ -211,3 +211,96 @@ class LearningPageHelperFunctions():
         except Exception as e:
             print(e)
             return redirect('/')
+
+    def unlink_page_item(page_path, container_type, item_id):
+        print(f"page_path={page_path}, container={container_type}, item={item_id}")
+        if not check_if_editor(request):
+            return redirect(f'/learn/{request.form["page_path"]}/false')
+        if container_type == "div":
+            div = db.session.execute(db.select(DivContainer).filter_by(id=item_id)).scalar_one()
+            div.page_id = -1
+            db.session.commit()
+
+        elif container_type == "element":
+            element = db.session.execute(db.select(PageElement).filter_by(id=item_id)).scalar_one()
+            element.page_id = -1
+            db.session.commit()
+
+        return redirect(f'/learn/{page_path}/true')
+
+    def update_page_element_image():
+        if not check_if_editor(request):
+            return redirect('/')
+        image_id = uploadimage(request)
+        page_element = PageElement.query.get_or_404(request.form["element_id"])
+
+        page_element.text = str(image_id)
+        print(f"element_id={page_element.id}. image_id={image_id}")
+        db.session.commit()
+        return redirect(f"/learn/{request.form['page_path']}/true")
+    
+    def carousel_items(element_id):
+        if not check_if_editor(request):
+            return redirect('/')
+        return jsonify(get_carousel_items(element_id))
+
+    def remove_carousel_image():
+        if not check_if_editor(request):
+            return redirect('/')
+        request_data = request.get_json()
+        carousel_id = request_data['carousel_id']
+        image_id = request_data['image_id']
+        page_path = request_data['page_path']
+        try:
+            carousel = db.session.execute(db.select(PageElement).filter_by(id=carousel_id)).scalar_one()
+            text = carousel.text
+            images = text.split("-")
+            print(f"images={images}; image_id={str(image_id)}")
+            images.remove(str(image_id))
+            return_string = ""
+            for i, x in enumerate(images):
+                if i == 0:
+                    return_string += str(x)
+                else:
+                    return_string += "-"
+                    return_string += str(x)
+            carousel.text = return_string
+            db.session.commit()
+            print(f"newpath=/learn/{page_path}/true")
+            body = {"redirect": f"/learn/{page_path}/true"}
+            response_obj = make_response(jsonify(body))
+            response_obj.headers.set('content-type', 'text/plain')
+            return response_obj
+        except Exception as e:
+            print(e)
+            response_obj = make_response("/")
+            response_obj.headers.set('content-type', 'text/plain')
+            return response_obj
+
+    def add_carousel_image():
+        if not check_if_editor(request):
+            return redirect('/')
+        image_id = uploadimage(request)
+        try:
+            carousel_id = request.form["carousel-id"]
+            page_path = request.form["page-path"]
+            carousel_id = int(carousel_id)
+            carousel = db.session.execute(db.select(PageElement).filter_by(id=carousel_id)).scalar_one()
+            images = carousel.text.split("-")
+            images.append(image_id)
+            return_string = ""
+            for i, x in enumerate(images):
+                if i == 0:
+                    return_string += str(x)
+                else:
+                    return_string += "-"
+                    return_string += str(x)
+            carousel.text = return_string
+            
+            db.session.commit()
+
+            return redirect(f"/learn/{page_path}/true")
+        
+        except Exception as e:
+            print(e)
+            return redirect("/")
