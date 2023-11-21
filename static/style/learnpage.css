@@ -312,7 +312,7 @@ body {
 }
 
 .form-wrapper img {
-    max-width: 60%;
+    max-width: 12vw;
     max-height: 60%;
 }
 
@@ -481,8 +481,8 @@ body {
     width: 100%;
     max-height: 100%;
     border-top: 3px solid beige;
-    margin-top: 1rem;
-    padding-top: 0.25rem;
+    /* margin-top: 1rem; */
+    /* padding-top: 0.25rem; */
 }
 
 .nested-user-created-div-wrapper-last {
@@ -494,8 +494,8 @@ body {
     max-height: 100%;
     border-top: 3px solid beige;
     border-bottom: 3px solid beige;
-    margin-top: 1rem;
-    padding-top: 0.25rem;
+    /* margin-top: 1rem;
+    padding-top: 0.25rem; */
 }
 
 .youtube-video {
