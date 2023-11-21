@@ -102,3 +102,45 @@ class ProfilePageRendering():
         picture_account.account_image_link = str(image_id)
         db.session.commit()
         return redirect("/profile")
+    
+    def updateprofileattribute():
+        request_data = request.get_json()
+        account_id = request_data['accountId']
+        fulfilled = False
+        if verify_account_match(request, account_id):
+            attribute = request_data['attribute']
+            new_value = request_data['newValue']
+            account = db.session.execute(db.select(UserAccount).filter_by(id=account_id)).scalar_one()
+            if attribute == "name":
+                account.full_name = new_value
+                fulfilled = True
+            elif attribute == "username":
+                account.username = new_value
+                fulfilled = True
+            elif attribute == "birthdate":
+                try:
+                    new_value_2 = new_value.replace('-', '/')
+                    birthdatedata = new_value_2.split('/')
+                    birthdate = date(int(birthdatedata[2]), int(birthdatedata[1]), int(birthdatedata[0]))
+                    account.birthdate = birthdate
+                    fulfilled = True
+                except Exception as e:
+                    print(f"Error during birthdate update. Provided={new_value} \n {e}")
+            elif attribute == "bio":
+                account.bio = new_value
+                fulfilled = True
+            elif attribute == "experience":
+                account.experience = new_value
+                fulfilled = True
+            db.session.commit()
+    
+        if fulfilled:
+            body = {"fulfillable": True}
+            response_obj = make_response(jsonify(body))
+            response_obj.headers.set('content-type', 'text/plain')
+            return response_obj
+        else:
+            body = {"fulfillable": False}
+            response_obj = make_response(jsonify(body))
+            response_obj.headers.set('content-type', 'text/plain')
+            return response_obj
