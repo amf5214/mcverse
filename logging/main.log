@@ -4,3 +4,116 @@ INFO:werkzeug:[33mPress CTRL+C to quit[0m
 INFO:werkzeug: * Restarting with stat
 WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 138-293-436
+INFO:profile_page:Profile page rendered
+INFO:authentication:auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDA2NTU0NTUsImlhdCI6MTcwMDU2OTA1NSwic3ViIjoiYXVzdGluZnJhbGV5LmxlZUBnbWFpbC5jb20ifQ.1jgp5qZ7LpxrmYArK2v1M4QMZm7QhwvCxNvthnupYWE
+INFO:authentication:auth_account_id=1
+INFO:authentication:account_id=1
+INFO:authentication:admin_flag=True
+INFO:authentication:account_image_loc=png
+INFO:profile_page:Account <UserAccount 1> rendered
+INFO:profile_page:Account id=1 accessed
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:16:54] "GET /profile HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:16:55] "[36mGET /static/style/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:16:55] "[36mGET /static/style/profile.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:16:55] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:16:55] "[36mGET /static/background2.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:16:55] "[36mGET /static/script/profile.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:16:55] "[36mGET /static/script/profile_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:16:55] "[36mGET /static/script/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:16:55] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:16:55] "GET /admin/items HTTP/1.1" 200 -
+INFO:authentication:auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDA2NTU0NTUsImlhdCI6MTcwMDU2OTA1NSwic3ViIjoiYXVzdGluZnJhbGV5LmxlZUBnbWFpbC5jb20ifQ.1jgp5qZ7LpxrmYArK2v1M4QMZm7QhwvCxNvthnupYWE
+INFO:authentication:auth_account_id=1
+INFO:authentication:account_id=1
+INFO:authentication:admin_flag=True
+INFO:authentication:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:05] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:05] "[36mGET /static/style/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:05] "[36mGET /static/style/index.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:05] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/homepage.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/homepage2.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/homepage3.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/homepage5.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/homepage4.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/script/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/mcgame_dungeons2.avif HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/forest.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/mcgame_vanilla2.avif HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/homepage6.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/homepage67.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/homepage8.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/homepage9.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/homepage10.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/mcgame_legends2.avif HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/mcgame_realms2.jpeg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/mcgame_edu2.webp HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/apple.webp HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/farming.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/mining4.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/Minecraft_mobs_preview.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/electricity3.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/storage3.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/backpack3.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/dungeon.webp HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/weapon3.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/Chisels.webp HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/bibliocraft2.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/journeymap4.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:06] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:authentication:auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDA2NTU0NTUsImlhdCI6MTcwMDU2OTA1NSwic3ViIjoiYXVzdGluZnJhbGV5LmxlZUBnbWFpbC5jb20ifQ.1jgp5qZ7LpxrmYArK2v1M4QMZm7QhwvCxNvthnupYWE
+INFO:authentication:auth_account_id=1
+INFO:authentication:account_id=1
+INFO:authentication:admin_flag=True
+INFO:authentication:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:29] "GET /learn/food HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:29] "[36mGET /static/style/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:29] "[36mGET /static/style/learnpage.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:29] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:29] "[36mGET /static/script/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:29] "GET /static/learningpage_1.jpeg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:29] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:29] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:authentication:auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDA2NTU0NTUsImlhdCI6MTcwMDU2OTA1NSwic3ViIjoiYXVzdGluZnJhbGV5LmxlZUBnbWFpbC5jb20ifQ.1jgp5qZ7LpxrmYArK2v1M4QMZm7QhwvCxNvthnupYWE
+INFO:authentication:auth_account_id=1
+INFO:authentication:account_id=1
+INFO:authentication:admin_flag=True
+INFO:authentication:account_image_loc=png
+INFO:authentication:auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDA2NTU0NTUsImlhdCI6MTcwMDU2OTA1NSwic3ViIjoiYXVzdGluZnJhbGV5LmxlZUBnbWFpbC5jb20ifQ.1jgp5qZ7LpxrmYArK2v1M4QMZm7QhwvCxNvthnupYWE
+INFO:authentication:auth_account_id=1
+INFO:authentication:account_id=1
+INFO:authentication:admin_flag=True
+INFO:authentication:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:48] "GET /learn/food/true HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:48] "[36mGET /static/style/learnpage.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:48] "[36mGET /static/style/main.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:48] "[36mGET /static/minecraftlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:48] "[36mGET /static/script/draggable.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:48] "[36mGET /static/script/learning_page_modification.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:48] "[36mGET /static/script/image_carousel.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:48] "[36mGET /static/learningpage_1.jpeg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:48] "[36mGET /static/script/autocomplete.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:48] "GET /admin/items HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:48] "[36mGET /static/icon.ico HTTP/1.1[0m" 304 -
+INFO:learning_page_backend:Item updating
+INFO:authentication:auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDA2NTU0NTUsImlhdCI6MTcwMDU2OTA1NSwic3ViIjoiYXVzdGluZnJhbGV5LmxlZUBnbWFpbC5jb20ifQ.1jgp5qZ7LpxrmYArK2v1M4QMZm7QhwvCxNvthnupYWE
+INFO:authentication:auth_account_id=1
+INFO:authentication:account_id=1
+INFO:authentication:admin_flag=True
+INFO:authentication:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:52] "POST /updatelearningitem2 HTTP/1.1" 200 -
+INFO:learning_page_backend:Item updating
+INFO:authentication:auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDA2NTU0NTUsImlhdCI6MTcwMDU2OTA1NSwic3ViIjoiYXVzdGluZnJhbGV5LmxlZUBnbWFpbC5jb20ifQ.1jgp5qZ7LpxrmYArK2v1M4QMZm7QhwvCxNvthnupYWE
+INFO:authentication:auth_account_id=1
+INFO:authentication:account_id=1
+INFO:authentication:admin_flag=True
+INFO:authentication:account_image_loc=png
+INFO:learning_page_backend:Item updating
+INFO:authentication:auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDA2NTU0NTUsImlhdCI6MTcwMDU2OTA1NSwic3ViIjoiYXVzdGluZnJhbGV5LmxlZUBnbWFpbC5jb20ifQ.1jgp5qZ7LpxrmYArK2v1M4QMZm7QhwvCxNvthnupYWE
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:54] "POST /updatelearningitem2 HTTP/1.1" 200 -
+INFO:authentication:auth_account_id=1
+INFO:authentication:account_id=1
+INFO:authentication:admin_flag=True
+INFO:authentication:account_image_loc=png
+INFO:werkzeug:127.0.0.1 - - [21/Nov/2023 08:17:55] "POST /updatelearningitem2 HTTP/1.1" 200 -
