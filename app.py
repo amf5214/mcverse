@@ -9,8 +9,6 @@ import uuid
 import logging
 from base64 import b64encode
 import base64
-from io import BytesIO #Converts data from Database into bytes
-from sqlalchemy import create_engine
 import pymysql
 
 from src.models import *
@@ -109,11 +107,11 @@ app.add_url_rule('/learn/<pagepath>/<editable>', view_func=LearningPageRendering
 
 # Routing for learning page helper functions
 app.add_url_rule('/learningpage/admin/newdiv/<path>/<int:page_id>/<int:placement_order>', view_func=LearningPageHelperFunctions.create_learning_page_object)
-app.add_url_rule('/learningpage/admin/newimage/<path>/<int:page_id>/<int:placement_order>', view_func=LearningPageHelperFunctions.create_learning_page_image)
-app.add_url_rule('/learningpage/admin/newpara/<path>/<int:page_id>/<int:placement_order>', view_func=LearningPageHelperFunctions.create_learning_page_paragraph)
-app.add_url_rule('/learningpage/admin/newvideo/<path>/<int:page_id>/<int:placement_order>', view_func=LearningPageHelperFunctions.create_learning_page_video)
-app.add_url_rule('/learningpage/admin/newcarousel/<path>/<int:page_id>/<int:placement_order>', view_func=LearningPageHelperFunctions.create_learning_page_carousel)
-app.add_url_rule('/learningpage/admin/newsection/<path>/<int:page_id>/<int:placement_order>', view_func=LearningPageHelperFunctions.create_learning_page_section)
+app.add_url_rule('/learningpage/admin/newimage/<path>/<int:page_id>/<int:placement_order>/<int:div_id>', view_func=LearningPageHelperFunctions.create_learning_page_image)
+app.add_url_rule('/learningpage/admin/newpara/<path>/<int:page_id>/<int:placement_order>/<int:div_id>', view_func=LearningPageHelperFunctions.create_learning_page_paragraph)
+app.add_url_rule('/learningpage/admin/newvideo/<path>/<int:page_id>/<int:placement_order>/<int:div_id>', view_func=LearningPageHelperFunctions.create_learning_page_video)
+app.add_url_rule('/learningpage/admin/newcarousel/<path>/<int:page_id>/<int:placement_order>/<int:div_id>', view_func=LearningPageHelperFunctions.create_learning_page_carousel)
+app.add_url_rule('/learningpage/admin/newsection/<path>/<int:page_id>/<int:placement_order>/<int:div_id>', view_func=LearningPageHelperFunctions.create_learning_page_section)
 app.add_url_rule('/updatelearningitem', methods=['POST'], view_func=LearningPageHelperFunctions.update_learning_item)
 app.add_url_rule('/movelearningelement/<page_path>/<int:element_id>/<direction>', view_func=LearningPageHelperFunctions.move_learning_element)
 app.add_url_rule('/movelearningdiv/<page_path>/<int:div_id>/<direction>', view_func=LearningPageHelperFunctions.move_learning_div)
