@@ -19,7 +19,6 @@ function getIdValues(element) {
 function addListener(element) {
     element.addEventListener("focusout", function() {
         let elementInfo = getIdValues(element);  
-        console.log(elementInfo);
         fetch("/updateprofileattribute", {
             method: "POST",
             body: JSON.stringify(elementInfo),

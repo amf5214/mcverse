@@ -6,11 +6,9 @@ const downButtons = document.getElementsByClassName("down-buttons");
 const pagePath = document.getElementById("master-page-name").value;
 function addListener(element) {
     element.addEventListener("focusout", function() {
-        console.log(`${element.id}/${element.innerText}`);
         let attribute = element.id;
         let newValuedata = element.innerText;
         attributePieces = attribute.split("-");
-        console.log(`${attribute}/${attributePieces}`);
         if(attributePieces.at(1) == "title") {
             newValuedata = newValuedata.split("rocket_launch")[0].trim();
             let valueData2 = newValuedata.split("expand_circle_right");
@@ -29,7 +27,6 @@ function addListener(element) {
 };
 
 function sendPost(url, body) {
-    console.log(url);
     fetch(url, {
         method: "POST",
         body: JSON.stringify(body),
