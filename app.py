@@ -38,8 +38,6 @@ with app.app_context():
 
     db.create_all()
 
-    Permission_values = ["Admin", "Edit_Pages", "Add_Pages"]
-
     logging.info("Backend functions built")
 
 @app.errorhandler(404)

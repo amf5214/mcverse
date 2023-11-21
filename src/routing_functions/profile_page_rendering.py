@@ -8,6 +8,8 @@ from src.models import AccountPermission, AuthAccount, UserAccount, PermissionsR
 
 logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
 
+Permission_values = ["Admin", "Edit_Pages", "Add_Pages"]
+
 class Permission():
         def __init__(self, has, name):
             self.has=has
