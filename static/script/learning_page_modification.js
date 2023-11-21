@@ -21,11 +21,26 @@ function addListener(element) {
 
         if(attributePieces.at(1) == "title" || attributePieces.at(1) == "text") {
             if(attributePieces.at(0) == "page" || attributePieces.at(0) == "div" || attributePieces.at(0) == "element") {
-                sendData(`/updatelearningitem`, {"page_path": pagePath, "item":attributePieces.at(2), "container": attributePieces.at(0), "attribute": attributePieces.at(1), "newValue": newValuedata});
+                // sendData(`/updatelearningitem`, {"page_path": pagePath, "item":attributePieces.at(2), "container": attributePieces.at(0), "attribute": attributePieces.at(1), "newValue": newValuedata});
+                sendPost('/updatelearningitem2', {page_path: pagePath, item: attributePieces.at(2), container: attributePieces.at(0), attribute: attributePieces.at(1), newValue: newValuedata});
             }
         }
     })
 };
+
+function sendPost(url, body) {
+    console.log(url);
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    }).then((response) => response.json())
+    .then((data) => {
+       console.log(data.fulfillable);
+    })
+}
 
 function sendData(path, parameters, method='post') {
 

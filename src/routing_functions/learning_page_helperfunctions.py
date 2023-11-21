@@ -170,6 +170,49 @@ class LearningPageHelperFunctions():
                 db.session.commit()
         
         return redirect(f'/learn/{request.form["page_path"]}/true')
+    
+    def update_learning_item2():
+        logging.info("Item updating")
+        request_data = request.get_json()
+        if not check_if_editor(request):
+            body = {"fulfillable": False}
+            response_obj = make_response(jsonify(body))
+            response_obj.headers.set('content-type', 'text/plain')
+            return response_obj
+        
+        container_type = request_data["container"]
+        element_type = request_data["attribute"]
+        item_id = request_data["item"]
+        new_value = request_data["newValue"]
+        if container_type == "page":
+            page = db.session.execute(db.select(WebPage).filter_by(id=item_id)).scalar_one()
+            if element_type == "title":
+                page.div_title = new_value
+                db.session.commit()
+            else:
+                page.text = new_value
+                db.session.commit()
+        elif container_type == "div":
+            div = db.session.execute(db.select(DivContainer).filter_by(id=item_id)).scalar_one()
+            if element_type == "title":
+                div.div_title = new_value
+                db.session.commit()
+            else:
+                div.text = new_value
+                db.session.commit()
+        elif container_type == "element":
+            element = db.session.execute(db.select(PageElement).filter_by(id=item_id)).scalar_one()
+            if element_type == "title":
+                element.div_title = new_value
+                db.session.commit()
+            else:
+                element.text = new_value
+                db.session.commit()
+        
+        body = {"fulfillable": True}
+        response_obj = make_response(jsonify(body))
+        response_obj.headers.set('content-type', 'text/plain')
+        return response_obj
 
     def move_learning_element(page_path, element_id, direction):
         logging.info("Moving page element")

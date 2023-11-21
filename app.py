@@ -112,6 +112,7 @@ app.add_url_rule('/learningpage/admin/newvideo/<path>/<int:page_id>/<int:placeme
 app.add_url_rule('/learningpage/admin/newcarousel/<path>/<int:page_id>/<int:placement_order>/<int:div_id>', view_func=LearningPageHelperFunctions.create_learning_page_carousel)
 app.add_url_rule('/learningpage/admin/newsection/<path>/<int:page_id>/<int:placement_order>/<int:div_id>', view_func=LearningPageHelperFunctions.create_learning_page_section)
 app.add_url_rule('/updatelearningitem', methods=['POST'], view_func=LearningPageHelperFunctions.update_learning_item)
+app.add_url_rule('/updatelearningitem2', methods=['POST'], view_func=LearningPageHelperFunctions.update_learning_item2)
 app.add_url_rule('/movelearningelement/<page_path>/<int:element_id>/<direction>', view_func=LearningPageHelperFunctions.move_learning_element)
 app.add_url_rule('/movelearningdiv/<page_path>/<int:div_id>/<direction>', view_func=LearningPageHelperFunctions.move_learning_div)
 app.add_url_rule('/unlinkpageitem/<page_path>/<container_type>/<item_id>', view_func=LearningPageHelperFunctions.unlink_page_item)
