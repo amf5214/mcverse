@@ -109,3 +109,19 @@ def encode_auth_token(email_account):
             )
         except Exception as e:
             return e
+        
+def verify_account_match(request, accountId):
+    """Verifies if the user making request is the same as the one matching the provided account id
+
+    Takes in an http request and uses it to access the user account information so that it can compare 
+    that account id with the provided account id and compare them
+
+    Keyword Arguements:
+    request -- http request containing a cookie named token which contains an authentication token
+    accountId -- account id that the user is trying to access
+
+    Return: boolean
+    """
+
+    account = get_account(request)
+    return account.id == accountId
