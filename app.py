@@ -59,11 +59,11 @@ app.add_url_rule('/aboutus', view_func=AuxPageRendering.aboutus)
 app.add_url_rule('/contactus', view_func=AuxPageRendering.contactus)
 
 # Routing for item pages
-app.add_url_rule('/item/<itemid>', defaults={"editable":"false"}, view_func=ItemPageRendering.item_report)
+app.add_url_rule('/item/<itemid>', defaults={'editable':'false'}, view_func=ItemPageRendering.item_report)
 app.add_url_rule('/item/<itemid>/<editable>', view_func=ItemPageRendering.item_report)
 app.add_url_rule('/newitem', methods=['POST'], view_func=ItemPageRendering.new_item)
 app.add_url_rule('/deleteitem/<itemid>', view_func=ItemPageRendering.delete_item)
-app.add_url_rule('/updateitem/<itemid>', methods=["POST"], view_func=ItemPageRendering.update_item)
+app.add_url_rule('/updateitem/<itemid>', methods=['POST'], view_func=ItemPageRendering.update_item)
 app.add_url_rule('/itemimageupdate', methods=['POST'], view_func=ItemPageRendering.itemimageupdate)
 app.add_url_rule('/createcraftingimage', methods=['POST'], view_func=ItemPageRendering.create_crafting_image)
 app.add_url_rule('/createsmeltingimage', methods=['POST'], view_func=ItemPageRendering.create_smelting_image)
@@ -82,7 +82,7 @@ app.add_url_rule('/uploadimagedb', methods=["POST"], view_func=AdminPageRenderin
 app.add_url_rule('/managewebpages', view_func=AdminPageRendering.managewebpages)
 app.add_url_rule('/createwebpage', methods=['POST'], view_func=AdminPageRendering.createwebpage)
 app.add_url_rule('/deletewebpage/<pageid>', view_func=AdminPageRendering.deletewebpage)
-app.add_url_rule('/admin/uploadimage', methods=["GET"], view_func=AdminPageRendering.adminuploadimage)
+app.add_url_rule('/admin/uploadimage', methods=['GET'], view_func=AdminPageRendering.adminuploadimage)
 app.add_url_rule('/admin/items', view_func=AdminPageRendering.all_items)
 app.add_url_rule('/item/home/<type>', view_func=AdminPageRendering.item_home)
 app.add_url_rule('/itemclasshome', view_func=AdminPageRendering.itemclasshome)
@@ -93,14 +93,15 @@ app.add_url_rule('/deleteitemclass/<classid>', view_func=AdminPageRendering.dele
 app.add_url_rule('/signin/home', view_func=ProfilePageRendering.signin)
 app.add_url_rule('/signin/failed', view_func=ProfilePageRendering.failed_signin)
 app.add_url_rule('/profile', view_func=ProfilePageRendering.profile)
-app.add_url_rule('/attemptedsignin', methods=["POST"], view_func=ProfilePageRendering.signinattempt)
+app.add_url_rule('/attemptedsignin', methods=['POST'], view_func=ProfilePageRendering.signinattempt)
 app.add_url_rule('/signout', view_func=ProfilePageRendering.sign_out)
-app.add_url_rule('/newaccount', methods=["POST"], view_func=ProfilePageRendering.create_new_account)
+app.add_url_rule('/newaccount', methods=['POST'], view_func=ProfilePageRendering.create_new_account)
 app.add_url_rule('/requestpermission/<permission>/<accountid>', view_func=ProfilePageRendering.create_permission_request)
 app.add_url_rule('/profileimageupdate', methods=['POST'], view_func=ProfilePageRendering.profileimageupdate)
+app.add_url_rule('/updateprofileattribute', methods=['POST'], view_func=ProfilePageRendering.updateprofileattribute)
 
 # Routing for learning pages
-app.add_url_rule('/learn/<pagepath>', defaults={"editable":"false"}, view_func=LearningPageRendering.learningpages)
+app.add_url_rule('/learn/<pagepath>', defaults={'editable':'false'}, view_func=LearningPageRendering.learningpages)
 app.add_url_rule('/learn/<pagepath>/<editable>', view_func=LearningPageRendering.learningpages)
 
 # Routing for learning page helper functions
@@ -117,6 +118,6 @@ app.add_url_rule('/unlinkpageitem/<page_path>/<container_type>/<item_id>', view_
 app.add_url_rule('/pageelementimageupdate', methods=['POST'], view_func=LearningPageHelperFunctions.update_page_element_image)
 app.add_url_rule('/admingetcarousel/<int:element_id>', view_func=LearningPageHelperFunctions.carousel_items)
 app.add_url_rule('/removecarouselimage', methods=['POST'], view_func=LearningPageHelperFunctions.remove_carousel_image)
-app.add_url_rule('/adminaddcarouselimage', methods=["POST"], view_func=LearningPageHelperFunctions.add_carousel_image)
+app.add_url_rule('/adminaddcarouselimage', methods=['POST'], view_func=LearningPageHelperFunctions.add_carousel_image)
 
 app.run(debug=True, port=54913)
