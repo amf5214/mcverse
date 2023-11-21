@@ -23,12 +23,39 @@ logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
 secret_key = secrets.token_hex(30)
 
 def create_password(password_string):
+    """Encrypts a password string
+
+    Keyword Arguements:
+    password_string = string value representing the password that needs to be encrypted
+
+    Return: string
+    """
+
     return sha256_crypt.encrypt(password_string)
 
 def validate_password(given_pass, real_pass):
+    """Valides user password by verifying that the crypt string equates to the provided unencrypted password
+    
+    Keyword Arguements:
+    given_pass = unencrypted password string
+    real_pass = crypt string that is being compared to 
+
+    Return: boolean
+    """
+
     return sha256_crypt.verify(given_pass, real_pass)
 
 def get_account(request):
+        """Pulls a user account from the datatables
+
+        Takes in an http request and uses it to determine the user account based off the auth token passed in the request
+
+        Keyword Arguements:
+        request -- http request containing a cookie named token which contains an authentication token
+
+        Return: UserAccount object
+        """
+
         token = request.cookies.get("token")
         logging.info(f"auth_token={token}")
         if token != None:
@@ -77,25 +104,61 @@ def permission_validation(permission, accountid):
     return False
 
 def check_if_admin(request):
+    """Validates user admin permissions
+
+    Takes in an http request and uses it to access the user auth token to see if the user has admin permissions
+
+    Keyword Arguements:
+    request -- http request containing a cookie named token which contains an authentication token
+
+    Return: boolean
+    """
+
     account = get_account(request)
     if account.full_name != "No Account":
         return permission_validation("Admin", account.id)
     
 def check_if_editor(request):
+    """Validates user page edit permissions
+
+    Takes in an http request and uses it to access the user auth token to see if the user has page edit permissions
+
+    Keyword Arguements:
+    request -- http request containing a cookie named token which contains an authentication token
+
+    Return: boolean
+    """
+
     account = get_account(request)
     if account.full_name != "No Account":
         return permission_validation("Edit_Pages", account.id)
     
 def check_if_canadd(request):
+    """Validates user page add permissions
+
+    Takes in an http request and uses it to access the user auth token to see if the user has page add permissions
+
+    Keyword Arguements:
+    request -- http request containing a cookie named token which contains an authentication token
+
+    Return: boolean
+    """
+
     account = get_account(request)
     if account.full_name != "No Account":
         return permission_validation("Add_Pages", account.id)
     
 def encode_auth_token(email_account):
+        """Generates the Auth Token
+
+        Utilizes a secret to generate a jwt token and returns it
+
+        Keyword Arguements:
+        email_account -- user account email address
+
+        Return: string
         """
-        Generates the Auth Token
-        :return: string
-        """
+
         try:
             payload = {
                 'exp': datetime.now(timezone.utc) + timedelta(days=1, seconds=0),
