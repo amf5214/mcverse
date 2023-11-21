@@ -48,9 +48,9 @@ def get_account(request):
                             try:
                                 int(image_id)
                             except:
-                                image_id = 3
+                                image_id = 8
                         else:
-                            image_id = 3
+                            image_id = 8
                             account.image_flag = False
                         image_obj = FileContent.query.get_or_404(image_id)
                         account.profile_img_loc = image_obj.location
