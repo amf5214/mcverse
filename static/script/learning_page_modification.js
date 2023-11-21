@@ -115,8 +115,8 @@ for(let button of upButtons) {
 for(let button1 of downButtons) {
     button1.addEventListener("click", function() {
         console.log("onclick fired");
-        let buttonId = button.id.split("/");
-        console.log(`split id=${button.id.split("/")}`);
+        let buttonId = button1.id.split("/");
+        console.log(`split id=${button1.id.split("/")}`);
         const pagePath = document.getElementById("master-page-name").value;
         if(buttonId.at(2).split(" ").includes("user-created-div")) {
             window.location.href = `/movelearningdiv/${pagePath}/${buttonId.at(1)}/down`;
