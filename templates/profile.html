@@ -24,10 +24,10 @@
                     </div>
                 </form>
 
-                <p class="site-purpose" id="user-name-{{ useraccount.id }}" contenteditable="true">Name: {{ useraccount.full_name }}</p>
-                <p class="site-purpose" id="user-username-{{ useraccount.id }}" contenteditable="true">Username: {{ useraccount.username }}</p>
-                <p class="site-purpose" id="user-email-{{ useraccount.id }}" contenteditable="true">Email: {{ useraccount.auth.email_account }}</p>
-                <p class="site-purpose" id="user-birthdate-{{ useraccount.id }}" contenteditable="true">Birthdate: {{ useraccount.birthdate.month }}/{{ useraccount.birthdate.day }}/{{ useraccount.birthdate.year }}</p>
+                <p class="site-purpose account-attribute" id="user-name-{{ useraccount.id }}" contenteditable="true">Name: {{ useraccount.full_name }}</p>
+                <p class="site-purpose account-attribute" id="user-username-{{ useraccount.id }}" contenteditable="true">Username: {{ useraccount.username }}</p>
+                <p class="site-purpose">Email: {{ useraccount.auth.email_account }}</p>
+                <p class="site-purpose account-attribute" id="user-birthdate-{{ useraccount.id }}" contenteditable="true">Birthdate: {{ useraccount.birthdate.month }}/{{ useraccount.birthdate.day }}/{{ useraccount.birthdate.year }}</p>
                 <div class="permissions">
                     <table>
                         <tr>
@@ -50,7 +50,7 @@
                     <h1 id="title">
                         Bio<span class="material-symbols-outlined">rocket_launch</span>
                     </h1>
-                    <p class="site-purpose" id="user-bio-{{ useraccount.id }}" contenteditable="true">{{ useraccount.bio }}
+                    <p class="site-purpose account-attribute" id="user-bio-{{ useraccount.id }}" contenteditable="true">{{ useraccount.bio }}
                     </p>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                     <h1 id="title">
                         My Experience<span class="material-symbols-outlined">rocket_launch</span>
                     </h1>
-                    <p class="site-purpose" id="user-experience-{{ useraccount.id }}" contenteditable="true">{{ useraccount.experience }}
+                    <p class="site-purpose account-attribute" id="user-experience-{{ useraccount.id }}" contenteditable="true">{{ useraccount.experience }}
                     </p>
                 </div>
             </div>
