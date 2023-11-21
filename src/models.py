@@ -1,5 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta, date, timezone
+from src.logging_manager import create_logger
+
+logger = create_logger("database_configuration")
 
 db = SQLAlchemy()
 

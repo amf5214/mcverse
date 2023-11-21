@@ -3,6 +3,9 @@ import logging
 from src.models import FrequentlyAskedQuestion
 from src.image_handling import *
 from src.authentication import *
+from src.logging_manager import create_logger
+
+logger = create_logger("question_page")
 
 class FAQPageRendering():
     def new_question():

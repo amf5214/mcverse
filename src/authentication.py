@@ -17,8 +17,9 @@ import pymysql
 import secrets
 
 from src.models import AuthAccount, UserAccount, FileContent, AccountPermission, db
+from src.logging_manager import create_logger
 
-logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
+logger = create_logger("authentication")
 
 secret_key = secrets.token_hex(30)
 
@@ -57,18 +58,18 @@ def get_account(request):
         """
 
         token = request.cookies.get("token")
-        logging.info(f"auth_token={token}")
+        logger.info(f"auth_token={token}")
         if token != None:
             try:
                 auth_account = db.session.execute(db.select(AuthAccount).filter_by(auth_token=token)).scalar_one()
                 if auth_account != None:
-                    logging.info(f"auth_account_id={auth_account.id}")
+                    logger.info(f"auth_account_id={auth_account.id}")
                     account = db.session.execute(db.select(UserAccount).filter_by(auth_account_id=auth_account.id)).scalar_one()
                     if account != None:
-                        logging.info(f"account_id={account.id}")
+                        logger.info(f"account_id={account.id}")
                         account.set_auth(auth_account)
                         account.admin_flag = permission_validation("Admin", account.id)
-                        logging.info(f"admin_flag={account.admin_flag}")
+                        logger.info(f"admin_flag={account.admin_flag}")
                         if account.account_image_link != None:
                             image_id = account.account_image_link
                             account.image_flag = True
@@ -81,7 +82,7 @@ def get_account(request):
                             account.image_flag = False
                         image_obj = FileContent.query.get_or_404(image_id)
                         account.profile_img_loc = image_obj.location
-                        logging.info(f"account_image_loc={account.profile_img_loc}")
+                        logger.info(f"account_image_loc={account.profile_img_loc}")
                         account.profile_img_data = image_obj.rendered_data
                     else:
                         return UserAccount(full_name="No Account")

@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, json, Response, jsonify, make_response, flash
 import logging
+from src.logging_manager import create_logger
 from src.models import WebPage, DivContainer, PageElement
 from src.image_handling import *
 from src.authentication import *
 
-logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
+logger = create_logger("learning_page_backend")
 
 def convert_image_to_json(image_obj):
         json_obj = {}
@@ -33,7 +34,7 @@ def get_carousel_items(element_id):
 
 class LearningPageHelperFunctions():
     def create_learning_page_object(path, page_id, placement_order):
-        logging.info(f"Learning Page Div Creator Running ({path}, {page_id}, {placement_order})")
+        logger.info(f"Learning Page Div Creator Running ({path}, {page_id}, {placement_order})")
         if check_if_editor(request):
             try:
                 page_num = int(page_id)
@@ -49,7 +50,7 @@ class LearningPageHelperFunctions():
             return redirect('/')
 
     def create_learning_page_image(path, page_id, placement_order, div_id):
-        logging.info(f"Learning Page Image Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
+        logger.info(f"Learning Page Image Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
         if check_if_editor(request):
             try:
                 page_num = int(page_id)
@@ -65,7 +66,7 @@ class LearningPageHelperFunctions():
             return redirect('/')
 
     def create_learning_page_paragraph(path, page_id, placement_order, div_id):
-        logging.info(f"Learning Page Image Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
+        logger.info(f"Learning Page Image Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
         if check_if_editor(request):
             try:
                 page_num = int(page_id)
@@ -81,7 +82,7 @@ class LearningPageHelperFunctions():
             return redirect('/')
 
     def create_learning_page_video(path, page_id, placement_order, div_id):
-        logging.info(f"Learning Page Image Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
+        logger.info(f"Learning Page Image Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
         if check_if_editor(request):
             try:
                 page_num = int(page_id)
@@ -97,7 +98,7 @@ class LearningPageHelperFunctions():
             return redirect('/')
 
     def create_learning_page_carousel(path, page_id, placement_order, div_id):
-        logging.info(f"Learning Page Image Carousel Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
+        logger.info(f"Learning Page Image Carousel Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
         if check_if_editor(request):
             try:
                 page_num = int(page_id)
@@ -113,7 +114,7 @@ class LearningPageHelperFunctions():
             return redirect('/')
 
     def create_learning_page_section(path, page_id, placement_order, div_id):
-        logging.info(f"Learning Page Image Carousel Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
+        logger.info(f"Learning Page Image Carousel Creator Running ({path}, {page_id}, {placement_order}, {div_id})")
         if check_if_editor(request):
             try:
                 page_num = int(page_id)
@@ -137,7 +138,7 @@ class LearningPageHelperFunctions():
             return redirect('/')
 
     def update_learning_item():
-        logging.info("Item updating")
+        logger.info("Item updating")
         if not check_if_editor(request):
             return redirect(f'/learn/{request.form["page_path"]}/false')
         container_type = request.form["container"]
@@ -172,7 +173,7 @@ class LearningPageHelperFunctions():
         return redirect(f'/learn/{request.form["page_path"]}/true')
     
     def update_learning_item2():
-        logging.info("Item updating")
+        logger.info("Item updating")
         request_data = request.get_json()
         if not check_if_editor(request):
             body = {"fulfillable": False}
@@ -215,30 +216,30 @@ class LearningPageHelperFunctions():
         return response_obj
 
     def move_learning_element(page_path, element_id, direction):
-        logging.info("Moving page element")
+        logger.info("Moving page element")
         if not check_if_editor(request):
             return redirect(f'/learn/{request.form["page_path"]}/false')
         try:
             page = db.session.execute(db.select(WebPage).filter_by(path=page_path)).scalar_one()
-            logging.info(f"learning page located. web_page_id={page.id}")
+            logger.info(f"learning page located. web_page_id={page.id}")
             current_element = db.session.execute(db.select(PageElement).filter_by(id=element_id)).scalar_one()
-            logging.info(f"Current element located. element_id={current_element.id}")
+            logger.info(f"Current element located. element_id={current_element.id}")
             order = current_element.placement_order
             original_order = int(order)
             if direction == "up":
                 order -= 1
                 if order > 0:
-                    logging.info(f"original_order={original_order}, new_order={order}")
+                    logger.info(f"original_order={original_order}, new_order={order}")
                     other_element = db.session.execute(db.select(PageElement).filter_by(page_id=page.id, div_id=current_element.div_id, placement_order=order)).scalar_one()
-                    logging.info(f"Other element located. element_id={other_element.id}")
+                    logger.info(f"Other element located. element_id={other_element.id}")
                     other_element.placement_order = original_order
                     current_element.placement_order = order
                     db.session.commit()
             elif direction == "down":
                 order += 1
                 other_element = db.session.execute(db.select(PageElement).filter_by(page_id=page.id, div_id=current_element.div_id, placement_order=order)).scalar_one()
-                logging.info(f"Other element located. element_id={other_element.id}")
-                logging.info(f"original_order={original_order}, new_order={order}")
+                logger.info(f"Other element located. element_id={other_element.id}")
+                logger.info(f"original_order={original_order}, new_order={order}")
                 other_element.placement_order = original_order
                 current_element.placement_order = order
                 db.session.commit()
@@ -248,30 +249,30 @@ class LearningPageHelperFunctions():
             return redirect('/')
 
     def move_learning_div(page_path, div_id, direction):
-        logging.info("Moving page div")
+        logger.info("Moving page div")
         if not check_if_editor(request):
             return redirect(f'/learn/{request.form["page_path"]}/false')
         try:
             page = db.session.execute(db.select(WebPage).filter_by(path=page_path)).scalar_one()
-            logging.info(f"learning page located. web_page_id={page.id}")
+            logger.info(f"learning page located. web_page_id={page.id}")
             current_div = db.session.execute(db.select(DivContainer).filter_by(id=div_id)).scalar_one()
-            logging.info(f"Current div located. div_id={current_div.id}")
+            logger.info(f"Current div located. div_id={current_div.id}")
             order = current_div.placement_order
             original_order = int(order)
             if direction == "up":
                 order -= 1
                 if order > 0:
-                    logging.info(f"original_order={original_order}, new_order={order}")
+                    logger.info(f"original_order={original_order}, new_order={order}")
                     other_div = db.session.execute(db.select(DivContainer).filter_by(page_id=page.id, placement_order=order)).scalar_one()
-                    logging.info(f"Other div located. div_id={other_div.id}")
+                    logger.info(f"Other div located. div_id={other_div.id}")
                     other_div.placement_order = original_order
                     current_div.placement_order = order
                     db.session.commit()
             elif direction == "down":
                 order += 1
                 other_div = db.session.execute(db.select(DivContainer).filter_by(page_id=page.id, placement_order=order)).scalar_one()
-                logging.info(f"Other element located. element_id={other_div.id}")
-                logging.info(f"original_order={original_order}, new_order={order}")
+                logger.info(f"Other element located. element_id={other_div.id}")
+                logger.info(f"original_order={original_order}, new_order={order}")
                 other_div.placement_order = original_order
                 current_div.placement_order = order
                 db.session.commit()

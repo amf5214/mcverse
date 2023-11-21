@@ -4,9 +4,10 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from src.authentication import *
 from src.image_handling import *
+from src.logging_manager import create_logger
 from src.models import AccountPermission, AuthAccount, UserAccount, PermissionsRequest, db
 
-logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
+profile_logger = create_logger("profile_page")
 
 Permission_values = ["Admin", "Edit_Pages", "Add_Pages"]
 
@@ -17,14 +18,19 @@ class Permission():
 
 class ProfilePageRendering():
     def signin():
+        profile_logger.info('Sign in/Sign up page rendered')
         return render_template('signinup.html', useraccount=get_account(request))
 
     def failed_signin():
+        profile_logger.info('Failed sign in occured')
         return render_template('signinup.html', message="Username/Password Invalid. Please try again.", useraccount=get_account(request))
 
     def profile():
+        profile_logger.info('Profile page rendered')
         account = get_account(request)
+        profile_logger.info(f'Account {account} rendered')
         if account.full_name != "No Account":
+            profile_logger.info(f'Account id={account.id} accessed')
             permissions = db.session.execute(db.select(AccountPermission).filter_by(account_id=account.id)).scalars()
             permissions_gen = []
             remaining_permissions = [z for z in Permission_values]

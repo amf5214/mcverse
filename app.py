@@ -14,6 +14,7 @@ import pymysql
 from src.models import *
 from src.image_handling import *
 from src.authentication import *
+from src.logging_manager import create_logger
 from src.routing_functions.aux_page_rendering import AuxPageRendering
 from src.routing_functions.admin_page_rendering import AdminPageRendering
 from src.routing_functions.item_page_rendering import ItemPageRendering
@@ -24,7 +25,7 @@ from src.routing_functions.question_page_rendering import FAQPageRendering
 
 app = Flask(__name__)
 
-logging.basicConfig(filename='record.log', level=logging.DEBUG, filemode="w")
+logger = create_logger("main")
 
 with app.app_context():
     app.config["SQLALCHEMY_DATABASE_URI"] = "mariadb+pymysql://prod_main:Alhamley3/@mariadb-152364-0.cloudclusters.net:19546/mcverse_prod?charset=utf8mb4"
@@ -34,11 +35,7 @@ with app.app_context():
 
     db.init_app(app)
     
-    logging.info("Database configured")
-
     db.create_all()
-
-    logging.info("Backend functions built")
 
 @app.errorhandler(404)
 def page_not_found(e):
