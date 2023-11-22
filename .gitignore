@@ -4,3 +4,4 @@ record.log
 __pycache__/
 .vscode/
 logging/
+database_config.ini
