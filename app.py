@@ -1,15 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, json, Response, jsonify, make_response, flash
-from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import OperationalError
 import sys
-import jwt
 import os
-from datetime import datetime, timedelta, date, timezone
-from werkzeug.utils import secure_filename
-import uuid
-import logging
-from base64 import b64encode
-import base64
 import pymysql
 import configparser
 
@@ -17,13 +9,6 @@ from src.models import *
 from src.image_handling import *
 from src.authentication import *
 from src.logging_manager import get_root_logger
-from src.routing_functions.aux_page_rendering import AuxPageRendering
-from src.routing_functions.admin_page_rendering import AdminPageRendering
-from src.routing_functions.item_page_rendering import ItemPageRendering
-from src.routing_functions.profile_page_rendering import ProfilePageRendering
-from src.routing_functions.learning_page_rendering import LearningPageRendering
-from src.routing_functions.learning_page_helperfunctions import LearningPageHelperFunctions
-from src.routing_functions.question_page_rendering import FAQPageRendering
 from src.routing_manager import configure_routing
 
 
