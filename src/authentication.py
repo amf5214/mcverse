@@ -2,6 +2,7 @@ from passlib.hash import sha256_crypt
 from datetime import datetime, timedelta
 import jwt
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import OperationalError
 from flask import Flask, render_template, request, redirect, url_for, json, Response, jsonify, make_response, flash
 import sys
 import os
@@ -91,7 +92,7 @@ def get_account(request):
                 
                 return account
             
-            except NoResultFound:
+            except (NoResultFound, OperationalError):
                 return UserAccount(full_name="No Account")
         else:
             return UserAccount(full_name="No Account")
