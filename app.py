@@ -116,7 +116,7 @@ def configure_routing(app):
 
 with app.app_context():
     config = configparser.ConfigParser()
-    config.read('src/database_config.ini')
+    config.read('auth/database_config.ini')
     app.config["SQLALCHEMY_DATABASE_URI"] = config['MariaDB_Config']['connection_string']
     app.config["SECRET_KEY"] = "jgjdfk34benrgtgjfhbdnjmkf5784iejkdshjssefwr"
 
