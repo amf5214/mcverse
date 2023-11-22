@@ -115,9 +115,14 @@ def configure_routing(app):
     app.add_url_rule('/adminaddcarouselimage', methods=['POST'], view_func=LearningPageHelperFunctions.add_carousel_image)
 
 with app.app_context():
-    config = configparser.ConfigParser()
-    config.read('auth/database_config.ini')
-    app.config["SQLALCHEMY_DATABASE_URI"] = config['MariaDB_Config']['connection_string']
+    db_config_file = 'auth/database_config.ini'
+    if os.path.isfile(db_config_file):
+        config = configparser.ConfigParser()
+        config.read(db_config_file)
+        app.config["SQLALCHEMY_DATABASE_URI"] = config['MariaDB_Config']['connection_string']
+    else:
+        app.config["SQLALCHEMY_DATABASE_URI"] = 'mariadb+pymysql://db:pasword@mariadb.cloudclusters.net:1000/prod?charset=utf8mb4'
+        
     app.config["SECRET_KEY"] = "jgjdfk34benrgtgjfhbdnjmkf5784iejkdshjssefwr"
 
     db_logger.info('DB Connection Beginning')
