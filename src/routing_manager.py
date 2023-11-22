@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, request
 
 from src.routing_functions.aux_page_rendering import AuxPageRendering
 from src.routing_functions.admin_page_rendering import AdminPageRendering
@@ -7,7 +7,11 @@ from src.routing_functions.profile_page_rendering import ProfilePageRendering
 from src.routing_functions.learning_page_rendering import LearningPageRendering
 from src.routing_functions.learning_page_helperfunctions import LearningPageHelperFunctions
 from src.routing_functions.question_page_rendering import FAQPageRendering
-    
+from src.authentication import get_account
+from src.logging_manager import create_logger
+
+logger = create_logger("routing_manager")
+
 def configure_routing(app):
 
     @app.errorhandler(404)
@@ -19,6 +23,10 @@ def configure_routing(app):
     @app.route('/404')
     def error_404():
         return render_template('comingsoon.html', useraccount=get_account(request)), 404
+
+    @app.route('/404.1')
+    def error_4041():
+        return render_template('jumping.html', useraccount=get_account(request)), 404
 
     @app.route('/')
     def go_home():

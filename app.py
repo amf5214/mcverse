@@ -8,7 +8,7 @@ import configparser
 from src.models import *
 from src.image_handling import *
 from src.authentication import *
-from src.logging_manager import get_root_logger
+from src.logging_manager import get_root_logger, create_logger
 from src.routing_manager import configure_routing
 
 

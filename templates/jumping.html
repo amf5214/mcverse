@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Jumping Balls</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style/jumpingballs.css') }}">
+</head>
+
+<body>
+  <div class="comingsoon-block toplogobox">
+    <button onClick="location.href='/'" id="homebutton" class="logobutton" >
+      <img id="logo" src="{{ url_for('static', filename = 'minecraftlogo.png') }}"/>
+    </button>
+    <h1>Coming Soon!</h1>
+    <button onClick="location.href='/'" id="homebutton" class="logobutton" >
+      <img id="logo" src="{{ url_for('static', filename = 'minecraftlogo.png') }}"/>
+    </button>
+  </div>
+  <div data-stage></div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/89/three.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js'></script>
+  <script  src="{{ url_for('static', filename='script/jumpingballs.js') }}"></script>
+</body>
+</html>
