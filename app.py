@@ -11,6 +11,7 @@ import logging
 from base64 import b64encode
 import base64
 import pymysql
+import configparser
 
 from src.models import *
 from src.image_handling import *
@@ -114,9 +115,10 @@ def configure_routing(app):
     app.add_url_rule('/adminaddcarouselimage', methods=['POST'], view_func=LearningPageHelperFunctions.add_carousel_image)
 
 with app.app_context():
+    config = configparser.ConfigParser()
+    config.read('src/database_config.ini')
+    app.config["SQLALCHEMY_DATABASE_URI"] = config['MariaDB_Config']['connection_string']
     app.config["SECRET_KEY"] = "jgjdfk34benrgtgjfhbdnjmkf5784iejkdshjssefwr"
-    app.config["UPLOAD_FOLDER"] = "static/uploads/"
-    app.config["ITEM_FOLDER"] = "static/items/"
 
     db_logger.info('DB Connection Beginning')
     db_logger.info(f'DB Connection location = {app.config["SQLALCHEMY_DATABASE_URI"]}')
