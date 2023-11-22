@@ -3,9 +3,10 @@ import logging.handlers
 import os
 
 def create_logger(filename):
-    handler = logging.handlers.WatchedFileHandler(os.environ.get("LOGFILE", f'logging/{filename}.log'))
-    formatter = logging.Formatter(logging.BASIC_FORMAT)
+    handler = logging.handlers.WatchedFileHandler(os.environ.get("LOGFILE", f'logging/{filename}.log'), mode='w')
+    formatter = logging.Formatter('%(levelname)s:%(asctime)s:%(message)s')
     handler.setFormatter(formatter)
+
     root = logging.getLogger(filename)
     root.setLevel(os.environ.get("LOGLEVEL", "INFO"))
     root.addHandler(handler)
@@ -13,11 +14,11 @@ def create_logger(filename):
     return root
 
 def get_root_logger(filename):
-    handler = logging.handlers.WatchedFileHandler(os.environ.get("LOGFILE", f'logging/{filename}.log'))
+    handler = logging.handlers.WatchedFileHandler(os.environ.get("LOGFILE", f'logging/{filename}.log'), mode='w')
     formatter = logging.Formatter(logging.BASIC_FORMAT)
     handler.setFormatter(formatter)
     root = logging.getLogger()
-    root.setLevel(os.environ.get("LOGLEVEL", "INFO"))
+    root.setLevel(os.environ.get('LOGLEVEL', 'INFO'))
     root.addHandler(handler)
 
     return root
