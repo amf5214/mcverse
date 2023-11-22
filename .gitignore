@@ -3,3 +3,4 @@ record.log
 'to do.txt'
 __pycache__/
 .vscode/
+logging/
