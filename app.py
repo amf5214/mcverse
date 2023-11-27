@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for, json, Response, jsonify, make_response, flash
+from flask import Flask, render_template, request
 from sqlalchemy.exc import OperationalError
 import sys
 import os
 import pymysql
 import configparser
+import secrets
 
 from src.models import *
 from src.image_handling import *
@@ -28,7 +29,7 @@ with app.app_context():
     else:
         app.config["SQLALCHEMY_DATABASE_URI"] = 'mariadb+pymysql://db:pasword@mariadb.cloudclusters.net:1000/prod?charset=utf8mb4'
         
-    app.config["SECRET_KEY"] = "jgjdfk34benrgtgjfhbdnjmkf5784iejkdshjssefwr"
+    app.config["SECRET_KEY"] = secrets.token_hex(30)
 
     db_logger.info('DB Connection Beginning')
     db_logger.info(f'DB Connection location = {app.config["SQLALCHEMY_DATABASE_URI"]}')
