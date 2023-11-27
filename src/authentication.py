@@ -45,6 +45,29 @@ def validate_password(given_pass, real_pass):
 
     return sha256_crypt.verify(given_pass, real_pass)
 
+def get_auth_account(token):
+    """Pulls an authentication account from the datatables
+
+    Takes in a string representing the encoded jwt and decodes it using the stored secret key to access the expiration date and compare it. 
+    For the token to still be valid, the delta of the expiration date and now should be negative, otherwise None will be returned
+
+    Keyword Arguements:
+    token -- string representing encoded jwt token
+
+    Return: AuthAccount object
+    """
+
+    auth_account = db.session.execute(db.select(AuthAccount).filter_by(auth_token=token)).scalar_one()
+    if auth_account:
+        payload = jwt.decode(token, key=auth_account.token_key, algorithms=["HS256"])
+        delta = datetime.now(timezone.utc).timestamp() - payload["exp"]
+        logger.info(f'Auth Account {auth_account.id} Accessed and token expiration delta = {delta}. Expiration delta should be negative if it is still valid otherwise it is expired')
+        if delta < 0:
+            return auth_account
+        else:
+            return None
+
+
 def get_account(request):
         """Pulls a user account from the datatables
 
@@ -60,7 +83,7 @@ def get_account(request):
         logger.info(f"auth_token={token}")
         if token != None:
             try:
-                auth_account = db.session.execute(db.select(AuthAccount).filter_by(auth_token=token)).scalar_one()
+                auth_account = get_auth_account(token)
                 if auth_account != None:
                     logger.info(f"auth_account_id={auth_account.id}")
                     account = db.session.execute(db.select(UserAccount).filter_by(auth_account_id=auth_account.id)).scalar_one()
@@ -162,7 +185,7 @@ def encode_auth_token(email_account):
 
         try:
             payload = {
-                'exp': datetime.now(timezone.utc) + timedelta(days=1, seconds=0),
+                'exp': datetime.now(timezone.utc) + timedelta(hours=2, seconds=0),
                 'iat': datetime.now(timezone.utc),
                 'sub': email_account
             }
