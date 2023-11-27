@@ -18,14 +18,36 @@ class Permission():
 
 class ProfilePageRendering():
     def signin():
+        """View function that renders the signin/signup page
+
+        Renders the page used to sign in and sign up for an account
+
+        Return: Rendered view from signinup.html template with js and css code 
+        """
+
         profile_logger.info('Sign in/Sign up page rendered')
         return render_template('signinup.html', useraccount=get_account(request))
 
     def failed_signin():
+        """View function that renders the signin/signup page with error message due to a failed sign in
+
+        Renders the page used to sign in and sign up for an account but adds the error message variable due to a failed sign in attempt
+
+        Return: Rendered view from signinup.html template with js and css code 
+        """
+
         profile_logger.info('Failed sign in occured')
         return render_template('signinup.html', message="Username/Password Invalid. Please try again.", useraccount=get_account(request))
 
     def profile():
+        """View function that renders the profile page
+
+        Renders the page used to view user profile. Checks to ensure that there is a user signed in and 
+        redirects to sign in page if no user is signed in
+
+        Return: Rendered view from profile.html template with js and css code 
+        """
+
         profile_logger.info('Profile page rendered')
         account = get_account(request)
         profile_logger.info(f'Account {account} rendered')
@@ -50,6 +72,13 @@ class ProfilePageRendering():
 
 
     def signinattempt():
+        """View function that handles a sign in attempt
+
+        Takes a post request in the form of an html form submission. If the signin works then user redirected to home path
+        otherwise user will be redirected to failed sign in path.
+
+        Return: Redirect object that moves the user to the correct page based off accuracy of the submitted form 
+        """
         try:
             given_pass = request.form["logpass"]
 
