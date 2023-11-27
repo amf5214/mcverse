@@ -11,6 +11,15 @@ db = SQLAlchemy()
 logger.info('Database Configuration Completed')
 
 class FrequentlyAskedQuestion(db.Model):
+        """Model representing the FrequentlyAskedQuestion table
+
+        Holds data on every row of the FrequentlyAskedQuestion table
+        
+        Parent Classes:
+        db.Model -- Model class from the database which provides access to the database schema 
+
+        """
+
         id = db.Column(db.Integer, primary_key=True)
         author_user = db.Column(db.String(200), nullable=True)
         question = db.Column(db.String(200), nullable=True)
@@ -42,6 +51,15 @@ class PageObject(db.Model):
         return f"<PageObj {self.id}>"
 
 class UserAccount(db.Model):
+    """Model representing the UserAccount table
+
+    Holds data on every row of the UserAccount table
+    
+    Parent Classes:
+    db.Model -- Model class from the database which provides access to the database schema 
+
+    """
+    
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50))
     full_name = db.Column(db.String(100))
@@ -58,6 +76,15 @@ class UserAccount(db.Model):
         self.auth = auth_account
     
 class AccountPermission(db.Model):
+    """Model representing the AccountPermission table
+
+    Holds data on every row of the AccountPermission table
+    
+    Parent Classes:
+    db.Model -- Model class from the database which provides access to the database schema 
+
+    """
+
     id = db.Column(db.Integer, primary_key=True)
     permission_type = db.Column(db.String(50))
     account_id = db.Column(db.Integer)
@@ -67,6 +94,15 @@ class AccountPermission(db.Model):
         return f"<AccountPermission {self.id}>"
     
 class PermissionsRequest(db.Model):
+    """Model representing the PermissionsRequest table
+
+    Holds data on every row of the PermissionsRequest table
+    
+    Parent Classes:
+    db.Model -- Model class from the database which provides access to the database schema 
+
+    """
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50))
     permission_type = db.Column(db.String(50))
@@ -78,6 +114,15 @@ class PermissionsRequest(db.Model):
         return f"<AccountPermission Request {self.id}>"
     
 class AuthAccount(db.Model):
+    """Model representing the AuthAccount table
+
+    Holds data on every row of the AuthAccount table
+    
+    Parent Classes:
+    db.Model -- Model class from the database which provides access to the database schema 
+
+    """
+
     id = db.Column(db.Integer, primary_key=True)
     email_account = db.Column(db.String(100), unique=True)
     hash_password = db.Column(db.String(1000))
@@ -88,6 +133,14 @@ class AuthAccount(db.Model):
         return f"<AuthAccount {self.id}>"
 
 class FileContent(db.Model):
+    """Model representing the FileContent table
+
+    Holds data on every row of the FileContent table
+    
+    Parent Classes:
+    db.Model -- Model class from the database which provides access to the database schema 
+
+    """
 
     id = db.Column(db.Integer,  primary_key=True)
     name = db.Column(db.String(128), nullable=False)
@@ -100,6 +153,14 @@ class FileContent(db.Model):
         return f"<FileContent {self.id}>"
 
 class ItemClass(db.Model):
+    """Model representing the ItemClass table
+
+    Holds data on every row of the ItemClass table
+    
+    Parent Classes:
+    db.Model -- Model class from the database which provides access to the database schema 
+
+    """
 
     id = db.Column(db.Integer,  primary_key=True)
     name = db.Column(db.String(128), nullable=False)
@@ -108,6 +169,14 @@ class ItemClass(db.Model):
         return f"<ItemClass {self.id}>"
     
 class WebPage(db.Model):
+    """Model representing the WebPage table
+
+    Holds data on every row of the WebPage table
+    
+    Parent Classes:
+    db.Model -- Model class from the database which provides access to the database schema 
+
+    """
 
     id = db.Column(db.Integer,  primary_key=True)
     text = db.Column(db.Text)
@@ -119,6 +188,14 @@ class WebPage(db.Model):
         return f"<WebPage {self.id}>"
     
 class DivContainer(db.Model):
+    """Model representing the DivContainer table
+
+    Holds data on every row of the DivContainer table
+    
+    Parent Classes:
+    db.Model -- Model class from the database which provides access to the database schema 
+
+    """
 
     id = db.Column(db.Integer,  primary_key=True)
     text = db.Column(db.Text)
@@ -132,6 +209,14 @@ class DivContainer(db.Model):
         return f"<DivContainer {self.id}>"
     
 class PageElement(db.Model):
+    """Model representing the PageElement table
+
+    Holds data on every row of the PageElement table
+    
+    Parent Classes:
+    db.Model -- Model class from the database which provides access to the database schema 
+
+    """
 
     id = db.Column(db.Integer,  primary_key=True)
     element_type = db.Column(db.String(255))
