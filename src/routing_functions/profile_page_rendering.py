@@ -56,7 +56,9 @@ class ProfilePageRendering():
             auth_account = db.session.execute(db.select(AuthAccount).filter_by(email_account=request.form["logemail"])).scalar_one()
 
             if(validate_password(given_pass, auth_account.hash_password)):
-                auth_account.auth_token = encode_auth_token(request.form["logemail"])
+                token_data = encode_auth_token(request.form["logemail"])
+                auth_account.auth_token = token_data[0]
+                auth_account.token_key = token_data[1]
                 db.session.commit()
                 response = make_response(redirect("/"))
                 response.set_cookie("token", auth_account.auth_token)
@@ -76,8 +78,8 @@ class ProfilePageRendering():
             return render_template('signinup.html', signupmessage="Name entry is invalid", useraccount=get_account(request))
 
         password = create_password(request.form["logpass"])
-        token = encode_auth_token(str(request.form["logusername"]))
-        auth_account = AuthAccount(email_account=request.form["logemail"],hash_password=password, auth_token=token)
+        token_data = encode_auth_token(str(request.form["logusername"]))
+        auth_account = AuthAccount(email_account=request.form["logemail"],hash_password=password, auth_token=token_data[0], token_key=token_data[1])
 
         db.session.add(auth_account)
 

@@ -82,6 +82,7 @@ class AuthAccount(db.Model):
     email_account = db.Column(db.String(100), unique=True)
     hash_password = db.Column(db.String(1000))
     auth_token = db.Column(db.String(1000))
+    token_key = db.Column(db.Text(max))
 
     def __repr__(self):
         return f"<AuthAccount {self.id}>"

@@ -22,8 +22,6 @@ from src.logging_manager import create_logger
 
 logger = create_logger("authentication")
 
-secret_key = secrets.token_hex(30)
-
 def create_password(password_string):
     """Encrypts a password string
 
@@ -158,8 +156,9 @@ def encode_auth_token(email_account):
         Keyword Arguements:
         email_account -- user account email address
 
-        Return: string
+        Return: tuple of (encoded_token, secret_key)
         """
+        secret_key = secrets.token_hex(30)
 
         try:
             payload = {
@@ -167,11 +166,11 @@ def encode_auth_token(email_account):
                 'iat': datetime.now(timezone.utc),
                 'sub': email_account
             }
-            return jwt.encode(
+            return (jwt.encode(
                 payload,
                 secret_key,
                 algorithm='HS256'
-            )
+            ), secret_key)
         except Exception as e:
             return e
         
