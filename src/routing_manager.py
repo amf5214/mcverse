@@ -13,6 +13,15 @@ from src.logging_manager import create_logger
 logger = create_logger("routing_manager")
 
 def configure_routing(app):
+    """Adds url rules to the main app object to route traffic to the correct view function
+
+    Takes in a flask app object and adds url rules to it to route traffic to specific view functions based off the provided path
+
+    Keyword Arguements:
+    app -- flask app object
+
+    Return: None
+    """
 
     @app.errorhandler(404)
     def page_not_found(e):
