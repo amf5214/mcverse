@@ -17,15 +17,20 @@ import pymysql
 
 from src.models import FileContent, PageObject, db
 
-class image_item():
-        def __init__(self, location, rendered_data, id):
-            self.location = location
-            self.rendered_data = rendered_data
-            self.id = id
-            self.src = self.create_src()
 
-        def create_src(self):
-            return f"data:image/{self.location};base64,{self.rendered_data}"
+def create_src(file):
+    """Adds src attribute to filecontent object representing html img src value to display image
+
+    Accepts FileContent object and adds the src attribute which represents the src value of an html img tag.
+    This allows the attribute to be directly plugged into an html template within an html tag src value
+
+    Keyword Arguements:
+    file -- FileContent object
+
+    Return: None
+
+    """
+    file.src = f"data:image/{file.location};base64,{file.rendered_data}"        
         
 def create_image(id):
     """Creates image_item object for a FileContent item
@@ -69,7 +74,8 @@ def create_image_item(id):
     else:
         image_id = 7
     image = FileContent.query.get_or_404(image_id)
-    return image_item(image.location, image.rendered_data, image.id)
+    create_src(image)
+    return image
 
 def create_image_item_2(item):
     """Creates image_item object for an item based on item object
@@ -93,7 +99,8 @@ def create_image_item_2(item):
     else:
         image_id = 7
     image = FileContent.query.get_or_404(image_id)
-    return image_item(image.location, image.rendered_data, image.id)
+    create_src(image)
+    return image
 
 def save_item(request):
         """Function to save a file in the local directory
