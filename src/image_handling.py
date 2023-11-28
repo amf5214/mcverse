@@ -28,14 +28,37 @@ class image_item():
             return f"data:image/{self.location};base64,{self.rendered_data}"
         
 def create_image(id):
+    """Creates image_item object for a FileContent item
+
+    Accepts integer representing FileContent id and creates an image_item object for it
+
+    Keyword Arguements:
+    id -- integer representing FileContent id 
+
+    Return: image_item object
+
+    """
+
     try:
         id = int(id)
     except: 
         return redirect('/404')
     image = FileContent.query.get_or_404(id)
-    return image_item(image.location, image.rendered_data, image.id)
+    create_src(image)
+    return image
 
 def create_image_item(id):
+    """Creates image_item object for an item based on item id
+
+    Accepts integer representing PageObject id and creates an image_item object for that item's primary image
+
+    Keyword Arguements:
+    id -- integer representing PageObject id 
+
+    Return: image_item object
+
+    """
+    
     item = PageObject.query.get_or_404(id)
     if item.image_link != None:
         image_id = item.image_link
@@ -49,6 +72,17 @@ def create_image_item(id):
     return image_item(image.location, image.rendered_data, image.id)
 
 def create_image_item_2(item):
+    """Creates image_item object for an item based on item object
+
+    Accepts PageObject object and creates an image_item object for that item's primary image
+
+    Keyword Arguements:
+    item -- PageObject object 
+
+    Return: image_item object
+
+    """
+
     image_id = item.image_link
     if item.image_link != None:
         image_id = item.image_link
@@ -62,6 +96,19 @@ def create_image_item_2(item):
     return image_item(image.location, image.rendered_data, image.id)
 
 def save_item(request):
+        """Function to save a file in the local directory
+
+        Accepts a post request in the form of an html form submission. It is important that the form has
+        enctype="multipart/form-data" activated so that you can access the files attribute. There should be
+        a file input with the name "file" which is what will be accessed
+        
+        Keyword Arguements:
+        request -- http post request from an html form submission
+
+        Return: string representing the name of the file
+
+        """
+        
         user_file = request.files["file"]
         if user_file.filename == '':
             return None
@@ -72,10 +119,34 @@ def save_item(request):
             return pic_name
 
 def render_picture(data):
+    """Converts byte data for image into a viewable format that is safe for browsers
+
+    Accepts stream data of raw image and converts it into a byte stream that is able to be rendered via a browser
+    
+    Keyword Arguements:
+    data -- stream with raw image data
+
+    Return: base64 string with browser safe version of the image
+
+    """
+
     render_pic = base64.b64encode(data).decode('ascii') 
     return render_pic
 
 def uploadimage(request):
+    """Function used to upload new image files to the database
+
+    Accepts a post request in the form of an html form submission. It is important that the form has
+    enctype="multipart/form-data" activated so that you can access the files attribute. There should be
+    a file input with the name "file" which is what will be accessed
+    
+    Keyword Arguements:
+    request -- http post request from an html form submission
+
+    Return: int representing the image id from the FileContent table
+
+    """
+    
     file = request.files['file']
     if file.filename == '':
         return None
