@@ -96,8 +96,8 @@
                             <a  class="linklabel" href="/learn/mining">Mining</a>
                         </div>
                         <div class="link" id="link-4">
-                            <img class="linkimage" src="{{url_for('static', filename='building.webp')}}">
-                            <a  class="linklabel" href="/learn/building">Building</a>
+                            <img class="linkimage" src="{{url_for('static', filename='Minecraft_mobs_preview.png')}}">
+                            <a  class="linklabel" href="/learn/mobs">Mobs</a>
                         </div>
                         <div class="link" id="link-5">
                             <img class="linkimage" src="{{url_for('static', filename='electricity3.png')}}">
@@ -149,52 +149,7 @@
                 </div>
             </section>
         </div>
-        <div class="intro-block" id="item-4">
-            <div class="title-block">
-                <h1 id="title">Frequently Asked Questions<span class="material-symbols-outlined">rocket_launch</span>
-                </h1>
-                <p id="site-purpose">This is a place to find answers to common questions and to ask for help.
-                </p>
-            </div>
-            <div class="table-wrapper">
-                <table class="faq-section">
-                    <caption></caption>
-                    {% if admin==True %}
-                        <th>Question ID</th>
-                    {% endif %}
-                    <th>Question</th>
-                    {% if admin==True %}
-                        <th>Author</th>
-                    {% endif %}
-                    <th>Answer</th>
-                    <th>Answerer</th>
-                    {% for question in questions %}
-                        <tr>
-                            {% if admin==True %}
-                                <td>{{question.id}}</td>
-                            {% endif %}
-                            <td>{{question.question}}</td>
-                            {% if admin==True %}
-                                <td>{{question.author_user}}</td>
-                            {% endif %}
-                            <td>{{question.answer}}</td>
-                            <td>{{question.answer_author}}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
-                <input type="button" onclick="location.href='#new-question'" value="New Question" id="new-question-button">
-                <div id="new-question">
-                    <h1>Ask a question</h1>
-                    <form action="/newquestion" method="POST">
-                        <label class="label-element">Username</label>
-                        <input class="form-element" type="text" name="username" id="username">
-                        <label class="label-element">Question</label>
-                        <input class="form-element" type="text" name="question" id="question">
-                        <input type="submit" id="submit-button-faq" value="Submit">
-                    </form>
-                </div>
-            </div>
-        </div>
+
         {% if useraccount.admin_flag == True %}
             <div class="intro-block" id="item-5">
                 <div class="title-block">

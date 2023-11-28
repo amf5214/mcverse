@@ -4,11 +4,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style/learnpage.css') }}"/>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <!-- <script>
-        $( function() {
-            $( ".draggable-obj" ).draggable();
-        } );
-    </script> -->
 {% endblock %}
 
 {% block body %} 
@@ -30,8 +25,6 @@
             <div class="intro-block user-created-div" id="user_created_page_div-{{ div.id }}-{{ div.placement_order }}">
                 {% if editable == True%}
                     <input type="hidden" id="div_count-{{ div.id }}" value="{{ div.element_count }}" text="{{ div.element_count }}">
-                {% endif %}
-                {% if editable == True %}
                     <button class="unlink-div" onclick="window.location.href='/unlinkpageitem/{{ page.path }}/div/{{ div.id }}'"><span class="material-symbols-outlined">close</span></button>
                 {% endif %}
                 <div class="title-block">
@@ -45,12 +38,12 @@
                 {% endif%}
                 {% for element in div.elements %}
                     {% if editable == True %}
-                        <div class="element-container" id="element_move-{{ element.id }}-{{ page.path }}">
+                        <div class="element-container" style="width:100%;" id="element_move-{{ element.id }}-{{ page.path }}">
+                            <button class="unlink-element" onclick="window.location.href='/unlinkpageitem/{{ page.path }}/element/{{ element.id }}'"><span class="material-symbols-outlined">close</span></button>
                     {% endif %}
                         {% if element.element_type == "img" %}
                             {% if editable == True %}
                                 <div class="form-wrapper">
-                                    <button class="unlink-element" onclick="window.location.href='/unlinkpageitem/{{ page.path }}/element/{{ element.id }}'"><span class="material-symbols-outlined">close</span></button>
                                     <form method="post" action="/pageelementimageupdate" id="pageelementimageupdate" enctype="multipart/form-data">
                                         <input type="text" hidden name="element_id" value="{{ element.id }}" text="{{ element.id }}">
                                         <input type="hidden" hidden name="page_path" id="page_path" value="{{ page.path }}" text="{{ page.path }}">
@@ -76,57 +69,118 @@
                         {% elif element.element_type == "p" %}
                             {% if editable == True %}
                                 <div class="form-wrapper">
-                                    <button class="unlink-element" onclick="window.location.href='/unlinkpageitem/{{ page.path }}/element/{{ element.id }}'"><span class="material-symbols-outlined">close</span></button>
                                     <p class="editable-item" contenteditable="{{editable}}" id="element-text-{{ element.id }}">{{ element.text }}</p>
                                 </div>
                             {% else %}
                                 <p class="editable-item" contenteditable="{{editable}}" id="element-text-{{ element.id }}">{{ element.text }}</p>
                             {% endif %}
 
-                        {% elif element.element_type == "youtube" %}
-                            <iframe width="560" height="315" src="{{ element.text }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-                        {% elif element.element_type == "image-carousel" %}
+                        {% elif element.element_type == "video" %}
+                                <iframe class="youtube-video" src="{{ element.text }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+                                {% if editable == True %}
+                                    <p class="editable-item" id="element-text-{{ element.id }}" contenteditable="{{editable}}">{{ element.text }}</p>
+                                {% endif %}
+                            {% elif element.element_type == "image-carousel" %}
                             <section class="container">
                                 <div class="slider-wrapper">
                                     <div class="slider">
                                         {% for image in element.images %}
-                                            <img id="carousel{{ element.id }}-slide{{ loop.index }}" src="{{ image }}" alt="Image"/>
+                                            <img id="carousel{{ element.id }}-slide{{ loop.index }}" src="{{ image.src }}" alt="Image"/>
                                         {% endfor %}
                                     </div>
                                     <div class="slider-nav">
-                                        <a href="#carousel{{ element.id }}-slide{{ loop.index }}"></a>
+                                        {% for image in element.images %}
+                                            <a href="#carousel{{ element.id }}-slide{{ loop.index }}"></a>
+                                        {% endfor %}
                                     </div>
                                 </div>
-                            </section>  
+                            </section> 
+                        {% elif element.element_type == "div" %}
+                            {% if loop.last == True %}
+                                <div class="nested-user-created-div-wrapper-last">
+                            {% else %}
+                                <div class="nested-user-created-div-wrapper">
+                            {% endif %}
+                            {% if editable == True or element.div_title != None %}
+                                <h3 id="element-title-{{ element.id }}" class="nested-div-title editable-item" contenteditable="{{editable}}"><span class="material-symbols-outlined">expand_circle_right</span>{{element.div_title}}</h3>
+                            {% endif %}
+                                <div class="nested-user-created-div" id="nested-div-{{ element.id }}">
+                                    {% for nested in element.nested_elements %}
+                                        {% if nested.element_type == "img" %}
+                                            {% if editable == True %}
+                                                <div class="form-wrapper" style="width: 50%">
+                                                    <form method="post" action="/pageelementimageupdate" id="pageelementimageupdatenested" enctype="multipart/form-data" style="width: 100%">
+                                                        <input type="text" hidden name="element_id" value="{{ nested.id }}" text="{{ nested.id }}">
+                                                        <input type="hidden" hidden name="page_path" id="page_path" value="{{ page.path }}" text="{{ page.path }}">
+                                                        <div class="intro-block" style="width: 100%">
+                                                            <label id="drop-area" style="width: 100%">
+                                                                <input type="file" value="" text="" name="file" accept="image/png, image/jpeg, image/jpg" hidden id="input_file-{{ nested.id }}" class="file-inputs">
+                                                                <div id="img_view-{{ nested.id }}" class="img-view" style="width: 100%">
+                                                                    <img src="{{ nested.text }}" class="user-created-img-nested" style="width: 100%">
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            {% else %}
+                                                <div class="form-wrapper">
+                                                    <img class="user-created-img-nested" src="{{ nested.text }}">
+                                                </div>
+                                            {% endif %}
+                                        {% elif nested.element_type == "p" %}
+                                            {% if editable == True %}
+                                                <div class="form-wrapper wrapper-p" style="width: 50%">
+                                                    <p class="editable-item nested-paragraph" contenteditable="{{editable}}" id="element-text-{{ nested.id }}" style="width: 100%">{{ nested.text }}</p>
+                                                </div>
+                                            {% else %}
+                                                <div class="form-wrapper wrapper-p" style="width: 50%">
+                                                    <p class="editable-item nested-paragraph" contenteditable="{{editable}}" id="element-text-{{ nested.id }}">{{ nested.text }}</p>
+                                                </div>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
                         {% endif %}
                     {% if editable == True %}
+                        {% if element.element_type == "image-carousel" %}
+                            <button class="carousel-menu" id="carousel-menu-{{ element.id }}" onclick="open_carousel_menu(event)"><span class="material-symbols-outlined">menu</span></button>
+                        {% endif %}
                         </div>
                     {% endif %}
                 {% endfor %}
                 {% if editable == True %}
-                <div class="user-created-div" id="drop-container">
-                    <img src="{{ images[0].src }}" id="drop-zone-img-element" class="dropzone">
+                <div class="new-div-droparea" id="drop-container">
+                    <img src="{{ images[0].src }}" id="drop-zone-img-element-{{ div.id }}" class="dropzone drop-zone-img-element">
                 </div>
         {% endif %}
             </div>
         {% endfor %}
         {% if editable == True %}
-            <div  id="drop-container">
+            <div class="new-div-droparea" id="drop-container">
                 <img src="{{ images[0].src }}" id="drop-zone-img" class="dropzone">
             </div>
         {% endif %}
+        {% if editable == True %}
+            <div class="leftmenubar" id="leftmenubar">
+                <div class="leftmenubar-content" id="leftmenubar-content">
+                    
+                </div>
+            </div>
+        {% endif %}
         
-
         <div class="rightmenubar">
             {% if editable == True %}
+                <a class="draggable-obj" draggable="true" id="drag_obj-{{ max_placement }}">Block</a>
                 <a class="draggable-obj" draggable="true" id="drag_obj-{{ max_placement }}">Section</a>
                 <a class="draggable-obj" draggable="true" id="drag_obj-{{ max_placement }}">Image</a>
+                <a class="draggable-obj" draggable="true" id="drag_obj-{{ max_placement }}">Video</a>
+                <a class="draggable-obj" draggable="true" id="drag_obj-{{ max_placement }}">Carousel</a>
                 <a class="draggable-obj" draggable="true" id="drag_obj-{{ max_placement }}">Paragraph</a>
             {% else %}
                 <a href="#item-1">Introduction</a>
                 {% for div in divs %}
-                    <a href="#user_created_page_div_{{ div.id }}">{{ div.div_title }}</a>
+                    <a href="#user_created_page_div-{{ div.id }}-{{ div.placement_order }}">{{ div.div_title }}</a>
                 {% endfor %}
             {% endif %}
             <div id="openclosemenudiv">
@@ -141,5 +195,6 @@
     {% if editable == True %}
         <script src="{{ url_for('static', filename='script/draggable.js') }}"></script>
         <script src="{{ url_for('static', filename='script/learning_page_modification.js') }}"></script>
+        <script src="{{ url_for('static', filename='script/image_carousel.js') }}"></script>
     {% endif %}
 {% endblock %}

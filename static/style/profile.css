@@ -88,7 +88,7 @@ body {
     padding: 0;
 }
 
-#site-purpose {
+.site-purpose {
     align-self: center;
     place-self: center;
     justify-self: center;

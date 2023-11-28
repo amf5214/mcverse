@@ -1,2 +1,11 @@
-venv
+venv/
 record.log
+'to do.txt'
+__pycache__/
+.vscode/
+logging/
+database_config.ini
+test_code/
+.ipynb_checkpoints/
+.DS_Store
+todo.txt

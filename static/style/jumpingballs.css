@@ -1,0 +1,57 @@
+*, *:before, *:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: black;
+}
+
+canvas {
+  display: block;
+}
+
+.comingsoon-block h1 {
+  font-family: grandstander;
+  color: white;
+  text-align: center;
+}
+
+#logo {
+  max-width: 50px;
+  max-height: 50px;
+  border: 0;
+  background-color: transparent;
+}
+
+.toplogobox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  color: white;
+  border: 0;
+  max-height: 50px;
+  align-items: center;
+  place-items: center;
+  text-align: center;
+  margin-top: 0.7em;
+  margin-bottom: 0.7em;
+  background-color: transparent;
+}
+
+#homebutton {
+  background-color: transparent;
+  cursor: pointer;
+  border: 0;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}

@@ -1,26 +1,35 @@
+body {
+    background-image: url("/static/learningpage_1.jpeg");
+    background-repeat: repeat;
+    background-size: auto;
+    font-family: grandstander;
+}
+
 .homepage {
     display: flex;
     flex-direction: column;
     margin: auto clamp(.25rem, .25rem + 2vw, 3rem);
+    margin: 1rem 20%;
 }
 
 .homepage > * {
     margin: 1rem auto;
 }
 
-@media(min-width: 1000px) {
+/* @media(min-width: 1000px) {
     .homepage {
         flex-direction: row;
         flex-wrap: wrap;
         column-gap: 1em;
         row-gap: 1em;
+        margin: 1rem auto;
     }
 
     .homepage > * {
         flex: 0 1 40%;
         align-self: top center;
     }
-}
+} */
 
 .intro-block {
     background-color: #21232A;
@@ -32,7 +41,6 @@
     align-content: center;
     padding: 2rem;
     border-radius: 1em;
-    margin: 1em;
 }
 
 .intro-block-image {
@@ -66,14 +74,14 @@
     max-height: 100%;   
 }
 
-#drop-zone-img-element {
-    max-width: 60%;
-    max-height: 60%;  
+.drop-zone-img-element {
+    max-width: 100%;
+    max-height: 100%;  
 }
 
 .user-created-img {
-    max-width: 50%;
-    max-height: 50%;  
+    max-width: 65%;
+    max-height: 65%;  
 }
 
 #drop-area {
@@ -99,8 +107,8 @@
 }
 
 .img-view img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 60%;
+    max-height: 60%;
 }
 
 #item-1 .title-block{
@@ -149,7 +157,7 @@
     align-content: center;
     right: 0;
     top: 20%;
-    max-width: 10%;
+    max-width: 30%;
     max-height: 50%;
     background-color: #21232ABB;
     margin-left: 0;
@@ -170,6 +178,7 @@
     font-size: clamp(.3rem, .3rem + 2vw, 1rem);
     color: white;
     text-decoration: none;
+    text-wrap: nowrap;
 }
 
 .rightmenubar a:hover {
@@ -179,12 +188,26 @@
 }
 
 .rightmenubar > * {
-    margin: 1rem;
+    margin: 20%;
 }
 
 #openclosemenudiv {
     display: flex;
     flex-direction: column;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 60%;  
+    max-height: 60%;
+}
+
+.slider-wrapper {
+    max-width: 100%;  
+    max-height: 100%;
 }
 
 .slider {
@@ -195,12 +218,15 @@
     scroll-behavior: smooth;
     box-shadow: 0 1.5 rem 3 rem  -0.75rem hsla(0, 0%, 0% 0.25);
     border-radius: 0.5rem;
+    max-width: 100%;  
+    max-height: 100%;
 }
 
 .slider img {
     flex: 1 0 100%;
     scroll-snap-align: start;  
     max-width: 100%;  
+    max-height: 100%;
 }
 
 .slider-nav {
@@ -274,13 +300,20 @@
     border-radius: 1em;
 }
 
-#form-wrapper {
+.form-wrapper {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    justify-content: center;
     border-radius: 1em;
+    max-width: 50%;
+}
+
+.form-wrapper img {
+    max-width: 12vw;
+    max-height: 60%;
 }
 
 #pageelementimageupdate .unlink-div {
@@ -292,7 +325,7 @@
     border: 0;
 }
 
-#form-wrapper .unlink-element {
+.form-wrapper .unlink-element {
     position: absolute;
     top: 0%;
     left: 0%;
@@ -301,18 +334,31 @@
     border: 0;
 }
 
+.unlink-element {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    border-radius: 1em;
+    background-color: white;
+    border: 0;
+    z-index: 54;
+}
+
 #drop-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     align-content: center;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 .element-container {
     display: flex;
     flex-direction: column;
     position: relative;
+    align-items: center;
 }
 
 .updownbuttons {
@@ -322,4 +368,140 @@
     border-radius: 1em;
     background-color: white;
     border: 0;
+}
+
+.carousel-menu {
+    position: absolute;
+    bottom: 5%;
+    left: 0%;
+    border-radius: 1em;
+    background-color: white;
+    border: 0;
+}
+
+.leftmenubar {
+    position: fixed;
+    display: none;
+    flex-direction: column;
+    max-height: 70%;
+    max-width: 30%;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    left: 0;
+    top: 20%;
+    background-color: #21232ABB;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    font-family: grandstander;
+    font-size: clamp(.3rem, .3rem + 2vw, 1rem);
+    color: white;
+    text-decoration: none;
+    box-shadow: -3em 0 -1em rgba(0,0,0,0.2);
+    border-radius: .7rem;
+    z-index: 100;
+}
+
+.leftmenubar-content {
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+.carousel-editor-row {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#leftmenu-close {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    border-radius: 1em;
+    background-color: white;
+    border: 0;
+    z-index: 54;
+}
+
+.carousel-image-remove {
+    margin: 1rem;
+}
+
+.nested-user-created-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.nested-paragraph {
+    text-align: center;
+    font-size: medium;
+    font-family: grandstander;
+    color: beige;
+}
+
+.user-created-img-nested {
+    max-width: 30%;
+    max-height: 30%;
+}
+
+.pageelementimageupdatenested {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1em;
+}
+
+.nested-div-title {
+    font-size: xx-large;
+    font-family: grandstander;
+    font-weight: bold;
+    color: beige;
+    margin: 0;
+}
+
+.nested-user-created-div-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 100%;
+    width: 100%;
+    max-height: 100%;
+    border-top: 3px solid beige;
+    /* margin-top: 1rem; */
+    /* padding-top: 0.25rem; */
+}
+
+.nested-user-created-div-wrapper-last {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 100%;
+    width: 100%;
+    max-height: 100%;
+    border-top: 3px solid beige;
+    border-bottom: 3px solid beige;
+    /* margin-top: 1rem;
+    padding-top: 0.25rem; */
+}
+
+.youtube-video {
+    margin: 1rem;
+    max-width: 100%;
+    max-height: 100%;
+    width: 50vw;
+    aspect-ratio: 16/9;
 }
