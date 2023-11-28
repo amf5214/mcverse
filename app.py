@@ -1,8 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask
 from sqlalchemy.exc import OperationalError
-import sys
 import os
-import pymysql
 import configparser
 import secrets
 
