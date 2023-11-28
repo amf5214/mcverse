@@ -7,3 +7,5 @@ test_code/
 .ipynb_checkpoints/
 .DS_Store
 todo.txt
+.dockerignore
+.gitignore
