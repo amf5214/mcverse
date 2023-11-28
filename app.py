@@ -7,16 +7,13 @@ import secrets
 from src.models import *
 from src.image_handling import *
 from src.authentication import *
-from src.logging_manager import get_root_logger, create_logger
+from src.logging_manager import log_message
 from src.routing_manager import configure_routing
 
 
 app = Flask(__name__)
 
-logger = get_root_logger('main')
-db_logger = create_logger('database_configuration')
-
-logger.info("--------------------------Application Server Starting------------------------------")
+log_message("--------------------------Application Server Starting------------------------------", main=True)
     
 with app.app_context():
     db_config_file = 'auth/database_config.ini'
@@ -29,18 +26,20 @@ with app.app_context():
         
     app.config["SECRET_KEY"] = secrets.token_hex(30)
 
-    db_logger.info('DB Connection Beginning')
-    db_logger.info(f'DB Connection location = {app.config["SQLALCHEMY_DATABASE_URI"]}')
+    log_message('DB Connection Beginning')
+    log_message(f'DB Connection location = {app.config["SQLALCHEMY_DATABASE_URI"]}')
+
     db.init_app(app)
-    db_logger.info('DB Connection Completed')
-    
-    db_logger.info('DB create_all Running')
+
+    log_message('DB Connection Completed')
+    log_message('DB create_all Running')
+
     try:
         db.create_all()
-        db_logger.info('DB create_all Completed')
+        log_message('DB create_all Completed')
         
     except OperationalError as e:
-        db_logger.info(f'DB create_all Error. Error = {e}')
+        log_message(f'DB create_all Error. Error = {e}')
 
     configure_routing(app)
 

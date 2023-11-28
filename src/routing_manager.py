@@ -8,9 +8,8 @@ from src.routing_functions.learning_page_rendering import LearningPageRendering
 from src.routing_functions.learning_page_helperfunctions import LearningPageHelperFunctions
 from src.routing_functions.question_page_rendering import FAQPageRendering
 from src.authentication import get_account
-from src.logging_manager import create_logger
+from src.logging_manager import log_message
 
-logger = create_logger("routing_manager")
 
 def configure_routing(app):
     """Adds url rules to the main app object to route traffic to the correct view function
@@ -26,7 +25,7 @@ def configure_routing(app):
     @app.errorhandler(404)
     def page_not_found(e):
         # note that we set the 404 status explicitly
-        logger.error(f'404 Error Created when loading {request.url} \n {e}')
+        log_message(f'404 Error Created when loading {request.url} \n {e}', level='error')
         return render_template('comingsoon.html', useraccount=get_account(request)), 404
 
     @app.route('/404')

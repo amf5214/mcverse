@@ -1,9 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, json, Response, jsonify, make_response, flash
 import logging
 from src.authentication import get_account
-from src.logging_manager import create_logger
-
-logger = create_logger("aux_page")
+from src.logging_manager import log_message
 
 class AuxPageRendering():
 

@@ -3,9 +3,7 @@ import logging
 from src.models import WebPage, DivContainer, PageElement
 from src.image_handling import *
 from src.authentication import *
-from src.logging_manager import create_logger
-
-logger = create_logger("learning_page")
+from src.logging_manager import log_message
 
 def process_carousel_element(element):
     if element.element_type == "image-carousel":

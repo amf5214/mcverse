@@ -1,14 +1,13 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta, date, timezone
-from src.logging_manager import create_logger
+from src.logging_manager import log_message
 
-logger = create_logger('database_configuration')
 
-logger.info('Database Configuration Beginning')
+log_message('Database Configuration Beginning')
 
 db = SQLAlchemy()
 
-logger.info('Database Configuration Completed')
+log_message('Database Configuration Completed')
 
 class FrequentlyAskedQuestion(db.Model):
         """Model representing the FrequentlyAskedQuestion table

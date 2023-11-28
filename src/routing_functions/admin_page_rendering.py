@@ -4,9 +4,7 @@ import logging
 from src.models import *
 from src.authentication import *
 from src.image_handling import *
-from src.logging_manager import create_logger
-
-logger = create_logger("admin_page")
+from src.logging_manager import log_message
 
 def get_item_classes():
         item_classes = ItemClass.query.order_by(ItemClass.id).all()

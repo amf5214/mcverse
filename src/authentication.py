@@ -18,9 +18,8 @@ import pymysql
 import secrets
 
 from src.models import AuthAccount, UserAccount, FileContent, AccountPermission, db
-from src.logging_manager import create_logger
+from src.logging_manager import log_message
 
-logger = create_logger("authentication")
 
 def create_password(password_string):
     """Encrypts a password string
@@ -61,7 +60,7 @@ def get_auth_account(token):
     if auth_account:
         payload = jwt.decode(token, key=auth_account.token_key, algorithms=["HS256"])
         delta = datetime.now(timezone.utc).timestamp() - payload["exp"]
-        logger.info(f'Auth Account {auth_account.id} Accessed and token expiration delta = {delta}. Expiration delta should be negative if it is still valid otherwise it is expired')
+        log_message(f'Auth Account {auth_account.id} Accessed and token expiration delta = {delta}. Expiration delta should be negative if it is still valid otherwise it is expired')
         if delta < 0:
             return auth_account
         else:
@@ -80,18 +79,18 @@ def get_account(request):
         """
 
         token = request.cookies.get("token")
-        logger.info(f"auth_token={token}")
+        log_message(f"auth_token={token}")
         if token != None:
             try:
                 auth_account = get_auth_account(token)
                 if auth_account != None:
-                    logger.info(f"auth_account_id={auth_account.id}")
+                    log_message(f"auth_account_id={auth_account.id}")
                     account = db.session.execute(db.select(UserAccount).filter_by(auth_account_id=auth_account.id)).scalar_one()
                     if account != None:
-                        logger.info(f"account_id={account.id}")
+                        log_message(f"account_id={account.id}")
                         account.set_auth(auth_account)
                         account.admin_flag = permission_validation("Admin", account.id)
-                        logger.info(f"admin_flag={account.admin_flag}")
+                        log_message(f"admin_flag={account.admin_flag}")
                         if account.account_image_link != None:
                             image_id = account.account_image_link
                             account.image_flag = True
@@ -104,7 +103,7 @@ def get_account(request):
                             account.image_flag = False
                         image_obj = FileContent.query.get_or_404(image_id)
                         account.profile_img_loc = image_obj.location
-                        logger.info(f"account_image_loc={account.profile_img_loc}")
+                        log_message(f"account_image_loc={account.profile_img_loc}")
                         account.profile_img_data = image_obj.rendered_data
                     else:
                         return UserAccount(full_name="No Account")
