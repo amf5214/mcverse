@@ -7,13 +7,26 @@ logger = create_logger("aux_page")
 
 class AuxPageRendering():
 
-    def __init__(self):
-        pass
-
     def aboutus():
+        """View function that handles a request to access the about us page
+
+        Function to render aboutus.html template
+
+        Return: Rendered template with css and js included
+        
+        """
+
         return render_template('aboutus.html', useraccount=get_account(request))
 
     def contactus():
+        """View function that handles a request to access the contact us page
+
+        Function to render contactus.html template
+
+        Return: Rendered template with css and js included
+        
+        """
+
         return render_template('contactus.html', useraccount=get_account(request))
 
     
