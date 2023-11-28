@@ -13,7 +13,7 @@ from src.routing_manager import configure_routing
 
 app = Flask(__name__)
 
-logger = get_root_logger("main")
+logger = get_root_logger('main')
 db_logger = create_logger('database_configuration')
 
 logger.info("--------------------------Application Server Starting------------------------------")
@@ -44,4 +44,6 @@ with app.app_context():
 
     configure_routing(app)
 
-app.run(debug=True, port=54913)
+if __name__ == "__main__":
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=True, host='0.0.0.0', port=port)
