@@ -23,6 +23,7 @@ class ProfilePageRendering():
         Renders the page used to sign in and sign up for an account
 
         Return: Rendered view from signinup.html template with js and css code 
+
         """
 
         profile_logger.info('Sign in/Sign up page rendered')
@@ -34,6 +35,7 @@ class ProfilePageRendering():
         Renders the page used to sign in and sign up for an account but adds the error message variable due to a failed sign in attempt
 
         Return: Rendered view from signinup.html template with js and css code 
+
         """
 
         profile_logger.info('Failed sign in occured')
@@ -46,6 +48,7 @@ class ProfilePageRendering():
         redirects to sign in page if no user is signed in
 
         Return: Rendered view from profile.html template with js and css code 
+
         """
 
         profile_logger.info('Profile page rendered')
@@ -78,7 +81,9 @@ class ProfilePageRendering():
         otherwise user will be redirected to failed sign in path.
 
         Return: Redirect object that moves the user to the correct page based off accuracy of the submitted form 
+        
         """
+
         try:
             given_pass = request.form["logpass"]
 
@@ -98,11 +103,27 @@ class ProfilePageRendering():
             return redirect("/signin/failed")
     
     def sign_out():
+        """View function that handles a sign out attempt
+
+        Function signs out current user by setting auth token cookie to None
+
+        Return: Response that redirects to home path 
+
+        """
+
         response = make_response(redirect("/"))
         response.set_cookie("token", "None")
         return response
 
     def create_new_account():
+        """View function that handles the creation of a new account
+
+        Function creates a new user account using post request in the form of an html form submission
+
+        Return: Redirect to either the home path or to the sign in page
+
+        """
+
         if request.form["logname"]=="No Account":
             return render_template('signinup.html', signupmessage="Name entry is invalid", useraccount=get_account(request))
 
@@ -126,6 +147,18 @@ class ProfilePageRendering():
         return redirect('/signin/home')
 
     def create_permission_request(permission, accountid):
+        """View function that handles the creation of a permissions request
+
+        Function that handles the creation of permission request.
+
+        Keyword Arguement:
+        permission -- string representing requested permission
+        accountid -- integer representing user account id
+
+        Return: Redirect to the profile page
+
+        """
+
         account = UserAccount.query.get_or_404(accountid)
         request = PermissionsRequest(account_id=accountid, permission_type=permission, username=account.username, grant_date=date.today())
         db.session.add(request)
@@ -133,6 +166,16 @@ class ProfilePageRendering():
         return redirect('/profile')
 
     def profileimageupdate():
+        """View function that handles a request to update a user's profile image
+
+        Function that handles a request to update a user's profile picture. Accepts a 
+        post request in the form of an html form submission. Utilizes uploadimage function 
+        from image_handling module.
+
+        Return: Redirect to the profile page
+
+        """
+
         image_id = uploadimage(request)
         picture_account = UserAccount.query.get_or_404(request.form["user_id"])
 
@@ -141,6 +184,15 @@ class ProfilePageRendering():
         return redirect("/profile")
     
     def updateprofileattribute():
+        """View function that handles a request to update a user account attribute
+
+        Function that handles a request to update a user account attribute and does so 
+        through the use of a post request in the form of a json object.
+
+        Return: JSON response object
+
+        """
+
         request_data = request.get_json()
         account_id = request_data['accountId']
         fulfilled = False
