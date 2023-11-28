@@ -9,6 +9,15 @@ logger = create_logger("question_page")
 
 class FAQPageRendering():
     def new_question():
+        """View function that handles a request to add a new question to the FrequentlyAskedQuestion table
+
+        Accepts a post request in the form of an html form submission and uses it to create a new question
+        in the FrequentlyAskedQuestion table
+
+        Return: Redirect object that sends the user to the home path
+        
+        """
+
         new_question = FrequentlyAskedQuestion(author_user=str(request.form["username"]), question=str(request.form["question"]))
         
         db.session.add(new_question)
