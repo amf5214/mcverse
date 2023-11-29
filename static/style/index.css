@@ -37,6 +37,7 @@
 }
 
 .intro-block {
+    position: relative;
     background-color: #21232A;
     color: white;
     display: flex;
@@ -149,6 +150,7 @@
     min-height: 60%;
     padding-top: 1em;
     padding-bottom: 1em;
+    cursor: pointer;
 }
 
 .link > * {
