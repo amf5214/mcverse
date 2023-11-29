@@ -9,6 +9,8 @@ from src.routing_functions.learning_page_helperfunctions import LearningPageHelp
 from src.routing_functions.question_page_rendering import FAQPageRendering
 from src.authentication import get_account
 from src.logging_manager import log_message
+from src.models import FileContent, db
+from src.image_handling import create_image
 
 
 def configure_routing(app):
@@ -38,7 +40,14 @@ def configure_routing(app):
 
     @app.route('/')
     def go_home():
-        return render_template('index.html', useraccount=get_account(request))
+        homepage_images = []
+        games_images = []
+        for image_id in [99, 100, 101, 102, 103, 104, 105, 106, 107, 108]:
+            homepage_images.append(create_image(db.session.execute(db.select(FileContent).filter_by(id=image_id)).scalar_one().id))
+        for image_id in [109, 110, 111, 112, 113]:
+            games_images.append(create_image(db.session.execute(db.select(FileContent).filter_by(id=image_id)).scalar_one().id))
+
+        return render_template('index.html', useraccount=get_account(request), homepage_images=homepage_images, games_images=games_images)
 
     # Routing for aux pages
     app.add_url_rule('/aboutus', view_func=AuxPageRendering.aboutus)
