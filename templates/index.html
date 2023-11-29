@@ -83,51 +83,51 @@
             <section class="container" id="con-2">
                 <div class="slider-wrapper" id="wrapper-2">
                     <div id="link-box">
-                        <div class="link" id="link-1">
+                        <div class="link" id="link-1" role="button" tabindex="0">
                             <img class="linkimage" src="{{url_for('static', filename='apple.webp')}}">
                             <a class="linklabel" href="/learn/food">Food</a>
                         </div>
-                        <div class="link" id="link-2">
+                        <div class="link" id="link-2" role="button" tabindex="0">
                             <img class="linkimage" src="{{url_for('static', filename='farming.png')}}">
                             <a  class="linklabel" href="/learn/farming">Farming</a>
                         </div>
-                        <div class="link" id="link-3">
+                        <div class="link" id="link-3" role="button" tabindex="0">
                             <img class="linkimage" src="{{url_for('static', filename='mining4.png')}}">
                             <a  class="linklabel" href="/learn/mining">Mining</a>
                         </div>
-                        <div class="link" id="link-4">
+                        <div class="link" id="link-4" role="button" tabindex="0">
                             <img class="linkimage" src="{{url_for('static', filename='Minecraft_mobs_preview.png')}}">
                             <a  class="linklabel" href="/learn/mobs">Mobs</a>
                         </div>
-                        <div class="link" id="link-5">
+                        <div class="link" id="link-5" role="button" tabindex="0">
                             <img class="linkimage" src="{{url_for('static', filename='electricity3.png')}}">
                             <a  class="linklabel" href="/learn/power">Power</a>
                         </div>
-                        <div class="link" id="link-6">
+                        <div class="link" id="link-6" role="button" tabindex="0">
                             <img class="linkimage" src="{{url_for('static', filename='storage3.png')}}">
                             <a  class="linklabel" href="/learn/storage">Storage</a>
                         </div>
-                        <div class="link" id="link-7">
+                        <div class="link" id="link-7" role="button" tabindex="0">
                             <img class="linkimage" src="{{url_for('static', filename='backpack3.png')}}">
                             <a  class="linklabel" href="/learn/backpacks">Backpack</a>
                         </div>
-                        <div class="link" id="link-8">
+                        <div class="link" id="link-8" role="button" tabindex="0">
                             <img class="linkimage" src="{{url_for('static', filename='dungeon.webp')}}">
                             <a  class="linklabel" href="/learn/dungeons">Dungeon</a>
                         </div>
-                        <div class="link" id="link-9">
+                        <div class="link" id="link-9" role="button" tabindex="0">
                             <img class="linkimage" src="{{url_for('static', filename='weapon3.png')}}">
                             <a  class="linklabel" href="/item/home/weapon">Weapon</a>
                         </div>
-                        <div class="link" id="link-10">
+                        <div class="link" id="link-10" role="button" tabindex="0">
                             <img class="linkimage" src="{{url_for('static', filename='Chisels.webp')}}">
                             <a  class="linklabel" href="/learn/chisel2">Chisel 2</a>
                         </div>
-                        <div class="link" id="link-11">
+                        <div class="link" id="link-11" role="button" tabindex="0">
                             <img class="linkimage" src="{{url_for('static', filename='bibliocraft2.png')}}">
                             <a  class="linklabel" href="/learn/bibliocraft">Biblio</a>
                         </div>
-                        <div class="link" id="link-12">
+                        <div class="link" id="link-12" role="button" tabindex="0">
                             <img class="linkimage" src="{{url_for('static', filename='journeymap4.png')}}">
                             <a  class="linklabel" href="/learn/journeymap">Journey</a>
                         </div>
@@ -180,4 +180,5 @@
             </div>
         {% endif %}
     </div>
+    <script src="{{ url_for('static', filename='script/learning_div_clickable.js') }}"></script>
 {% endblock %}
