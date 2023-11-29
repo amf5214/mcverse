@@ -58,13 +58,14 @@ def get_auth_account(token):
 
     auth_account = db.session.execute(db.select(AuthAccount).filter_by(auth_token=token)).scalar_one()
     if auth_account:
-        payload = jwt.decode(token, key=auth_account.token_key, algorithms=["HS256"])
-        delta = datetime.now(timezone.utc).timestamp() - payload["exp"]
-        log_message(f'Auth Account {auth_account.id} Accessed and token expiration delta = {delta}. Expiration delta should be negative if it is still valid otherwise it is expired')
-        if delta < 0:
+        try:
+            jwt.decode(token, key=auth_account.token_key, algorithms=["HS256"])
             return auth_account
-        else:
+        except jwt.ExpiredSignatureError:
+            log_message(f'Auth Account {auth_account.id} Accessed and token expired.')
             return None
+    else:
+        return None
 
 
 def get_account(request):
